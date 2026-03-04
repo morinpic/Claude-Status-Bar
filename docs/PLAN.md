@@ -271,11 +271,11 @@ StatusViewModel（@Observable）
 
 ### Phase 5: 仕上げ
 
-- [ ] エラーハンドリング（ネットワーク断、API 障害）
-- [ ] ログイン時の自動起動設定（Launch at Login）
-- [ ] アプリアイコン作成
-- [ ] README.md 作成
-- [ ] LICENSE (MIT) 追加
+- [x] エラーハンドリング（ネットワーク断、API 障害）
+- [x] ログイン時の自動起動設定（Launch at Login）
+- [x] アプリアイコン作成
+- [x] README.md 作成
+- [x] LICENSE (MIT) 追加
 
 ### Phase 6: 配布
 
