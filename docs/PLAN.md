@@ -265,9 +265,9 @@ StatusViewModel（@Observable）
 
 ### Phase 4: 通知
 
-- [ ] `NotificationService.swift` — 通知の発火ロジック
-- [ ] 通知許可リクエスト
-- [ ] ステータス変化検知と通知トリガー
+- [x] `NotificationService.swift` — 通知の発火ロジック
+- [x] 通知許可リクエスト
+- [x] ステータス変化検知と通知トリガー
 
 ### Phase 5: 仕上げ
 
