@@ -286,6 +286,8 @@ StatusViewModel（@Observable）
 - [ ] （将来）コード署名 + Notarization
 - [ ] （将来）homebrew-cask 本体へ PR
 
+> **Note:** Release ビルド（`xcodebuild -configuration Release`）および全15テストの通過を確認済み（2026-03-04）。Archive 以降は手動操作が必要。
+
 ## 8. コーディング規約
 
 - Swift の標準的な命名規則に従う（lowerCamelCase）
