@@ -251,9 +251,9 @@ StatusViewModel（@Observable）
 
 ### Phase 2: API 通信 + データモデル
 
-- [ ] `StatusModels.swift` — Codable 構造体の定義
-- [ ] `StatusService.swift` — API ポーリング実装
-- [ ] ユニットテスト — モデルのデコード、サービスのモック
+- [x] `StatusModels.swift` — Codable 構造体の定義
+- [x] `StatusService.swift` — API ポーリング実装
+- [x] ユニットテスト — モデルのデコード、サービスのモック
 
 ### Phase 3: メニューバー + UI
 
