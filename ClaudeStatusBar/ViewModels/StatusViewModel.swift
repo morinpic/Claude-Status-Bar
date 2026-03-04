@@ -11,8 +11,11 @@ final class StatusViewModel {
     var error: Error?
 
     private let service = StatusService()
+    private let notificationService = NotificationService.shared
+    private var previousStatus: StatusIndicator?
 
     init() {
+        notificationService.requestAuthorization()
         startMonitoring()
     }
 
@@ -90,14 +93,35 @@ final class StatusViewModel {
 
     @MainActor
     private func apply(_ summary: StatusSummary) {
-        overallStatus = summary.status.indicator
+        let newStatus = summary.status.indicator
+        let activeIncidentsList = summary.incidents
+            .filter { $0.status != .resolved && $0.status != .postmortem }
+
+        if let previous = previousStatus {
+            checkStatusTransition(from: previous, to: newStatus, incidents: activeIncidentsList)
+        }
+
+        previousStatus = newStatus
+        overallStatus = newStatus
         components = summary.components
             .filter { !$0.group }
             .sorted { $0.position < $1.position }
-        activeIncidents = summary.incidents
-            .filter { $0.status != .resolved && $0.status != .postmortem }
+        activeIncidents = activeIncidentsList
         lastUpdated = Date()
         isLoading = false
         error = nil
+    }
+
+    private func checkStatusTransition(
+        from previous: StatusIndicator,
+        to current: StatusIndicator,
+        incidents: [Incident]
+    ) {
+        if previous == .none && current != .none {
+            let incidentName = incidents.first?.name ?? "Unknown incident"
+            notificationService.sendIncidentNotification(incidentName: incidentName)
+        } else if previous != .none && current == .none {
+            notificationService.sendRecoveryNotification()
+        }
     }
 }
