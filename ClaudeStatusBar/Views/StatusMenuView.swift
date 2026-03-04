@@ -1,7 +1,9 @@
 import SwiftUI
+import ServiceManagement
 
 struct StatusMenuView: View {
     let viewModel: StatusViewModel
+    @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -10,6 +12,7 @@ struct StatusMenuView: View {
             componentSection
             Divider()
             incidentSection
+            errorSection
             Divider()
             footerSection
         }
@@ -76,6 +79,38 @@ struct StatusMenuView: View {
         .padding(.vertical, 8)
     }
 
+    // MARK: - Error
+
+    @ViewBuilder
+    private var errorSection: some View {
+        if let error = viewModel.error {
+            VStack(spacing: 4) {
+                HStack(spacing: 4) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.yellow)
+                        .font(.caption)
+                    Text("Connection Error")
+                        .font(.caption)
+                        .fontWeight(.medium)
+                }
+                Text(error.localizedDescription)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+                Button("Retry") {
+                    viewModel.refresh()
+                }
+                .buttonStyle(.link)
+                .font(.caption)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+
+            Divider()
+        }
+    }
+
     // MARK: - Footer
 
     private var footerSection: some View {
@@ -92,6 +127,23 @@ struct StatusMenuView: View {
                     .controlSize(.small)
                     .frame(maxWidth: .infinity)
             }
+
+            Toggle("Launch at Login", isOn: $launchAtLogin)
+                .toggleStyle(.switch)
+                .controlSize(.mini)
+                .font(.caption)
+                .padding(.horizontal, 14)
+                .onChange(of: launchAtLogin) { _, newValue in
+                    do {
+                        if newValue {
+                            try SMAppService.mainApp.register()
+                        } else {
+                            try SMAppService.mainApp.unregister()
+                        }
+                    } catch {
+                        launchAtLogin = SMAppService.mainApp.status == .enabled
+                    }
+                }
 
             Divider()
 

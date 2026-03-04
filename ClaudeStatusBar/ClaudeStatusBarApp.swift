@@ -16,6 +16,7 @@ struct ClaudeStatusBarApp: App {
     }
 
     private var menuBarIconColor: Color {
+        if viewModel.hasError { return .gray }
         switch viewModel.overallStatus {
         case .none: return .green
         case .minor: return .yellow

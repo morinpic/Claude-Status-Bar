@@ -2,14 +2,21 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "permissions": {
+    "allow": [
+      "Bash(xcodebuild:*)",
+      "WebFetch(domain:status.claude.com)",
+      "Bash(curl:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git log:*)",
+      "Bash(git merge:*)"
+    ]
+  },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true,
     "superpowers@superpowers-marketplace": true
   },
-  "teammateMode": "tmux",
-  "permissions": {
-    "allow": [
-      "Bash(xcodebuild:*)"
-    ]
-  }
+  "teammateMode": "tmux"
 }

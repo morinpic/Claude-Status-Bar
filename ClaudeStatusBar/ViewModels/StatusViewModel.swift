@@ -19,22 +19,11 @@ final class StatusViewModel {
         startMonitoring()
     }
 
-    var menuBarIcon: String {
-        switch overallStatus {
-        case .none: return "circle.fill"
-        case .minor: return "circle.fill"
-        case .major: return "circle.fill"
-        case .critical: return "circle.fill"
-        }
-    }
+    var hasError: Bool { error != nil }
 
-    var menuBarIconColor: String {
-        switch overallStatus {
-        case .none: return "green"
-        case .minor: return "yellow"
-        case .major: return "orange"
-        case .critical: return "red"
-        }
+    var menuBarIcon: String {
+        if hasError { return "exclamationmark.circle.fill" }
+        return "circle.fill"
     }
 
     var overallStatusText: String {
