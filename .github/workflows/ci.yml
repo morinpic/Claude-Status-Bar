@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: xcodebuild -scheme ClaudeStatusBar -configuration Debug CODE_SIGNING_ALLOWED=NO build
+
+      - name: Test
+        run: xcodebuild -scheme ClaudeStatusBar -configuration Debug CODE_SIGNING_ALLOWED=NO test
