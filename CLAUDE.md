@@ -85,3 +85,4 @@ GET https://status.claude.com/api/v2/summary.json
 - `CLAUDE.md` — プロジェクト構成・ビルド手順・コーディング規約
 - `docs/PLAN.md` — 仕様に変更があれば更新
 - `docs/CHANGELOG.md` — リリース時に変更履歴を追記
+- `docs/BACKLOG.md` — 実装した項目の Issue 列更新・完了マーク。運用ルールは BACKLOG.md を参照
