@@ -66,6 +66,8 @@ GET https://status.claude.com/api/v2/summary.json
 - async/await を使用した非同期処理
 - git コミットメッセージは英語で記述する
 - git コミットメッセージに `Co-Authored-By: Claude` の行を含めない
+- フェーズごとにブランチを作成し、その中で作業すること
+- 適切な粒度でコミットすること
 
 ## ドキュメント更新ルール
 
