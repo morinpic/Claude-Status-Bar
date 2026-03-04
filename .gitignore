@@ -20,3 +20,6 @@ Pods/
 
 # Archives
 *.xcarchive
+
+# Claude Code
+.claude/
