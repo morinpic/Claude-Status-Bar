@@ -1,5 +1,9 @@
 # Claude Status Bar
 
+[![GitHub Release](https://img.shields.io/github/v/release/morinpic/Claude-Status-Bar)](https://github.com/morinpic/Claude-Status-Bar/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![macOS](https://img.shields.io/badge/macOS-14.0%2B-blue)](https://github.com/morinpic/Claude-Status-Bar)
+
 > Never miss a Claude outage.
 
 macOS menu bar app that monitors Claude's service status and sends real-time notifications when incidents occur.
@@ -24,7 +28,17 @@ macOS menu bar app that monitors Claude's service status and sends real-time not
 
 ## Installation
 
-### Build from source
+### Homebrew (Recommended)
+
+```bash
+brew tap morinpic/tap && brew install --cask claude-status-bar
+```
+
+### Manual Download
+
+Download the latest `ClaudeStatusBar-x.x.x.zip` from [Releases](https://github.com/morinpic/Claude-Status-Bar/releases/latest), unzip, and move `ClaudeStatusBar.app` to `/Applications`.
+
+### Build from Source
 
 ```bash
 git clone https://github.com/morinpic/Claude-Status-Bar.git
@@ -33,12 +47,6 @@ xcodebuild -scheme ClaudeStatusBar -configuration Release build
 ```
 
 The built app will be in `DerivedData/ClaudeStatusBar-*/Build/Products/Release/ClaudeStatusBar.app`.
-
-### From Xcode
-
-1. Open `ClaudeStatusBar.xcodeproj` in Xcode
-2. Select the `ClaudeStatusBar` scheme
-3. Build and run (Cmd+R)
 
 ## Usage
 
