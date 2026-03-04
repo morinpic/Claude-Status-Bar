@@ -1,5 +1,6 @@
 # Claude Status Bar
 
+[![CI](https://github.com/morinpic/Claude-Status-Bar/actions/workflows/ci.yml/badge.svg)](https://github.com/morinpic/Claude-Status-Bar/actions/workflows/ci.yml)
 [![GitHub Release](https://img.shields.io/github/v/release/morinpic/Claude-Status-Bar)](https://github.com/morinpic/Claude-Status-Bar/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![macOS](https://img.shields.io/badge/macOS-14.0%2B-blue)](https://github.com/morinpic/Claude-Status-Bar)
