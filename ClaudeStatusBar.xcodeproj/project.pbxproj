@@ -65,7 +65,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8A1B2C3D4E5F000000000201 /* root */ = {
+		8A1B2C3D4E5F000000000201 = {
 			isa = PBXGroup;
 			children = (
 				8A1B2C3D4E5F000000000202 /* ClaudeStatusBar */,
@@ -213,7 +213,7 @@
 				en,
 				Base,
 			);
-			mainGroup = 8A1B2C3D4E5F000000000201 /* root */;
+			mainGroup = 8A1B2C3D4E5F000000000201;
 			productRefGroup = 8A1B2C3D4E5F000000000208 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -397,8 +397,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Claude Status Bar";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.morinpic.ClaudeStatusBar;
@@ -418,8 +419,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Claude Status Bar";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.morinpic.ClaudeStatusBar;
