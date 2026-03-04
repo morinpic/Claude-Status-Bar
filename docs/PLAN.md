@@ -257,11 +257,11 @@ StatusViewModel（@Observable）
 
 ### Phase 3: メニューバー + UI
 
-- [ ] `ClaudeStatusBarApp.swift` — MenuBarExtra の設定
-- [ ] `StatusViewModel.swift` — 状態管理
-- [ ] `StatusMenuView.swift` — ポップオーバー全体
-- [ ] `ComponentRow.swift` — コンポーネント行
-- [ ] `IncidentCard.swift` — インシデント詳細
+- [x] `ClaudeStatusBarApp.swift` — MenuBarExtra の設定
+- [x] `StatusViewModel.swift` — 状態管理
+- [x] `StatusMenuView.swift` — ポップオーバー全体
+- [x] `ComponentRow.swift` — コンポーネント行
+- [x] `IncidentCard.swift` — インシデント詳細
 
 ### Phase 4: 通知
 
