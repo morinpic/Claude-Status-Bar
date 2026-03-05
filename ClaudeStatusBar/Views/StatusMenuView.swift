@@ -14,6 +14,8 @@ struct StatusMenuView: View {
             incidentSection
             errorSection
             Divider()
+            iconDesignSection
+            Divider()
             footerSection
         }
         .frame(width: 300)
@@ -111,6 +113,12 @@ struct StatusMenuView: View {
         }
     }
 
+    // MARK: - Icon Design
+
+    private var iconDesignSection: some View {
+        IconSettingsView(viewModel: viewModel)
+    }
+
     // MARK: - Footer
 
     private var footerSection: some View {
@@ -127,10 +135,6 @@ struct StatusMenuView: View {
                     .controlSize(.small)
                     .frame(maxWidth: .infinity)
             }
-
-            IconSettingsView(viewModel: viewModel)
-
-            Divider()
 
             Toggle("Launch at Login", isOn: $launchAtLogin)
                 .toggleStyle(.switch)

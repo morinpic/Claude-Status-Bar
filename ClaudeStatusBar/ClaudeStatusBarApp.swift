@@ -11,6 +11,9 @@ struct ClaudeStatusBarApp: App {
             if let assetName = viewModel.menuBarIconAssetName {
                 Image(assetName)
                     .renderingMode(.original)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 18, height: 18)
             } else {
                 Image(systemName: viewModel.menuBarIcon)
                     .symbolRenderingMode(.palette)

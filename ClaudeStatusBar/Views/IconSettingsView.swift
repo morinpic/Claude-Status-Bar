@@ -17,7 +17,7 @@ struct IconSettingsView: View {
                 } label: {
                     HStack(spacing: 8) {
                         iconPreview(for: design)
-                            .frame(width: 18, height: 18)
+                            .frame(width: 24, height: 24)
                         Text(design.displayName)
                             .font(.caption)
                         Spacer()
@@ -42,7 +42,7 @@ struct IconSettingsView: View {
         if design == .default {
             Image(systemName: "circle.fill")
                 .foregroundStyle(.green)
-                .font(.system(size: 14))
+                .font(.system(size: 16))
         } else {
             Image(design.assetName(for: .normal))
                 .renderingMode(.original)

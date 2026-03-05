@@ -10,10 +10,10 @@ enum IconDesignType: String, CaseIterable, Sendable {
     var displayName: String {
         switch self {
         case .default: return "Default"
-        case .directionA: return "Shield + Pulse"
-        case .directionB: return "Abstract C"
-        case .directionC: return "Connection Ring"
-        case .directionD: return "Claude-kun"
+        case .directionA: return "Shield"
+        case .directionB: return "Arc"
+        case .directionC: return "Ring"
+        case .directionD: return "Buddy"
         }
     }
 
