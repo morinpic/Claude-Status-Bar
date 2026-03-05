@@ -25,7 +25,7 @@
 | ~~I-1~~ | ~~GitHub Actions で CI（ビルド + テスト自動実行）~~ | ~~高~~ | ~~M~~ | ~~#1~~ |
 | ~~I-2~~ | ~~README.md にテスト結果バッジを追加~~ | ~~高~~ | ~~S~~ | ~~#2~~ |
 | I-3 | SwiftLint でコードスタイル自動チェック | 中 | S | - |
-| I-4 | リリース自動化（tag push → Archive → Release → Cask SHA 更新） | 中 | L | - |
+| ~~I-4~~ | ~~リリース自動化（tag push → Archive → Release → Cask SHA 更新）~~ | ~~中~~ | ~~L~~ | ~~#6~~ |
 | I-5 | コードカバレッジレポート + バッジ表示 | 低 | M | - |
 | I-6 | Dependabot の設定 | 低 | S | - |
 | I-7 | homebrew-cask 本体へ PR | 低 | S | - |
