@@ -147,7 +147,7 @@ struct StatusMenuView: View {
 
             Divider()
 
-            HStack {
+            VStack(spacing: 6) {
                 Button("Open Status Page") {
                     if let url = URL(string: "https://status.claude.com") {
                         NSWorkspace.shared.open(url)
@@ -155,14 +155,33 @@ struct StatusMenuView: View {
                 }
                 .buttonStyle(.link)
                 .font(.caption)
+                .frame(maxWidth: .infinity)
 
-                Spacer()
+                HStack {
+                    Button("GitHub") {
+                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
 
-                Button("Quit") {
-                    NSApplication.shared.terminate(nil)
+                    Button("Report Bug") {
+                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar/issues/new") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
+
+                    Spacer()
+
+                    Button("Quit") {
+                        NSApplication.shared.terminate(nil)
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
                 }
-                .buttonStyle(.link)
-                .font(.caption)
             }
             .padding(.horizontal, 14)
             .padding(.bottom, 8)
