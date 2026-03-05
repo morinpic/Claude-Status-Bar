@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom SVG icons registered in asset catalog (4 designs x 5 states)
 - GitHub repository link in popover footer
 - Bug report link (GitHub Issues) in popover footer
+- Release automation with GitHub Actions (tag push triggers build, GitHub Release, and Homebrew Cask update)
 
 ## [1.0.0] - 2026-03-04
 

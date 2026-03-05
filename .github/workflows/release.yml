@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Build Release
+        run: |
+          xcodebuild -scheme ClaudeStatusBar \
+            -configuration Release \
+            -derivedDataPath DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Create zip
+        run: |
+          APP_PATH="DerivedData/Build/Products/Release/ClaudeStatusBar.app"
+          ZIP_NAME="ClaudeStatusBar-${{ steps.version.outputs.VERSION }}.zip"
+          cd $(dirname "$APP_PATH")
+          zip -r "$ZIP_NAME" ClaudeStatusBar.app
+          echo "ZIP_PATH=$(pwd)/$ZIP_NAME" >> $GITHUB_ENV
+          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
+
+      - name: Calculate SHA256
+        id: sha
+        run: |
+          SHA=$(shasum -a 256 "$ZIP_PATH" | awk '{print $1}')
+          echo "SHA256=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ZIP_PATH }}
+          generate_release_notes: true
+          name: ${{ github.ref_name }}
+
+      - name: Update Homebrew Cask
+        env:
+          TAP_TOKEN: ${{ secrets.TAP_TOKEN }}
+        run: |
+          if [ -z "$TAP_TOKEN" ]; then
+            echo "TAP_TOKEN not set, skipping Homebrew Cask update"
+            exit 0
+          fi
+          git clone https://x-access-token:${TAP_TOKEN}@github.com/morinpic/homebrew-tap.git
+          cd homebrew-tap
+          CASK_FILE="Casks/claude-status-bar.rb"
+          sed -i '' "s|version \".*\"|version \"${{ steps.version.outputs.VERSION }}\"|" "$CASK_FILE"
+          sed -i '' "s|sha256 \".*\"|sha256 \"${{ steps.sha.outputs.SHA256 }}\"|" "$CASK_FILE"
+          sed -i '' "s|ClaudeStatusBar-.*\.zip|ClaudeStatusBar-${{ steps.version.outputs.VERSION }}.zip|" "$CASK_FILE"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "$CASK_FILE"
+          git commit -m "Update claude-status-bar to ${{ steps.version.outputs.VERSION }}"
+          git push
