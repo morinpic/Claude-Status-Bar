@@ -8,12 +8,8 @@ struct ClaudeStatusBarApp: App {
         MenuBarExtra {
             StatusMenuView(viewModel: viewModel)
         } label: {
-            if let assetName = viewModel.menuBarIconAssetName {
-                Image(assetName)
-                    .renderingMode(.original)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 18, height: 18)
+            if let nsImage = menuBarCustomIcon {
+                Image(nsImage: nsImage)
             } else {
                 Image(systemName: viewModel.menuBarIcon)
                     .symbolRenderingMode(.palette)
@@ -21,6 +17,14 @@ struct ClaudeStatusBarApp: App {
             }
         }
         .menuBarExtraStyle(.window)
+    }
+
+    private var menuBarCustomIcon: NSImage? {
+        guard let assetName = viewModel.menuBarIconAssetName,
+              let nsImage = NSImage(named: assetName) else { return nil }
+        nsImage.size = NSSize(width: 18, height: 18)
+        nsImage.isTemplate = false
+        return nsImage
     }
 
     private var menuBarIconColor: Color {
