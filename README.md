@@ -21,7 +21,7 @@ macOS menu bar app that monitors Claude's service status and sends real-time not
 - **Incident details** — Active incidents displayed with impact level, current status, and latest update message
 - **Desktop notifications** — Alerts when Claude goes down and when it recovers
 - **Launch at Login** — Optional auto-start on login
-- **Open Status Page** — Quick link to [status.claude.com](https://status.claude.com)
+- **Quick links** — Open [status.claude.com](https://status.claude.com), GitHub repository, or file a bug report directly from the popover
 
 ## Requirements
 
