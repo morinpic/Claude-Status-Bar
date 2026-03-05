@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import SwiftUI
 
 @Observable
 final class StatusViewModel {
@@ -9,6 +10,7 @@ final class StatusViewModel {
     var lastUpdated: Date?
     var isLoading = false
     var error: Error?
+    var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.default.rawValue
 
     private let service = StatusService()
     private let notificationService = NotificationService.shared
@@ -20,6 +22,24 @@ final class StatusViewModel {
     }
 
     var hasError: Bool { error != nil }
+
+    var selectedIconDesign: IconDesignType {
+        get { IconDesignType(rawValue: selectedIconDesignRaw) ?? .default }
+        set {
+            selectedIconDesignRaw = newValue.rawValue
+            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedIconDesign")
+        }
+    }
+
+    var currentIconState: IconState {
+        IconState.from(overallStatus, hasError: hasError)
+    }
+
+    var menuBarIconAssetName: String? {
+        let design = selectedIconDesign
+        guard design != .default else { return nil }
+        return design.assetName(for: currentIconState)
+    }
 
     var menuBarIcon: String {
         if hasError { return "exclamationmark.circle.fill" }
