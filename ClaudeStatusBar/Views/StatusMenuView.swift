@@ -2,7 +2,7 @@ import SwiftUI
 import ServiceManagement
 
 struct StatusMenuView: View {
-    let viewModel: StatusViewModel
+    @Bindable var viewModel: StatusViewModel
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
     var body: some View {
@@ -127,6 +127,10 @@ struct StatusMenuView: View {
                     .controlSize(.small)
                     .frame(maxWidth: .infinity)
             }
+
+            IconSettingsView(viewModel: viewModel)
+
+            Divider()
 
             Toggle("Launch at Login", isOn: $launchAtLogin)
                 .toggleStyle(.switch)
