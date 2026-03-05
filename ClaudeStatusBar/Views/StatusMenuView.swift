@@ -123,12 +123,18 @@ struct StatusMenuView: View {
 
     private var footerSection: some View {
         VStack(spacing: 8) {
-            if let lastUpdated = viewModel.lastUpdated {
-                Text("Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))")
+            HStack {
+                if let lastUpdated = viewModel.lastUpdated {
+                    Text("Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+                Spacer()
+                Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")")
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
-                    .frame(maxWidth: .infinity)
             }
+            .padding(.horizontal, 14)
 
             if viewModel.isLoading {
                 ProgressView()
@@ -155,7 +161,7 @@ struct StatusMenuView: View {
 
             Divider()
 
-            HStack {
+            VStack(spacing: 6) {
                 Button("Open Status Page") {
                     if let url = URL(string: "https://status.claude.com") {
                         NSWorkspace.shared.open(url)
@@ -163,14 +169,40 @@ struct StatusMenuView: View {
                 }
                 .buttonStyle(.link)
                 .font(.caption)
+                .frame(maxWidth: .infinity)
 
-                Spacer()
+                HStack {
+                    Button {
+                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    } label: {
+                        Image("github-mark")
+                            .renderingMode(.template)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 14, height: 14)
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help("Open GitHub Repository")
 
-                Button("Quit") {
-                    NSApplication.shared.terminate(nil)
+                    Button("Report Bug") {
+                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar/issues/new") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
+
+                    Spacer()
+
+                    Button("Quit") {
+                        NSApplication.shared.terminate(nil)
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
                 }
-                .buttonStyle(.link)
-                .font(.caption)
             }
             .padding(.horizontal, 14)
             .padding(.bottom, 8)

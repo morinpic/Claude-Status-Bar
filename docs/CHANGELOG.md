@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Icon design selection setting — choose between 5 menu bar icon designs (Default, Shield + Pulse, Abstract C, Connection Ring, Claude-kun)
 - Custom SVG icons registered in asset catalog (4 designs x 5 states)
+- GitHub repository link in popover footer
+- Bug report link (GitHub Issues) in popover footer
 
 ## [1.0.0] - 2026-03-04
 
