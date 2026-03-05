@@ -8,9 +8,14 @@ struct ClaudeStatusBarApp: App {
         MenuBarExtra {
             StatusMenuView(viewModel: viewModel)
         } label: {
-            Image(systemName: viewModel.menuBarIcon)
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(menuBarIconColor)
+            if let assetName = viewModel.menuBarIconAssetName {
+                Image(assetName)
+                    .renderingMode(.original)
+            } else {
+                Image(systemName: viewModel.menuBarIcon)
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(menuBarIconColor)
+            }
         }
         .menuBarExtraStyle(.window)
     }
