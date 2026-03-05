@@ -41,12 +41,21 @@ jobs:
           SHA=$(shasum -a 256 "$ZIP_PATH" | awk '{print $1}')
           echo "SHA256=$SHA" >> $GITHUB_OUTPUT
 
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          NOTES=$(awk "/^## \[${VERSION}\]/{flag=1; next} /^## \[/{flag=0} flag" docs/CHANGELOG.md)
+          echo "NOTES<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ env.ZIP_PATH }}
-          generate_release_notes: true
-          name: ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.NOTES }}
+          name: v${{ steps.version.outputs.VERSION }}
 
       - name: Update Homebrew Cask
         env:
