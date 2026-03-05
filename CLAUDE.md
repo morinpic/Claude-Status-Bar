@@ -25,14 +25,16 @@ ClaudeStatusBar/
 ├── ClaudeStatusBarApp.swift          # @main, MenuBarExtra
 ├── ClaudeStatusBar.entitlements      # App Sandbox + ネットワーク権限
 ├── Models/
-│   └── StatusModels.swift            # Codable structs（API レスポンス）
+│   ├── StatusModels.swift            # Codable structs（API レスポンス）
+│   └── IconDesignType.swift          # アイコンデザイン・状態 enum
 ├── Services/
 │   ├── StatusService.swift           # API ポーリング + パース + 指数バックオフ
 │   └── NotificationService.swift     # UNUserNotificationCenter 通知
 ├── Views/
 │   ├── StatusMenuView.swift          # ポップオーバー（ステータス + エラー + Launch at Login）
 │   ├── ComponentRow.swift            # コンポーネント1行分
-│   └── IncidentCard.swift            # インシデント詳細カード
+│   ├── IncidentCard.swift            # インシデント詳細カード
+│   └── IconSettingsView.swift        # アイコンデザイン選択 UI
 ├── ViewModels/
 │   └── StatusViewModel.swift         # @Observable, 状態管理 + 通知トリガー
 └── Resources/
