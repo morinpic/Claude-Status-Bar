@@ -34,6 +34,17 @@ enum StatusIndicator: String, Codable, Sendable {
     case critical
 }
 
+extension StatusIndicator {
+    var severityLevel: Int {
+        switch self {
+        case .none:     return 0
+        case .minor:    return 1
+        case .major:    return 2
+        case .critical: return 3
+        }
+    }
+}
+
 // MARK: - Component
 
 struct Component: Codable, Sendable, Identifiable {

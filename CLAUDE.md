@@ -77,6 +77,7 @@ GET https://status.claude.com/api/v2/summary.json
 - git コミットメッセージに `Co-Authored-By: Claude` の行を含めない
 - GitHub Release のリリースノートは英語で記述する
 - フェーズごとにブランチを作成し、その中で作業すること
+- チームで相談してタスクを実装すること
 - 適切な粒度でコミットすること
 
 ## ドキュメント更新ルール

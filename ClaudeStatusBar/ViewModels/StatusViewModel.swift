@@ -13,12 +13,22 @@ final class StatusViewModel {
     var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.default.rawValue
 
     private let service = StatusService()
-    private let notificationService = NotificationService.shared
+    private let notificationService: NotificationServiceProtocol
     private var previousStatus: StatusIndicator?
 
-    init() {
-        notificationService.requestAuthorization()
-        startMonitoring()
+    var notificationsEnabled: Bool {
+        get { UserDefaults.standard.bool(forKey: "notificationsEnabled") }
+        set { UserDefaults.standard.set(newValue, forKey: "notificationsEnabled") }
+    }
+
+    init(notificationService: NotificationServiceProtocol = NotificationService.shared, autoStart: Bool = true) {
+        self.notificationService = notificationService
+        if autoStart {
+            notificationService.requestAuthorization()
+        }
+        if autoStart {
+            startMonitoring()
+        }
     }
 
     var hasError: Bool { error != nil }
@@ -101,13 +111,16 @@ final class StatusViewModel {
     }
 
     @MainActor
-    private func apply(_ summary: StatusSummary) {
+    func apply(_ summary: StatusSummary) {
         let newStatus = summary.status.indicator
         let activeIncidentsList = summary.incidents
             .filter { $0.status != .resolved && $0.status != .postmortem }
+        let affectedCount = summary.components
+            .filter { !$0.group && $0.status != .operational }
+            .count
 
         if let previous = previousStatus {
-            checkStatusTransition(from: previous, to: newStatus, incidents: activeIncidentsList)
+            checkStatusTransition(from: previous, to: newStatus, incidents: activeIncidentsList, affectedCount: affectedCount)
         }
 
         previousStatus = newStatus
@@ -121,14 +134,17 @@ final class StatusViewModel {
         error = nil
     }
 
-    private func checkStatusTransition(
+    func checkStatusTransition(
         from previous: StatusIndicator,
         to current: StatusIndicator,
-        incidents: [Incident]
+        incidents: [Incident],
+        affectedCount: Int
     ) {
-        if previous == .none && current != .none {
+        guard notificationsEnabled else { return }
+
+        if previous.severityLevel < current.severityLevel {
             let incidentName = incidents.first?.name ?? "Unknown incident"
-            notificationService.sendIncidentNotification(incidentName: incidentName)
+            notificationService.sendIncidentNotification(incidentName: incidentName, impact: current, affectedCount: affectedCount)
         } else if previous != .none && current == .none {
             notificationService.sendRecoveryNotification()
         }

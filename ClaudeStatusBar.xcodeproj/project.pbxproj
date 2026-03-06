@@ -20,6 +20,7 @@
 		8A1B2C3D4E5F00000000010D /* IconSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000010 /* IconSettingsView.swift */; };
 		8A1B2C3D4E5F00000000010A /* StatusModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F00000000000C /* StatusModelsTests.swift */; };
 		8A1B2C3D4E5F00000000010B /* StatusServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F00000000000D /* StatusServiceTests.swift */; };
+		8A1B2C3D4E5F00000000010E /* NotificationTransitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000011 /* NotificationTransitionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		8A1B2C3D4E5F00000000000E /* ClaudeStatusBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClaudeStatusBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1B2C3D4E5F00000000000F /* IconDesignType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconDesignType.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000010 /* IconSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSettingsView.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F000000000011 /* NotificationTransitionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTransitionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 			children = (
 				8A1B2C3D4E5F00000000000C /* StatusModelsTests.swift */,
 				8A1B2C3D4E5F00000000000D /* StatusServiceTests.swift */,
+				8A1B2C3D4E5F000000000011 /* NotificationTransitionTests.swift */,
 			);
 			path = ClaudeStatusBarTests;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			files = (
 				8A1B2C3D4E5F00000000010A /* StatusModelsTests.swift in Sources */,
 				8A1B2C3D4E5F00000000010B /* StatusServiceTests.swift in Sources */,
+				8A1B2C3D4E5F00000000010E /* NotificationTransitionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

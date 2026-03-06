@@ -142,6 +142,12 @@ struct StatusMenuView: View {
                     .frame(maxWidth: .infinity)
             }
 
+            Toggle("障害通知", isOn: $viewModel.notificationsEnabled)
+                .toggleStyle(.switch)
+                .controlSize(.mini)
+                .font(.caption)
+                .padding(.horizontal, 14)
+
             Toggle("Launch at Login", isOn: $launchAtLogin)
                 .toggleStyle(.switch)
                 .controlSize(.mini)

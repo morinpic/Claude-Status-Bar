@@ -1,7 +1,13 @@
 import Foundation
 import UserNotifications
 
-final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
+protocol NotificationServiceProtocol: AnyObject {
+    func requestAuthorization()
+    func sendIncidentNotification(incidentName: String, impact: StatusIndicator, affectedCount: Int)
+    func sendRecoveryNotification()
+}
+
+final class NotificationService: NSObject, UNUserNotificationCenterDelegate, NotificationServiceProtocol {
     static let shared = NotificationService()
 
     private let center = UNUserNotificationCenter.current()
@@ -17,10 +23,15 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    func sendIncidentNotification(incidentName: String) {
+    func sendIncidentNotification(incidentName: String, impact: StatusIndicator, affectedCount: Int) {
         let content = UNMutableNotificationContent()
-        content.title = "Claude Status"
-        content.body = "⚠ Claude で障害が発生しました: \(incidentName)"
+        content.title = "Claude Status — 障害を検知"
+        content.subtitle = switch impact {
+        case .critical: "重大"
+        case .major:    "重要"
+        default:        "軽微"
+        }
+        content.body = "\(incidentName)。影響: \(affectedCount) コンポーネント"
         content.sound = .default
 
         let request = UNNotificationRequest(
