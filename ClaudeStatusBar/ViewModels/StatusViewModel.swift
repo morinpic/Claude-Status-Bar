@@ -133,4 +133,47 @@ final class StatusViewModel {
             notificationService.sendRecoveryNotification()
         }
     }
+
+    #if DEBUG
+    var isDebugMode = false
+
+    func applyDebugState(
+        statusPreset: DebugStatusPreset,
+        incidentPreset: DebugIncidentPreset,
+        componentPreset: DebugComponentPreset,
+        errorPreset: DebugErrorPreset,
+        isLoadingOverride: Bool
+    ) {
+        if statusPreset == .live {
+            exitDebugMode()
+            return
+        }
+
+        isDebugMode = true
+        stopMonitoring()
+
+        let statusIndicator: StatusIndicator
+        switch statusPreset {
+        case .live: return // handled above
+        case .operational: statusIndicator = .none
+        case .minor: statusIndicator = .minor
+        case .major: statusIndicator = .major
+        case .critical: statusIndicator = .critical
+        }
+
+        overallStatus = statusIndicator
+        activeIncidents = DebugDataFactory.makeIncidents(preset: incidentPreset)
+        components = DebugDataFactory.makeComponents(preset: componentPreset)
+        error = DebugDataFactory.makeError(preset: errorPreset)
+        isLoading = isLoadingOverride
+        lastUpdated = Date()
+    }
+
+    func exitDebugMode() {
+        isDebugMode = false
+        error = nil
+        isLoading = false
+        startMonitoring()
+    }
+    #endif
 }
