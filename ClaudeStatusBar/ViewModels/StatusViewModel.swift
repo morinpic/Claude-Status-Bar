@@ -101,17 +101,25 @@ final class StatusViewModel {
     }
 
     @MainActor
-    private func apply(_ summary: StatusSummary) {
-        let newStatus = summary.status.indicator
+    func apply(_ summary: StatusSummary) {
+        let apiStatus = summary.status.indicator
         let activeIncidentsList = summary.incidents
             .filter { $0.status != .resolved && $0.status != .postmortem }
 
+        let maxIncidentImpact = activeIncidentsList
+            .map { $0.impact }
+            .max()
+
+        let effectiveStatus = [apiStatus, maxIncidentImpact]
+            .compactMap { $0 }
+            .max() ?? .none
+
         if let previous = previousStatus {
-            checkStatusTransition(from: previous, to: newStatus, incidents: activeIncidentsList)
+            checkStatusTransition(from: previous, to: effectiveStatus, incidents: activeIncidentsList)
         }
 
-        previousStatus = newStatus
-        overallStatus = newStatus
+        previousStatus = effectiveStatus
+        overallStatus = effectiveStatus
         components = summary.components
             .filter { !$0.group }
             .sorted { $0.position < $1.position }

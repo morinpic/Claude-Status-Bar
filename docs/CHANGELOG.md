@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Debug menu for state simulation in DEBUG builds (status, incidents, components, errors, loading)
 
+### Fixed
+
+- Fix header status showing "All Systems Operational" when active incidents exist
+
 ## [1.1.0] - 2026-03-05
 
 ### Added
