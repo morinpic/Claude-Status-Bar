@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Debug menu for state simulation in DEBUG builds (status, incidents, components, errors, loading)
+
 ## [1.1.0] - 2026-03-05
 
 ### Added

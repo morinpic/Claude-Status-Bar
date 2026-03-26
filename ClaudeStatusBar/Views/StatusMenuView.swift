@@ -15,6 +15,10 @@ struct StatusMenuView: View {
             errorSection
             Divider()
             iconDesignSection
+            #if DEBUG
+            Divider()
+            DebugMenuView(viewModel: viewModel)
+            #endif
             Divider()
             footerSection
         }
