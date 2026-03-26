@@ -84,6 +84,29 @@ final class StatusViewModelTests: XCTestCase {
         XCTAssertEqual(vm.overallStatus, .none)
     }
 
+    func testApiMajorWithMinorIncident_overallStatusIsMajor() {
+        let vm = StatusViewModel()
+        let summary = makeSummary(
+            indicator: .major,
+            incidents: [makeIncident(impact: .minor)]
+        )
+        vm.apply(summary)
+        XCTAssertEqual(vm.overallStatus, .major)
+    }
+
+    func testApiNoneWithMultipleIncidents_overallStatusIsMaxImpact() {
+        let vm = StatusViewModel()
+        let summary = makeSummary(
+            indicator: .none,
+            incidents: [
+                makeIncident(impact: .minor),
+                makeIncident(impact: .major)
+            ]
+        )
+        vm.apply(summary)
+        XCTAssertEqual(vm.overallStatus, .major)
+    }
+
     // MARK: - StatusIndicator Comparable
 
     func testStatusIndicatorOrdering() {
