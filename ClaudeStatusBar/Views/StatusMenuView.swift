@@ -125,15 +125,12 @@ struct StatusMenuView: View {
                 }
                 Spacer()
 
-                Button {
-                    openSettings()
-                } label: {
+                SettingsLink {
                     Image(systemName: "gear")
                         .font(.body)
                         .foregroundStyle(.primary)
                 }
                 .buttonStyle(.plain)
-                .help("Open Settings")
 
                 Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")")
                     .font(.caption2)
@@ -207,12 +204,4 @@ struct StatusMenuView: View {
         }
     }
 
-    private func openSettings() {
-        if #available(macOS 14, *) {
-            NSApp.activate(ignoringOtherApps: true)
-            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        } else {
-            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-        }
-    }
 }
