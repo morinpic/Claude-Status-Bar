@@ -8,18 +8,9 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
-
-      - name: Select Xcode 26
-        run: |
-          XCODE_26=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
-          if [ -z "$XCODE_26" ]; then
-            echo "No Xcode 26 found" && exit 1
-          fi
-          echo "Using $XCODE_26"
-          sudo xcode-select -s "$XCODE_26"
 
       - name: Build
         run: xcodebuild -scheme ClaudeStatusBar -configuration Debug CODE_SIGNING_ALLOWED=NO build
