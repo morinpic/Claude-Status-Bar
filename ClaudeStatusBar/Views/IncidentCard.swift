@@ -54,20 +54,20 @@ struct IncidentCard: View {
 
     private var impactText: String {
         switch incident.impact {
-        case .none: return String(localized: "None")
-        case .minor: return String(localized: "Minor")
-        case .major: return String(localized: "Major")
-        case .critical: return String(localized: "Critical")
+        case .none: return "None"
+        case .minor: return "Minor"
+        case .major: return "Major"
+        case .critical: return "Critical"
         }
     }
 
     private var statusText: String {
         switch incident.status {
-        case .investigating: return String(localized: "Investigating")
-        case .identified: return String(localized: "Identified")
-        case .monitoring: return String(localized: "Monitoring")
-        case .resolved: return String(localized: "Resolved")
-        case .postmortem: return String(localized: "Postmortem")
+        case .investigating: return "Investigating"
+        case .identified: return "Identified"
+        case .monitoring: return "Monitoring"
+        case .resolved: return "Resolved"
+        case .postmortem: return "Postmortem"
         }
     }
 }

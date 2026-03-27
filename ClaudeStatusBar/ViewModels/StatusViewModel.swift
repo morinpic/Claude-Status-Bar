@@ -52,10 +52,10 @@ final class StatusViewModel {
 
     var overallStatusText: String {
         switch overallStatus {
-        case .none: return String(localized: "All Systems Operational")
-        case .minor: return String(localized: "Minor Issues")
-        case .major: return String(localized: "Major Outage")
-        case .critical: return String(localized: "Critical Outage")
+        case .none: return "All Systems Operational"
+        case .minor: return "Minor Issues"
+        case .major: return "Major Outage"
+        case .critical: return "Critical Outage"
         }
     }
 
