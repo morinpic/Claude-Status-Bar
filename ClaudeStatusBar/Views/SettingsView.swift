@@ -47,11 +47,7 @@ struct SettingsView: View {
                 Text("Choose which components trigger desktop notifications when their status changes.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
-            } header: {
-                Text("Notifications")
-            }
 
-            Section("Components") {
                 ForEach(viewModel.components) { component in
                     Toggle(
                         component.name,
@@ -61,6 +57,8 @@ struct SettingsView: View {
                         )
                     )
                 }
+            } header: {
+                Text("Notifications")
             }
         }
         .formStyle(.grouped)
