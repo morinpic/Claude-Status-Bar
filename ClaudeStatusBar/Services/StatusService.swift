@@ -100,7 +100,7 @@ enum StatusServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidResponse:
-            return "Invalid response from server"
+            return String(localized: "Invalid response from server")
         case .httpError(let statusCode):
             return "HTTP error: \(statusCode)"
         case .decodingError(let error):

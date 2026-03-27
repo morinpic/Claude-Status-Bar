@@ -24,9 +24,12 @@ struct IncidentCard: View {
                     .foregroundStyle(.secondary)
             }
 
-            Text("Updated: \(incident.updatedAt.formatted(date: .abbreviated, time: .shortened))")
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
+            Text(
+                "Updated: \(incident.updatedAt.formatted(date: .abbreviated, time: .shortened))",
+                comment: "Label showing when the incident was last updated"
+            )
+            .font(.caption2)
+            .foregroundStyle(.tertiary)
 
             if let latestUpdate = incident.incidentUpdates.first {
                 Text(latestUpdate.body)
@@ -51,20 +54,20 @@ struct IncidentCard: View {
 
     private var impactText: String {
         switch incident.impact {
-        case .none: return "None"
-        case .minor: return "Minor"
-        case .major: return "Major"
-        case .critical: return "Critical"
+        case .none: return String(localized: "None")
+        case .minor: return String(localized: "Minor")
+        case .major: return String(localized: "Major")
+        case .critical: return String(localized: "Critical")
         }
     }
 
     private var statusText: String {
         switch incident.status {
-        case .investigating: return "Investigating"
-        case .identified: return "Identified"
-        case .monitoring: return "Monitoring"
-        case .resolved: return "Resolved"
-        case .postmortem: return "Postmortem"
+        case .investigating: return String(localized: "Investigating")
+        case .identified: return String(localized: "Identified")
+        case .monitoring: return String(localized: "Monitoring")
+        case .resolved: return String(localized: "Resolved")
+        case .postmortem: return String(localized: "Postmortem")
         }
     }
 }

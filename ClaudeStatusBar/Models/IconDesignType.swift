@@ -9,11 +9,11 @@ enum IconDesignType: String, CaseIterable, Sendable {
 
     var displayName: String {
         switch self {
-        case .default: return "Default"
-        case .directionA: return "Shield"
-        case .directionB: return "Arc"
-        case .directionC: return "Ring"
-        case .directionD: return "Buddy"
+        case .default: return String(localized: "Default")
+        case .directionA: return String(localized: "Shield")
+        case .directionB: return String(localized: "Arc")
+        case .directionC: return String(localized: "Ring")
+        case .directionD: return String(localized: "Buddy")
         }
     }
 

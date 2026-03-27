@@ -30,9 +30,12 @@ struct StatusMenuView: View {
                 Text("Claude Status")
                     .font(.headline)
                 if let lastUpdated = viewModel.lastUpdated {
-                    Text("Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))")
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                    Text(
+                        "Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))",
+                        comment: "Label showing the last time status was fetched"
+                    )
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
                 }
             }
             Spacer()
@@ -151,7 +154,7 @@ struct StatusMenuView: View {
         }
     }
 
-    private func menuItem(_ title: String, action: @escaping () -> Void) -> some View {
+    private func menuItem(_ title: LocalizedStringResource, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
                 .font(.body)

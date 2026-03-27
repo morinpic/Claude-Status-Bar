@@ -36,13 +36,13 @@ struct ComponentRow: View {
     private var statusText: String {
         switch component.status {
         case .operational:
-            return "Operational"
+            return String(localized: "Operational")
         case .degradedPerformance:
-            return "Degraded"
+            return String(localized: "Degraded")
         case .partialOutage:
-            return "Partial Outage"
+            return String(localized: "Partial Outage")
         case .majorOutage:
-            return "Major Outage"
+            return String(localized: "Major Outage")
         }
     }
 }
