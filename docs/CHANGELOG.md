@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Raise minimum deployment target from macOS 14 to macOS 26 (Tahoe)
 - Apply Liquid Glass design to status badge, incident cards, and debug menu buttons
 - Use template rendering for custom menu bar icons (transparent menu bar support)
+- Sign release builds with Developer ID certificate and notarize with Apple (Gatekeeper compatible)
 
 ## [1.2.0] - 2026-03-28
 
