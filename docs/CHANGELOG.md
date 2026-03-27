@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-03-28
+
 ### Added
 
 - Notification test controls in debug menu (direct send + transition simulation)
@@ -51,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling with graceful UI for network failures
 - Homebrew Cask distribution via `brew tap morinpic/tap`
 
+[1.2.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/morinpic/Claude-Status-Bar/releases/tag/v1.0.0
