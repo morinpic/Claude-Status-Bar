@@ -26,9 +26,20 @@ struct StatusMenuView: View {
 
     private var headerSection: some View {
         HStack {
-            Text("Claude Status")
-                .font(.headline)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Claude Status")
+                    .font(.headline)
+                if let lastUpdated = viewModel.lastUpdated {
+                    Text("Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+            }
             Spacer()
+            if viewModel.isLoading {
+                ProgressView()
+                    .controlSize(.mini)
+            }
             statusBadge
         }
         .padding(.horizontal, 14)
@@ -45,6 +56,9 @@ struct StatusMenuView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .glassEffect(.regular, in: .capsule)
     }
 
     // MARK: - Components
@@ -117,86 +131,36 @@ struct StatusMenuView: View {
     // MARK: - Footer
 
     private var footerSection: some View {
-        VStack(spacing: 8) {
-            HStack {
-                if let lastUpdated = viewModel.lastUpdated {
-                    Text("Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))")
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
+        VStack(spacing: 0) {
+            menuItem("Open Status Page") {
+                if let url = URL(string: "https://status.claude.com") {
+                    NSWorkspace.shared.open(url)
                 }
-                Spacer()
-
-                Button {
-                    NSApp.activate(ignoringOtherApps: true)
-                    openSettings()
-                } label: {
-                    Image(systemName: "gear")
-                        .font(.body)
-                        .foregroundStyle(.primary)
-                }
-                .buttonStyle(.plain)
-
-                Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
             }
-            .padding(.horizontal, 14)
 
-            if viewModel.isLoading {
-                ProgressView()
-                    .controlSize(.small)
-                    .frame(maxWidth: .infinity)
+            menuItem("Settings...") {
+                NSApp.activate(ignoringOtherApps: true)
+                openSettings()
             }
 
             Divider()
 
-            VStack(spacing: 6) {
-                Button("Open Status Page") {
-                    if let url = URL(string: "https://status.claude.com") {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-                .buttonStyle(.link)
-                .font(.caption)
-                .frame(maxWidth: .infinity)
-
-                HStack {
-                    Button {
-                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    } label: {
-                        Image("github-mark")
-                            .renderingMode(.template)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 14, height: 14)
-                            .foregroundStyle(.secondary)
-                    }
-                    .buttonStyle(.plain)
-                    .help("Open GitHub Repository")
-
-                    Button("Report Bug") {
-                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar/issues/new") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    }
-                    .buttonStyle(.link)
-                    .font(.caption)
-
-                    Spacer()
-
-                    Button("Quit") {
-                        NSApplication.shared.terminate(nil)
-                    }
-                    .buttonStyle(.link)
-                    .font(.caption)
-                }
+            menuItem("Quit Claude Status Bar") {
+                NSApplication.shared.terminate(nil)
             }
-            .padding(.horizontal, 14)
-            .padding(.bottom, 8)
         }
-        .padding(.top, 6)
+    }
+
+    private func menuItem(_ title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.body)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 6)
     }
 
     private var overallStatusColor: Color {

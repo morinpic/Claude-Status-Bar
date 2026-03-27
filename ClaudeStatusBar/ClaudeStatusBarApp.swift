@@ -27,7 +27,7 @@ struct ClaudeStatusBarApp: App {
         guard let assetName = viewModel.menuBarIconAssetName,
               let nsImage = NSImage(named: assetName) else { return nil }
         nsImage.size = NSSize(width: 18, height: 18)
-        nsImage.isTemplate = false
+        nsImage.isTemplate = true
         return nsImage
     }
 

@@ -3,7 +3,7 @@
 [![CI](https://github.com/morinpic/Claude-Status-Bar/actions/workflows/ci.yml/badge.svg)](https://github.com/morinpic/Claude-Status-Bar/actions/workflows/ci.yml)
 [![GitHub Release](https://img.shields.io/github/v/release/morinpic/Claude-Status-Bar)](https://github.com/morinpic/Claude-Status-Bar/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![macOS](https://img.shields.io/badge/macOS-14.0%2B-blue)](https://github.com/morinpic/Claude-Status-Bar)
+[![macOS](https://img.shields.io/badge/macOS-26.0%2B-blue)](https://github.com/morinpic/Claude-Status-Bar)
 
 > Never miss a Claude outage.
 
@@ -26,7 +26,7 @@ macOS menu bar app that monitors Claude's service status and sends real-time not
 
 ## Requirements
 
-- macOS 14.0 (Sonoma) or later
+- macOS 26.0 (Tahoe) or later
 
 ## Installation
 
