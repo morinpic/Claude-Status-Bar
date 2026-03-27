@@ -20,6 +20,7 @@
 | F-12 | ステータス履歴グラフ（直近24時間〜7日間の推移をミニグラフ表示） | 未定 | M | - |
 | ~~F-13~~ | ~~通知のカスタマイズ（特定コンポーネントのみ通知する設定）~~ | ~~未定~~ | ~~M~~ | ~~#16~~ |
 | F-14 | Sparkle によるアプリ内自動アップデート（GitHub Releases + appcast.xml） | 未定 | L | - |
+| F-17 | ポップオーバーに Repository / Report a Bug リンクを追加 | 中 | S | - |
 | ~~F-15~~ | ~~サポート OS を macOS 26 に引き上げ（macOS 14+ → 26+）~~ | ~~高~~ | ~~S~~ | - |
 | ~~F-16~~ | ~~Liquid Glass 対応（ポップオーバー・設定ウィンドウに .glassEffect 適用）~~ | ~~高~~ | ~~M~~ | - |
 
@@ -44,6 +45,7 @@
 | ~~I-2~~ | ~~README.md にテスト結果バッジを追加~~ | ~~高~~ | ~~S~~ | ~~#2~~ |
 | I-3 | SwiftLint でコードスタイル自動チェック | 中 | S | - |
 | ~~I-4~~ | ~~リリース自動化（tag push → Archive → Release → Cask SHA 更新）~~ | ~~中~~ | ~~L~~ | ~~#6~~ |
+| I-8 | Developer ID 署名 + Notarization（リリースビルドの Gatekeeper 対応） | 高 | M | - |
 | I-5 | コードカバレッジレポート + バッジ表示 | 低 | M | - |
 | I-6 | Dependabot の設定 | 低 | S | - |
 | I-7 | homebrew-cask 本体へ PR | 低 | S | - |
