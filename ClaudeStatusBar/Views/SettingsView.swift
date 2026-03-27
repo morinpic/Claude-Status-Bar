@@ -31,7 +31,7 @@ struct SettingsView: View {
 
                 Picker(selection: $viewModel.selectedLanguage) {
                     ForEach(AppLanguage.allCases) { language in
-                        Text(verbatim: language.displayName).tag(language)
+                        Text(language.localizedDisplayName).tag(language)
                     }
                 } label: {
                     VStack(alignment: .leading, spacing: 2) {
