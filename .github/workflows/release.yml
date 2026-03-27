@@ -7,24 +7,77 @@ on:
 
 jobs:
   release:
-    runs-on: macos-latest
+    runs-on: macos-15
     permissions:
       contents: write
 
     steps:
       - uses: actions/checkout@v4
 
+      - name: Select Xcode 26
+        run: sudo xcode-select -s /Applications/Xcode_26.app
+
       - name: Extract version from tag
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Import Developer ID certificate
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+          MACOS_CI_KEYCHAIN_PWD: ${{ secrets.MACOS_CI_KEYCHAIN_PWD }}
+        run: |
+          echo "$MACOS_CERTIFICATE" | base64 --decode > certificate.p12
+          security create-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_CI_KEYCHAIN_PWD" build.keychain
+          rm certificate.p12
 
       - name: Build Release
         run: |
           xcodebuild -scheme ClaudeStatusBar \
             -configuration Release \
             -derivedDataPath DerivedData \
-            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="${{ secrets.MACOS_CERTIFICATE_NAME }}" \
+            DEVELOPMENT_TEAM="${{ secrets.MACOS_NOTARIZATION_TEAM_ID }}" \
+            OTHER_CODE_SIGN_FLAGS="--options runtime" \
             build
+
+      - name: Verify code signature
+        run: |
+          APP_PATH="DerivedData/Build/Products/Release/ClaudeStatusBar.app"
+          codesign --verify --deep --strict --verbose=2 "$APP_PATH"
+          codesign -dv "$APP_PATH"
+
+      - name: Notarize app
+        env:
+          MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.MACOS_NOTARIZATION_APPLE_ID }}
+          MACOS_NOTARIZATION_TEAM_ID: ${{ secrets.MACOS_NOTARIZATION_TEAM_ID }}
+          MACOS_NOTARIZATION_PWD: ${{ secrets.MACOS_NOTARIZATION_PWD }}
+        run: |
+          APP_PATH="DerivedData/Build/Products/Release/ClaudeStatusBar.app"
+
+          xcrun notarytool store-credentials "notarytool-profile" \
+            --apple-id "$MACOS_NOTARIZATION_APPLE_ID" \
+            --team-id "$MACOS_NOTARIZATION_TEAM_ID" \
+            --password "$MACOS_NOTARIZATION_PWD"
+
+          ditto -c -k --keepParent "$APP_PATH" "notarization.zip"
+
+          xcrun notarytool submit "notarization.zip" \
+            --keychain-profile "notarytool-profile" \
+            --wait \
+            --timeout 30m
+
+          xcrun stapler staple "$APP_PATH"
+
+      - name: Verify notarization
+        run: |
+          APP_PATH="DerivedData/Build/Products/Release/ClaudeStatusBar.app"
+          spctl --assess --type execute --verbose=2 "$APP_PATH"
 
       - name: Create zip
         run: |
@@ -76,3 +129,8 @@ jobs:
           git add "$CASK_FILE"
           git commit -m "Update claude-status-bar to ${{ steps.version.outputs.VERSION }}"
           git push
+
+      - name: Cleanup keychain
+        if: always()
+        run: |
+          security delete-keychain build.keychain 2>/dev/null || true
