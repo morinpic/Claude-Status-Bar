@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "XcodeBuildMCP": {
+      "command": "npx",
+      "args": ["-y", "xcodebuildmcp@latest"],
+      "env": {
+        "INCREMENTAL_BUILDS_ENABLED": "true",
+        "XCODEBUILDMCP_DYNAMIC_TOOLS": "true"
+      }
+    },
+    "xcode": {
+      "command": "xcrun",
+      "args": ["mcpbridge"]
+    },
+    "apple-docs": {
+      "command": "npx",
+      "args": ["-y", "@kimsungwhee/apple-docs-mcp@latest"]
+    }
+  }
+}
