@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-03-27
+
 ### Added
 
 - Debug menu for state simulation in DEBUG builds (status, incidents, components, errors, loading)
+
+### Fixed
+
+- Fix header status showing "All Systems Operational" when active incidents exist
 
 ## [1.1.0] - 2026-03-05
 
@@ -34,5 +40,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling with graceful UI for network failures
 - Homebrew Cask distribution via `brew tap morinpic/tap`
 
+[1.1.1]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/morinpic/Claude-Status-Bar/releases/tag/v1.0.0

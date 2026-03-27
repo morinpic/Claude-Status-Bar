@@ -27,11 +27,24 @@ struct Status: Codable, Sendable {
     let description: String
 }
 
-enum StatusIndicator: String, Codable, Sendable {
+enum StatusIndicator: String, Codable, Sendable, Comparable {
     case none
     case minor
     case major
     case critical
+
+    var severity: Int {
+        switch self {
+        case .none: return 0
+        case .minor: return 1
+        case .major: return 2
+        case .critical: return 3
+        }
+    }
+
+    static func < (lhs: StatusIndicator, rhs: StatusIndicator) -> Bool {
+        lhs.severity < rhs.severity
+    }
 }
 
 // MARK: - Component
