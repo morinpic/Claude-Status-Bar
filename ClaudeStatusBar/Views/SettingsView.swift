@@ -91,6 +91,7 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .frame(width: 450, height: 550)
+        .navigationTitle("Settings")
         .alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Reset", role: .destructive) {
