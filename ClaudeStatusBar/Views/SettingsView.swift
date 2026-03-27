@@ -9,27 +9,35 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section("General") {
-                Toggle("Launch at Login", isOn: $launchAtLogin)
-                    .onChange(of: launchAtLogin) { _, newValue in
-                        do {
-                            if newValue {
-                                try SMAppService.mainApp.register()
-                            } else {
-                                try SMAppService.mainApp.unregister()
-                            }
-                        } catch {
-                            launchAtLogin = SMAppService.mainApp.status == .enabled
-                        }
+                Toggle(isOn: $launchAtLogin) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Launch at Login")
+                        Text("Start Claude Status Bar when you log in.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
                     }
+                }
+                .onChange(of: launchAtLogin) { _, newValue in
+                    do {
+                        if newValue {
+                            try SMAppService.mainApp.register()
+                        } else {
+                            try SMAppService.mainApp.unregister()
+                        }
+                    } catch {
+                        launchAtLogin = SMAppService.mainApp.status == .enabled
+                    }
+                }
             }
 
-            Section("Icon Design") {
+            Section {
                 let designs = IconDesignType.allCases
                 ForEach(designs, id: \.self) { (design: IconDesignType) in
                     HStack {
                         iconPreview(for: design)
-                            .frame(width: 24, height: 24)
+                            .frame(width: 28, height: 28)
                         Text(design.displayName)
+                            .font(.body)
                         Spacer()
                         if viewModel.selectedIconDesign == design {
                             Image(systemName: "checkmark")
@@ -42,13 +50,14 @@ struct SettingsView: View {
                         viewModel.selectedIconDesign = design
                     }
                 }
+            } header: {
+                Text("Icon Design")
+            } footer: {
+                Text("Choose how the status icon appears in the menu bar.")
+                    .foregroundStyle(.secondary)
             }
 
             Section {
-                Text("Choose which components trigger desktop notifications when their status changes.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-
                 ForEach(viewModel.components) { component in
                     Toggle(
                         component.name,
@@ -60,9 +69,12 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Notifications")
+            } footer: {
+                Text("Choose which components trigger desktop notifications when their status changes.")
+                    .foregroundStyle(.secondary)
             }
 
-            Section("Reset") {
+            Section {
                 HStack {
                     Spacer()
                     Button("Reset All Settings") {
@@ -70,10 +82,15 @@ struct SettingsView: View {
                     }
                     Spacer()
                 }
+            } header: {
+                Text("Reset")
+            } footer: {
+                Text("Reset icon design, notification settings, and Launch at Login to defaults.")
+                    .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)
-        .frame(width: 400, height: 500)
+        .frame(width: 450, height: 550)
         .alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Reset", role: .destructive) {
