@@ -12,6 +12,7 @@ final class StatusViewModel {
     var isLoading = false
     var error: Error?
     var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.default.rawValue
+    var notificationEnabledMap: [String: Bool] = [:]
 
     private let service = StatusService()
     private let notificationService = NotificationService.shared
@@ -128,6 +129,7 @@ final class StatusViewModel {
             .filter { !$0.group }
             .sorted { $0.position < $1.position }
         notificationSettings.initializeIfNeeded(allComponentIDs: filteredComponents.map { $0.id })
+        syncNotificationEnabledMap(for: filteredComponents)
         checkComponentTransitions(newComponents: filteredComponents)
         previousComponentStatuses = Dictionary(
             uniqueKeysWithValues: filteredComponents.map { ($0.id, $0.status) }
@@ -138,6 +140,12 @@ final class StatusViewModel {
         lastUpdated = Date()
         isLoading = false
         error = nil
+    }
+
+    private func syncNotificationEnabledMap(for components: [Component]) {
+        for component in components {
+            notificationEnabledMap[component.id] = notificationSettings.isNotificationEnabled(for: component.id)
+        }
     }
 
     private func checkComponentTransitions(newComponents: [Component]) {
@@ -160,7 +168,7 @@ final class StatusViewModel {
     }
 
     func isComponentNotificationEnabled(_ componentID: String) -> Bool {
-        notificationSettings.isNotificationEnabled(for: componentID)
+        notificationEnabledMap[componentID] ?? notificationSettings.isNotificationEnabled(for: componentID)
     }
 
     func resetAllSettings() {
@@ -168,7 +176,11 @@ final class StatusViewModel {
         selectedIconDesign = .default
 
         // Notification settings
-        notificationSettings.resetAll(allComponentIDs: components.map { $0.id })
+        let ids = components.map { $0.id }
+        notificationSettings.resetAll(allComponentIDs: ids)
+        for id in ids {
+            notificationEnabledMap[id] = true
+        }
 
         // Launch at Login
         try? SMAppService.mainApp.unregister()
@@ -176,6 +188,7 @@ final class StatusViewModel {
 
     func toggleComponentNotification(_ componentID: String, enabled: Bool) {
         notificationSettings.setNotificationEnabled(enabled, for: componentID, allComponentIDs: components.map { $0.id })
+        notificationEnabledMap[componentID] = enabled
     }
 
     private func checkStatusTransition(
