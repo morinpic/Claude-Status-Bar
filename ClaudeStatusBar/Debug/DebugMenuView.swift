@@ -110,6 +110,52 @@ struct DebugMenuView: View {
                         .buttonStyle(.bordered)
                         .controlSize(.small)
                     }
+
+                    Divider()
+                        .padding(.vertical, 4)
+
+                    Text("Notification Test")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.secondary)
+
+                    HStack {
+                        Button("📢 Incident") {
+                            viewModel.debugSendIncidentNotification()
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+
+                        Button("✅ Recovery") {
+                            viewModel.debugSendRecoveryNotification()
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                    }
+
+                    Text("Simulate Transition")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Button("none → minor") {
+                            viewModel.debugSimulateTransition(from: .none, to: .minor)
+                        }
+                        Button("none → major") {
+                            viewModel.debugSimulateTransition(from: .none, to: .major)
+                        }
+                        Button("none → critical") {
+                            viewModel.debugSimulateTransition(from: .none, to: .critical)
+                        }
+                        Button("minor → none (recovery)") {
+                            viewModel.debugSimulateTransition(from: .minor, to: .none)
+                        }
+                        Button("major → none (recovery)") {
+                            viewModel.debugSimulateTransition(from: .major, to: .none)
+                        }
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
                 }
                 .padding(.horizontal, 14)
                 .padding(.bottom, 8)
