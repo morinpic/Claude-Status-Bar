@@ -14,7 +14,9 @@ final class StatusViewModel {
 
     private let service = StatusService()
     private let notificationService = NotificationService.shared
+    private let notificationSettings = NotificationSettingsService.shared
     private var previousStatus: StatusIndicator?
+    private var previousComponentStatuses: [String: ComponentStatus] = [:]
 
     init() {
         notificationService.requestAuthorization()
@@ -120,13 +122,48 @@ final class StatusViewModel {
 
         previousStatus = effectiveStatus
         overallStatus = effectiveStatus
-        components = summary.components
+
+        let filteredComponents = summary.components
             .filter { !$0.group }
             .sorted { $0.position < $1.position }
+        notificationSettings.initializeIfNeeded(allComponentIDs: filteredComponents.map { $0.id })
+        checkComponentTransitions(newComponents: filteredComponents)
+        previousComponentStatuses = Dictionary(
+            uniqueKeysWithValues: filteredComponents.map { ($0.id, $0.status) }
+        )
+        components = filteredComponents
+
         activeIncidents = activeIncidentsList
         lastUpdated = Date()
         isLoading = false
         error = nil
+    }
+
+    private func checkComponentTransitions(newComponents: [Component]) {
+        guard !previousComponentStatuses.isEmpty else { return }
+
+        for component in newComponents {
+            guard notificationSettings.isNotificationEnabled(for: component.id) else { continue }
+
+            let previousStatus = previousComponentStatuses[component.id]
+
+            if previousStatus == .operational && component.status != .operational {
+                notificationService.sendComponentIncidentNotification(
+                    componentName: component.name,
+                    status: component.status
+                )
+            } else if previousStatus != nil && previousStatus != .operational && component.status == .operational {
+                notificationService.sendComponentRecoveryNotification(componentName: component.name)
+            }
+        }
+    }
+
+    func isComponentNotificationEnabled(_ componentID: String) -> Bool {
+        notificationSettings.isNotificationEnabled(for: componentID)
+    }
+
+    func toggleComponentNotification(_ componentID: String, enabled: Bool) {
+        notificationSettings.setNotificationEnabled(enabled, for: componentID)
     }
 
     private func checkStatusTransition(
@@ -196,6 +233,38 @@ final class StatusViewModel {
 
     func debugSendRecoveryNotification() {
         notificationService.sendRecoveryNotification()
+    }
+
+    func debugSimulateComponentTransition(
+        componentName: String,
+        from oldStatus: ComponentStatus,
+        to newStatus: ComponentStatus
+    ) {
+        guard let index = components.firstIndex(where: { $0.name == componentName }) else { return }
+        let component = components[index]
+
+        previousComponentStatuses[component.id] = oldStatus
+
+        let updatedComponent = Component(
+            id: component.id,
+            name: component.name,
+            status: newStatus,
+            createdAt: component.createdAt,
+            updatedAt: Date(),
+            position: component.position,
+            description: component.description,
+            showcase: component.showcase,
+            startDate: component.startDate,
+            groupId: component.groupId,
+            pageId: component.pageId,
+            group: component.group,
+            onlyShowIfDegraded: component.onlyShowIfDegraded
+        )
+
+        checkComponentTransitions(newComponents: [updatedComponent])
+
+        components[index] = updatedComponent
+        lastUpdated = Date()
     }
 
     func debugSimulateTransition(from: StatusIndicator, to: StatusIndicator) {

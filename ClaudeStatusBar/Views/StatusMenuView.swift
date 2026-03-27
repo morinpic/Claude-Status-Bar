@@ -15,6 +15,8 @@ struct StatusMenuView: View {
             errorSection
             Divider()
             iconDesignSection
+            Divider()
+            NotificationSettingsView(viewModel: viewModel)
             #if DEBUG
             Divider()
             DebugMenuView(viewModel: viewModel)

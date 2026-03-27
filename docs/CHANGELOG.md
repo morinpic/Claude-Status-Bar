@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Notification test controls in debug menu (direct send + transition simulation)
+- Per-component notification settings — choose which components trigger notifications
+- Component-level status change notifications (individual component outage/recovery)
 
 ## [1.1.1] - 2026-03-27
 

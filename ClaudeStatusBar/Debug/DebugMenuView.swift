@@ -156,6 +156,30 @@ struct DebugMenuView: View {
                     }
                     .buttonStyle(.link)
                     .font(.caption)
+
+                    Text("Component Notification")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+
+                    Button("Claude API: operational → partial_outage") {
+                        viewModel.debugSimulateComponentTransition(
+                            componentName: "Claude API",
+                            from: .operational,
+                            to: .partialOutage
+                        )
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
+
+                    Button("Claude API: partial_outage → operational") {
+                        viewModel.debugSimulateComponentTransition(
+                            componentName: "Claude API",
+                            from: .partialOutage,
+                            to: .operational
+                        )
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
                 }
                 .padding(.horizontal, 14)
                 .padding(.bottom, 8)

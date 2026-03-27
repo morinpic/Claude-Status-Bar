@@ -23,6 +23,9 @@
 		8A1B2C3D4E5F00000000010E /* DebugPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000011 /* DebugPreset.swift */; };
 		8A1B2C3D4E5F00000000010F /* DebugMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000012 /* DebugMenuView.swift */; };
 		8A1B2C3D4E5F000000000110 /* StatusViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000013 /* StatusViewModelTests.swift */; };
+		8A1B2C3D4E5F000000000111 /* NotificationSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000014 /* NotificationSettingsService.swift */; };
+		8A1B2C3D4E5F000000000112 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000015 /* NotificationSettingsView.swift */; };
+		8A1B2C3D4E5F000000000113 /* NotificationSettingsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000016 /* NotificationSettingsServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		8A1B2C3D4E5F000000000011 /* DebugPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPreset.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000012 /* DebugMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuView.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000013 /* StatusViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewModelTests.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F000000000014 /* NotificationSettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsService.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F000000000015 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F000000000016 /* NotificationSettingsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 			children = (
 				8A1B2C3D4E5F000000000003 /* StatusService.swift */,
 				8A1B2C3D4E5F000000000004 /* NotificationService.swift */,
+				8A1B2C3D4E5F000000000014 /* NotificationSettingsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -124,6 +131,7 @@
 				8A1B2C3D4E5F000000000006 /* ComponentRow.swift */,
 				8A1B2C3D4E5F000000000007 /* IncidentCard.swift */,
 				8A1B2C3D4E5F000000000010 /* IconSettingsView.swift */,
+				8A1B2C3D4E5F000000000015 /* NotificationSettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -159,6 +167,7 @@
 				8A1B2C3D4E5F00000000000C /* StatusModelsTests.swift */,
 				8A1B2C3D4E5F00000000000D /* StatusServiceTests.swift */,
 				8A1B2C3D4E5F000000000013 /* StatusViewModelTests.swift */,
+				8A1B2C3D4E5F000000000016 /* NotificationSettingsServiceTests.swift */,
 			);
 			path = ClaudeStatusBarTests;
 			sourceTree = "<group>";
@@ -275,6 +284,8 @@
 				8A1B2C3D4E5F00000000010D /* IconSettingsView.swift in Sources */,
 				8A1B2C3D4E5F00000000010E /* DebugPreset.swift in Sources */,
 				8A1B2C3D4E5F00000000010F /* DebugMenuView.swift in Sources */,
+				8A1B2C3D4E5F000000000111 /* NotificationSettingsService.swift in Sources */,
+				8A1B2C3D4E5F000000000112 /* NotificationSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +296,7 @@
 				8A1B2C3D4E5F00000000010A /* StatusModelsTests.swift in Sources */,
 				8A1B2C3D4E5F00000000010B /* StatusServiceTests.swift in Sources */,
 				8A1B2C3D4E5F000000000110 /* StatusViewModelTests.swift in Sources */,
+				8A1B2C3D4E5F000000000113 /* NotificationSettingsServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
