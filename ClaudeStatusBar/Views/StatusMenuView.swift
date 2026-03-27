@@ -27,7 +27,7 @@ struct StatusMenuView: View {
     private var headerSection: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text("Claude Status")
+                Text(verbatim: "Claude Status")
                     .font(.headline)
                 if let lastUpdated = viewModel.lastUpdated {
                     Text(
