@@ -17,7 +17,8 @@
 		8A1B2C3D4E5F000000000108 /* StatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000008 /* StatusViewModel.swift */; };
 		8A1B2C3D4E5F000000000109 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000009 /* Assets.xcassets */; };
 		8A1B2C3D4E5F00000000010C /* IconDesignType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F00000000000F /* IconDesignType.swift */; };
-		8A1B2C3D4E5F00000000010D /* IconSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000010 /* IconSettingsView.swift */; };
+		8A1B2C3D4E5F000000000114 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000017 /* SettingsView.swift */; };
+		8A1B2C3D4E5F000000000115 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000018 /* GeneralSettingsView.swift */; };
 		8A1B2C3D4E5F00000000010A /* StatusModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F00000000000C /* StatusModelsTests.swift */; };
 		8A1B2C3D4E5F00000000010B /* StatusServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F00000000000D /* StatusServiceTests.swift */; };
 		8A1B2C3D4E5F00000000010E /* DebugPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000011 /* DebugPreset.swift */; };
@@ -54,7 +55,8 @@
 		8A1B2C3D4E5F00000000000D /* StatusServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusServiceTests.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F00000000000E /* ClaudeStatusBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClaudeStatusBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1B2C3D4E5F00000000000F /* IconDesignType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconDesignType.swift; sourceTree = "<group>"; };
-		8A1B2C3D4E5F000000000010 /* IconSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSettingsView.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F000000000017 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F000000000018 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000011 /* DebugPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPreset.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000012 /* DebugMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuView.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000013 /* StatusViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewModelTests.swift; sourceTree = "<group>"; };
@@ -130,7 +132,8 @@
 				8A1B2C3D4E5F000000000005 /* StatusMenuView.swift */,
 				8A1B2C3D4E5F000000000006 /* ComponentRow.swift */,
 				8A1B2C3D4E5F000000000007 /* IncidentCard.swift */,
-				8A1B2C3D4E5F000000000010 /* IconSettingsView.swift */,
+				8A1B2C3D4E5F000000000017 /* SettingsView.swift */,
+				8A1B2C3D4E5F000000000018 /* GeneralSettingsView.swift */,
 				8A1B2C3D4E5F000000000015 /* NotificationSettingsView.swift */,
 			);
 			path = Views;
@@ -281,7 +284,8 @@
 				8A1B2C3D4E5F000000000107 /* IncidentCard.swift in Sources */,
 				8A1B2C3D4E5F000000000108 /* StatusViewModel.swift in Sources */,
 				8A1B2C3D4E5F00000000010C /* IconDesignType.swift in Sources */,
-				8A1B2C3D4E5F00000000010D /* IconSettingsView.swift in Sources */,
+				8A1B2C3D4E5F000000000114 /* SettingsView.swift in Sources */,
+				8A1B2C3D4E5F000000000115 /* GeneralSettingsView.swift in Sources */,
 				8A1B2C3D4E5F00000000010E /* DebugPreset.swift in Sources */,
 				8A1B2C3D4E5F00000000010F /* DebugMenuView.swift in Sources */,
 				8A1B2C3D4E5F000000000111 /* NotificationSettingsService.swift in Sources */,

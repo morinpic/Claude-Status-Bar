@@ -1,9 +1,7 @@
 import SwiftUI
-import ServiceManagement
 
 struct StatusMenuView: View {
     @Bindable var viewModel: StatusViewModel
-    @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -13,10 +11,6 @@ struct StatusMenuView: View {
             Divider()
             incidentSection
             errorSection
-            Divider()
-            iconDesignSection
-            Divider()
-            NotificationSettingsView(viewModel: viewModel)
             #if DEBUG
             Divider()
             DebugMenuView(viewModel: viewModel)
@@ -119,12 +113,6 @@ struct StatusMenuView: View {
         }
     }
 
-    // MARK: - Icon Design
-
-    private var iconDesignSection: some View {
-        IconSettingsView(viewModel: viewModel)
-    }
-
     // MARK: - Footer
 
     private var footerSection: some View {
@@ -136,6 +124,17 @@ struct StatusMenuView: View {
                         .foregroundStyle(.tertiary)
                 }
                 Spacer()
+
+                Button {
+                    openSettings()
+                } label: {
+                    Image(systemName: "gear")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .help("Open Settings")
+
                 Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")")
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
@@ -147,23 +146,6 @@ struct StatusMenuView: View {
                     .controlSize(.small)
                     .frame(maxWidth: .infinity)
             }
-
-            Toggle("Launch at Login", isOn: $launchAtLogin)
-                .toggleStyle(.switch)
-                .controlSize(.mini)
-                .font(.caption)
-                .padding(.horizontal, 14)
-                .onChange(of: launchAtLogin) { _, newValue in
-                    do {
-                        if newValue {
-                            try SMAppService.mainApp.register()
-                        } else {
-                            try SMAppService.mainApp.unregister()
-                        }
-                    } catch {
-                        launchAtLogin = SMAppService.mainApp.status == .enabled
-                    }
-                }
 
             Divider()
 
@@ -222,6 +204,15 @@ struct StatusMenuView: View {
         case .minor: return .yellow
         case .major: return .orange
         case .critical: return .red
+        }
+    }
+
+    private func openSettings() {
+        if #available(macOS 14, *) {
+            NSApp.activate(ignoringOtherApps: true)
+            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        } else {
+            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
         }
     }
 }
