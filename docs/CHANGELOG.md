@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Japanese localization — all UI text, notifications, and settings screens are now available in Japanese when the system language is set to Japanese
+
 ## [2.0.0] - 2026-03-28
 
 ### Changed
