@@ -2,6 +2,7 @@ import SwiftUI
 
 struct StatusMenuView: View {
     @Bindable var viewModel: StatusViewModel
+    @Environment(\.openSettings) private var openSettings
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -125,7 +126,10 @@ struct StatusMenuView: View {
                 }
                 Spacer()
 
-                SettingsLink {
+                Button {
+                    NSApp.activate(ignoringOtherApps: true)
+                    openSettings()
+                } label: {
                     Image(systemName: "gear")
                         .font(.body)
                         .foregroundStyle(.primary)
