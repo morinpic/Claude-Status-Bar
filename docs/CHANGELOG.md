@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-03-28
+
 ### Changed
 
 - Raise minimum deployment target from macOS 14 to macOS 26 (Tahoe)
@@ -60,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling with graceful UI for network failures
 - Homebrew Cask distribution via `brew tap morinpic/tap`
 
+[2.0.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.0.0...v1.1.0
