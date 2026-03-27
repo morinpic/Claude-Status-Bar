@@ -169,8 +169,14 @@ final class StatusViewModel {
         case .critical: statusIndicator = .critical
         }
 
-        overallStatus = statusIndicator
-        activeIncidents = DebugDataFactory.makeIncidents(preset: incidentPreset)
+        let incidents = DebugDataFactory.makeIncidents(preset: incidentPreset)
+        let maxIncidentImpact = incidents.map { $0.impact }.max()
+        let effectiveStatus = [statusIndicator, maxIncidentImpact]
+            .compactMap { $0 }
+            .max() ?? .none
+
+        overallStatus = effectiveStatus
+        activeIncidents = incidents
         components = DebugDataFactory.makeComponents(preset: componentPreset)
         error = DebugDataFactory.makeError(preset: errorPreset)
         isLoading = isLoadingOverride
