@@ -72,26 +72,6 @@
     "Apply" : {
 
     },
-    "Arc" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "アーク"
-          }
-        }
-      }
-    },
-    "Buddy" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "バディ"
-          }
-        }
-      }
-    },
     "Cancel" : {
       "localizations" : {
         "ja" : {
@@ -148,16 +128,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "接続エラー"
-          }
-        }
-      }
-    },
-    "Default" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "デフォルト"
           }
         }
       }
@@ -358,16 +328,6 @@
         }
       }
     },
-    "Ring" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "リング"
-          }
-        }
-      }
-    },
     "Settings" : {
       "localizations" : {
         "ja" : {
@@ -384,16 +344,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定..."
-          }
-        }
-      }
-    },
-    "Shield" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "シールド"
           }
         }
       }
