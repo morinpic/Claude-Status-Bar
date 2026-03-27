@@ -12,6 +12,7 @@ final class StatusViewModel {
     var isLoading = false
     var error: Error?
     var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.default.rawValue
+    var selectedLanguageRaw: String = UserDefaults.standard.string(forKey: "selectedLanguage") ?? AppLanguage.system.rawValue
     var notificationEnabledMap: [String: Bool] = [:]
 
     private let service = StatusService()
@@ -32,6 +33,20 @@ final class StatusViewModel {
         set {
             selectedIconDesignRaw = newValue.rawValue
             UserDefaults.standard.set(newValue.rawValue, forKey: "selectedIconDesign")
+        }
+    }
+
+    var selectedLanguage: AppLanguage {
+        get { AppLanguage(rawValue: selectedLanguageRaw) ?? .system }
+        set {
+            selectedLanguageRaw = newValue.rawValue
+            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedLanguage")
+            // Update AppleLanguages for non-SwiftUI code (e.g. NotificationService)
+            if newValue == .system {
+                UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+            } else {
+                UserDefaults.standard.set([newValue.rawValue], forKey: "AppleLanguages")
+            }
         }
     }
 
@@ -174,6 +189,9 @@ final class StatusViewModel {
     func resetAllSettings() {
         // Icon design
         selectedIconDesign = .default
+
+        // Language
+        selectedLanguage = .system
 
         // Notification settings
         let ids = components.map { $0.id }

@@ -112,6 +112,16 @@
         }
       }
     },
+    "Choose the display language for the app." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリの表示言語を選択します。"
+          }
+        }
+      }
+    },
     "Choose which components trigger desktop notifications when their status changes." : {
       "localizations" : {
         "ja" : {
@@ -199,6 +209,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最終確認: %@"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "言語"
           }
         }
       }
@@ -380,6 +400,16 @@
     },
     "Simulate Transition" : {
 
+    },
+    "System Default" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システムのデフォルト"
+          }
+        }
+      }
     },
     "Start Claude Status Bar when you log in." : {
       "localizations" : {

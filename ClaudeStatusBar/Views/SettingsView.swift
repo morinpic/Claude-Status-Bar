@@ -28,6 +28,19 @@ struct SettingsView: View {
                         launchAtLogin = SMAppService.mainApp.status == .enabled
                     }
                 }
+
+                Picker(selection: $viewModel.selectedLanguage) {
+                    ForEach(AppLanguage.allCases) { language in
+                        Text(verbatim: language.displayName).tag(language)
+                    }
+                } label: {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Language")
+                        Text("Choose the display language for the app.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
 
             Section {
