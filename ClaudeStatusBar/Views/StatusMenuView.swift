@@ -120,7 +120,7 @@ struct StatusMenuView: View {
     // MARK: - Footer
 
     private var footerSection: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 0) {
             HStack {
                 if let lastUpdated = viewModel.lastUpdated {
                     Text("Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))")
@@ -128,78 +128,48 @@ struct StatusMenuView: View {
                         .foregroundStyle(.tertiary)
                 }
                 Spacer()
-
-                Button {
-                    NSApp.activate(ignoringOtherApps: true)
-                    openSettings()
-                } label: {
-                    Image(systemName: "gear")
-                        .font(.body)
-                        .foregroundStyle(.primary)
+                if viewModel.isLoading {
+                    ProgressView()
+                        .controlSize(.mini)
                 }
-                .buttonStyle(.plain)
-
                 Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")")
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
             }
             .padding(.horizontal, 14)
+            .padding(.vertical, 6)
 
-            if viewModel.isLoading {
-                ProgressView()
-                    .controlSize(.small)
-                    .frame(maxWidth: .infinity)
+            Divider()
+
+            menuItem("Open Status Page") {
+                if let url = URL(string: "https://status.claude.com") {
+                    NSWorkspace.shared.open(url)
+                }
+            }
+
+            menuItem("Settings...") {
+                NSApp.activate(ignoringOtherApps: true)
+                openSettings()
             }
 
             Divider()
 
-            VStack(spacing: 6) {
-                Button("Open Status Page") {
-                    if let url = URL(string: "https://status.claude.com") {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-                .buttonStyle(.link)
-                .font(.caption)
-                .frame(maxWidth: .infinity)
-
-                HStack {
-                    Button {
-                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    } label: {
-                        Image("github-mark")
-                            .renderingMode(.template)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 14, height: 14)
-                            .foregroundStyle(.secondary)
-                    }
-                    .buttonStyle(.plain)
-                    .help("Open GitHub Repository")
-
-                    Button("Report Bug") {
-                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar/issues/new") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    }
-                    .buttonStyle(.link)
-                    .font(.caption)
-
-                    Spacer()
-
-                    Button("Quit") {
-                        NSApplication.shared.terminate(nil)
-                    }
-                    .buttonStyle(.link)
-                    .font(.caption)
-                }
+            menuItem("Quit Claude Status Bar") {
+                NSApplication.shared.terminate(nil)
             }
-            .padding(.horizontal, 14)
-            .padding(.bottom, 8)
         }
-        .padding(.top, 6)
+    }
+
+    private func menuItem(_ title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.body)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 6)
     }
 
     private var overallStatusColor: Color {
