@@ -161,25 +161,26 @@ struct DebugMenuView: View {
                         .font(.caption2)
                         .foregroundStyle(.secondary)
 
-                    Button("Claude API: operational → partial_outage") {
-                        viewModel.debugSimulateComponentTransition(
-                            componentName: "Claude API",
-                            from: .operational,
-                            to: .partialOutage
-                        )
+                    if let firstComponent = viewModel.components.first {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Button("\(firstComponent.name): operational → partial_outage") {
+                                viewModel.debugSimulateComponentTransition(
+                                    componentName: firstComponent.name,
+                                    from: .operational,
+                                    to: .partialOutage
+                                )
+                            }
+                            Button("\(firstComponent.name): partial_outage → operational") {
+                                viewModel.debugSimulateComponentTransition(
+                                    componentName: firstComponent.name,
+                                    from: .partialOutage,
+                                    to: .operational
+                                )
+                            }
+                        }
+                        .buttonStyle(.link)
+                        .font(.caption)
                     }
-                    .buttonStyle(.link)
-                    .font(.caption)
-
-                    Button("Claude API: partial_outage → operational") {
-                        viewModel.debugSimulateComponentTransition(
-                            componentName: "Claude API",
-                            from: .partialOutage,
-                            to: .operational
-                        )
-                    }
-                    .buttonStyle(.link)
-                    .font(.caption)
                 }
                 .padding(.horizontal, 14)
                 .padding(.bottom, 8)
