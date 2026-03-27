@@ -26,9 +26,20 @@ struct StatusMenuView: View {
 
     private var headerSection: some View {
         HStack {
-            Text("Claude Status")
-                .font(.headline)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Claude Status")
+                    .font(.headline)
+                if let lastUpdated = viewModel.lastUpdated {
+                    Text("Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+            }
             Spacer()
+            if viewModel.isLoading {
+                ProgressView()
+                    .controlSize(.mini)
+            }
             statusBadge
         }
         .padding(.horizontal, 14)
@@ -121,23 +132,6 @@ struct StatusMenuView: View {
 
     private var footerSection: some View {
         VStack(spacing: 0) {
-            HStack {
-                if let lastUpdated = viewModel.lastUpdated {
-                    Text("Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))")
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
-                }
-                Spacer()
-                if viewModel.isLoading {
-                    ProgressView()
-                        .controlSize(.mini)
-                }
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 6)
-
-            Divider()
-
             menuItem("Open Status Page") {
                 if let url = URL(string: "https://status.claude.com") {
                     NSWorkspace.shared.open(url)
