@@ -64,10 +64,22 @@ jobs:
 
           ditto -c -k --keepParent "$APP_PATH" "notarization.zip"
 
-          xcrun notarytool submit "notarization.zip" \
+          SUBMIT_OUTPUT=$(xcrun notarytool submit "notarization.zip" \
             --keychain-profile "notarytool-profile" \
             --wait \
-            --timeout 30m
+            --timeout 30m 2>&1) || true
+          echo "$SUBMIT_OUTPUT"
+
+          SUBMISSION_ID=$(echo "$SUBMIT_OUTPUT" | grep "id:" | head -1 | awk '{print $2}')
+
+          if echo "$SUBMIT_OUTPUT" | grep -q "status: Invalid"; then
+            echo "::error::Notarization failed. Fetching log..."
+            xcrun notarytool log "$SUBMISSION_ID" \
+              --keychain-profile "notarytool-profile" \
+              notarization-log.json || true
+            cat notarization-log.json || true
+            exit 1
+          fi
 
           xcrun stapler staple "$APP_PATH"
 
