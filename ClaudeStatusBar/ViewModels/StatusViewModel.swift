@@ -189,5 +189,34 @@ final class StatusViewModel {
         isLoading = false
         startMonitoring()
     }
+
+    func debugSendIncidentNotification() {
+        notificationService.sendIncidentNotification(incidentName: "[Debug] Test incident on Claude API")
+    }
+
+    func debugSendRecoveryNotification() {
+        notificationService.sendRecoveryNotification()
+    }
+
+    func debugSimulateTransition(from: StatusIndicator, to: StatusIndicator) {
+        previousStatus = from
+
+        let incidents: [Incident]
+        if to != .none {
+            incidents = [DebugDataFactory.makeIncident(
+                name: "[Debug] Simulated \(to.rawValue) incident",
+                impact: to,
+                status: .investigating
+            )]
+        } else {
+            incidents = []
+        }
+
+        checkStatusTransition(from: from, to: to, incidents: incidents)
+
+        overallStatus = to
+        activeIncidents = incidents
+        lastUpdated = Date()
+    }
     #endif
 }

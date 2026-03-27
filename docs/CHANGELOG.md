@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Notification test controls in debug menu (direct send + transition simulation)
+
 ## [1.1.1] - 2026-03-27
 
 ### Added
