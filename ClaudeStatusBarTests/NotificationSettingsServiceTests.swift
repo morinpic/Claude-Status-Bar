@@ -59,6 +59,18 @@ final class NotificationSettingsServiceTests: XCTestCase {
         XCTAssertTrue(service.isNotificationEnabled(for: "comp-1"))
     }
 
+    func testSetNotificationEnabled_beforeInit_preservesOtherComponents() {
+        let service = NotificationSettingsService.shared
+        let allIDs = ["comp-1", "comp-2", "comp-3"]
+
+        // initializeIfNeeded の前に OFF にしても、他は ON のまま
+        service.setNotificationEnabled(false, for: "comp-2", allComponentIDs: allIDs)
+
+        XCTAssertTrue(service.isNotificationEnabled(for: "comp-1"))
+        XCTAssertFalse(service.isNotificationEnabled(for: "comp-2"))
+        XCTAssertTrue(service.isNotificationEnabled(for: "comp-3"))
+    }
+
     func testInitializeIfNeeded_doesNotOverwriteExisting() {
         let service = NotificationSettingsService.shared
         let ids = ["comp-1", "comp-2", "comp-3"]

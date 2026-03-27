@@ -26,12 +26,14 @@ final class NotificationSettingsService {
     }
 
     /// コンポーネントの通知設定を更新
-    func setNotificationEnabled(_ enabled: Bool, for componentID: String) {
+    /// allComponentIDs: 未初期化時に全 ON ベースで始めるために必要
+    func setNotificationEnabled(_ enabled: Bool, for componentID: String, allComponentIDs: [String] = []) {
         var currentSet: Set<String>
         if let existing = enabledComponentIDs() {
             currentSet = existing
         } else {
-            currentSet = Set<String>()
+            // 未初期化 = 全 ON なので、全コンポーネント ID から始める
+            currentSet = Set(allComponentIDs)
         }
 
         if enabled {

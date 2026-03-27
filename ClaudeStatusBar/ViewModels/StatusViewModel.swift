@@ -163,7 +163,7 @@ final class StatusViewModel {
     }
 
     func toggleComponentNotification(_ componentID: String, enabled: Bool) {
-        notificationSettings.setNotificationEnabled(enabled, for: componentID)
+        notificationSettings.setNotificationEnabled(enabled, for: componentID, allComponentIDs: components.map { $0.id })
     }
 
     private func checkStatusTransition(
