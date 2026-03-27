@@ -156,6 +156,31 @@ struct DebugMenuView: View {
                     }
                     .buttonStyle(.link)
                     .font(.caption)
+
+                    Text("Component Notification")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+
+                    if let firstComponent = viewModel.components.first {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Button("\(firstComponent.name): operational → partial_outage") {
+                                viewModel.debugSimulateComponentTransition(
+                                    componentName: firstComponent.name,
+                                    from: .operational,
+                                    to: .partialOutage
+                                )
+                            }
+                            Button("\(firstComponent.name): partial_outage → operational") {
+                                viewModel.debugSimulateComponentTransition(
+                                    componentName: firstComponent.name,
+                                    from: .partialOutage,
+                                    to: .operational
+                                )
+                            }
+                        }
+                        .buttonStyle(.link)
+                        .font(.caption)
+                    }
                 }
                 .padding(.horizontal, 14)
                 .padding(.bottom, 8)

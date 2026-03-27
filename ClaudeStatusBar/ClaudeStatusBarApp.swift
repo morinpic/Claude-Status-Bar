@@ -17,6 +17,10 @@ struct ClaudeStatusBarApp: App {
             }
         }
         .menuBarExtraStyle(.window)
+
+        Settings {
+            SettingsView(viewModel: viewModel)
+        }
     }
 
     private var menuBarCustomIcon: NSImage? {

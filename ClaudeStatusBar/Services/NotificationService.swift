@@ -45,6 +45,42 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
+    func sendComponentIncidentNotification(componentName: String, status: ComponentStatus) {
+        let statusText: String
+        switch status {
+        case .operational: return
+        case .degradedPerformance: statusText = "degraded performance"
+        case .partialOutage: statusText = "partial outage"
+        case .majorOutage: statusText = "major outage"
+        }
+
+        let content = UNMutableNotificationContent()
+        content.title = "Claude Status"
+        content.body = "⚠ \(componentName): \(statusText)"
+        content.sound = .default
+
+        let request = UNNotificationRequest(
+            identifier: "component-\(UUID().uuidString)",
+            content: content,
+            trigger: nil
+        )
+        center.add(request)
+    }
+
+    func sendComponentRecoveryNotification(componentName: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "Claude Status"
+        content.body = "✅ \(componentName) is back to operational"
+        content.sound = .default
+
+        let request = UNNotificationRequest(
+            identifier: "component-recovery-\(UUID().uuidString)",
+            content: content,
+            trigger: nil
+        )
+        center.add(request)
+    }
+
     // Show notifications even when app is in foreground
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
