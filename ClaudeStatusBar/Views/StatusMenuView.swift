@@ -132,9 +132,6 @@ struct StatusMenuView: View {
                     ProgressView()
                         .controlSize(.mini)
                 }
-                Text("v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 6)
