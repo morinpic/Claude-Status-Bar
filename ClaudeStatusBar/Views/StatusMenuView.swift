@@ -129,8 +129,8 @@ struct StatusMenuView: View {
                     openSettings()
                 } label: {
                     Image(systemName: "gear")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .font(.body)
+                        .foregroundStyle(.primary)
                 }
                 .buttonStyle(.plain)
                 .help("Open Settings")
