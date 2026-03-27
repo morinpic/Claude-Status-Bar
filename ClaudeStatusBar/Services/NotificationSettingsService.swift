@@ -45,6 +45,11 @@ final class NotificationSettingsService {
         userDefaults.set(Array(currentSet), forKey: enabledComponentsKey)
     }
 
+    /// 全設定をリセット（全コンポーネント ON に戻す）
+    func resetAll(allComponentIDs: [String]) {
+        userDefaults.set(allComponentIDs, forKey: enabledComponentsKey)
+    }
+
     /// 全コンポーネント ID を渡して初期化（初回のみ）
     /// 既に設定がある場合は何もしない
     func initializeIfNeeded(allComponentIDs: [String]) {

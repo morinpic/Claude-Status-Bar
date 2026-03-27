@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import ServiceManagement
 import SwiftUI
 
 @Observable
@@ -160,6 +161,17 @@ final class StatusViewModel {
 
     func isComponentNotificationEnabled(_ componentID: String) -> Bool {
         notificationSettings.isNotificationEnabled(for: componentID)
+    }
+
+    func resetAllSettings() {
+        // Icon design
+        selectedIconDesign = .default
+
+        // Notification settings
+        notificationSettings.resetAll(allComponentIDs: components.map { $0.id })
+
+        // Launch at Login
+        try? SMAppService.mainApp.unregister()
     }
 
     func toggleComponentNotification(_ componentID: String, enabled: Bool) {
