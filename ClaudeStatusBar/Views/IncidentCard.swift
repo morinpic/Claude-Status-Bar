@@ -37,8 +37,7 @@ struct IncidentCard: View {
         }
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.quaternary.opacity(0.5))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .glassEffect(.regular, in: .rect(cornerRadius: 8))
     }
 
     private var impactColor: Color {

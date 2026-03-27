@@ -96,7 +96,7 @@ struct DebugMenuView: View {
                                 isLoadingOverride: isLoadingOverride
                             )
                         }
-                        .buttonStyle(.borderedProminent)
+                        .buttonStyle(.glassProminent)
                         .controlSize(.small)
 
                         Button("Reset to Live") {
@@ -107,7 +107,7 @@ struct DebugMenuView: View {
                             isLoadingOverride = false
                             viewModel.exitDebugMode()
                         }
-                        .buttonStyle(.bordered)
+                        .buttonStyle(.glass)
                         .controlSize(.small)
                     }
 
@@ -123,13 +123,13 @@ struct DebugMenuView: View {
                         Button("📢 Incident") {
                             viewModel.debugSendIncidentNotification()
                         }
-                        .buttonStyle(.bordered)
+                        .buttonStyle(.glass)
                         .controlSize(.small)
 
                         Button("✅ Recovery") {
                             viewModel.debugSendRecoveryNotification()
                         }
-                        .buttonStyle(.bordered)
+                        .buttonStyle(.glass)
                         .controlSize(.small)
                     }
 

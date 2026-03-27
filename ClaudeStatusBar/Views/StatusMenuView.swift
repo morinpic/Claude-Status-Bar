@@ -45,6 +45,9 @@ struct StatusMenuView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .glassEffect(.regular, in: .capsule)
     }
 
     // MARK: - Components
