@@ -10,9 +10,10 @@ struct ClaudeStatusBarApp: App {
                 .applyLocale(viewModel.selectedLanguage)
         } label: {
             if let color = viewModel.menuBarIconColor {
-                Image(systemName: viewModel.menuBarIcon)
-                    .symbolRenderingMode(.monochrome)
-                    .foregroundStyle(color)
+                // Classic mode: MenuBarExtra treats SF Symbols as template images,
+                // so .foregroundStyle() is ignored. Draw a colored circle via NSBezierPath
+                // with isTemplate = false to ensure the color is rendered correctly.
+                Image(nsImage: coloredCircleImage(color: color))
             } else {
                 Image(systemName: viewModel.menuBarIcon)
             }
@@ -23,6 +24,21 @@ struct ClaudeStatusBarApp: App {
                 .applyLocale(viewModel.selectedLanguage)
         }
     }
+}
+
+// MARK: - Helpers
+
+private func coloredCircleImage(color: Color) -> NSImage {
+    let size = NSSize(width: 18, height: 18)
+    let image = NSImage(size: size, flipped: false) { rect in
+        let circleRect = rect.insetBy(dx: 2, dy: 2)
+        let path = NSBezierPath(ovalIn: circleRect)
+        NSColor(color).setFill()
+        path.fill()
+        return true
+    }
+    image.isTemplate = false
+    return image
 }
 
 // MARK: - View Extension
