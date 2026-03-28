@@ -109,7 +109,7 @@ struct SettingsView: View {
         case .classic:
             Image(systemName: "circle.fill")
                 .symbolRenderingMode(.monochrome)
-                .foregroundStyle(.green)
+                .foregroundStyle(Color(nsColor: .systemGreen))
                 .font(.system(size: 16))
         }
     }

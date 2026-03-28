@@ -16,7 +16,7 @@ struct ClaudeStatusBarApp: App {
                 Image(nsImage: coloredCircleImage(color: nsColor))
             } else {
                 Image(systemName: viewModel.menuBarIcon)
-                    .font(.system(size: 16))
+                    .font(.system(size: 24))
             }
         }
         .menuBarExtraStyle(.window)

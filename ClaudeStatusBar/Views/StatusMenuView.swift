@@ -107,7 +107,7 @@ struct StatusMenuView: View {
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
                     Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(Color(nsColor: .systemYellow))
                         .font(.caption)
                     Text("Connection Error")
                         .font(.caption)
