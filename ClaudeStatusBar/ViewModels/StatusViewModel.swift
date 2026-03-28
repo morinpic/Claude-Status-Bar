@@ -221,10 +221,15 @@ final class StatusViewModel {
                 notificationService.sendComponentIncidentNotification(
                     componentName: component.name,
                     status: component.status,
-                    language: selectedLanguage
+                    language: selectedLanguage,
+                    iconDesign: selectedIconDesign
                 )
             } else if previousStatus != nil && previousStatus != .operational && component.status == .operational {
-                notificationService.sendComponentRecoveryNotification(componentName: component.name, language: selectedLanguage)
+                notificationService.sendComponentRecoveryNotification(
+                    componentName: component.name,
+                    language: selectedLanguage,
+                    iconDesign: selectedIconDesign
+                )
             }
         }
     }
@@ -266,9 +271,16 @@ final class StatusViewModel {
     ) {
         if previous == .none && current != .none {
             let incidentName = incidents.first?.name ?? "Unknown incident"
-            notificationService.sendIncidentNotification(incidentName: incidentName, language: selectedLanguage)
+            notificationService.sendIncidentNotification(
+                incidentName: incidentName,
+                language: selectedLanguage,
+                iconDesign: selectedIconDesign
+            )
         } else if previous != .none && current == .none {
-            notificationService.sendRecoveryNotification(language: selectedLanguage)
+            notificationService.sendRecoveryNotification(
+                language: selectedLanguage,
+                iconDesign: selectedIconDesign
+            )
         }
     }
 
@@ -337,11 +349,18 @@ final class StatusViewModel {
     }
 
     func debugSendIncidentNotification() {
-        notificationService.sendIncidentNotification(incidentName: "[Debug] Test incident on Claude API", language: selectedLanguage)
+        notificationService.sendIncidentNotification(
+            incidentName: "[Debug] Test incident on Claude API",
+            language: selectedLanguage,
+            iconDesign: selectedIconDesign
+        )
     }
 
     func debugSendRecoveryNotification() {
-        notificationService.sendRecoveryNotification(language: selectedLanguage)
+        notificationService.sendRecoveryNotification(
+            language: selectedLanguage,
+            iconDesign: selectedIconDesign
+        )
     }
 
     func debugSimulateComponentTransition(
