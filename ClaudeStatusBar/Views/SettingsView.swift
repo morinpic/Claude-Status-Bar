@@ -46,9 +46,7 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Notifications")
-            }
-
-            Section {
+            } footer: {
                 HStack {
                     Spacer()
                     Button("Reset All Settings") {
@@ -57,6 +55,7 @@ struct SettingsView: View {
                     .buttonStyle(.plain)
                     .foregroundStyle(.red)
                 }
+                .padding(.top, 12)
             }
         }
         .formStyle(.grouped)
