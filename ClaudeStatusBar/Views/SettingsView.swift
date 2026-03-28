@@ -9,37 +9,25 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section("General") {
-                Toggle(isOn: $launchAtLogin) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Launch at Login")
-                        Text("Start Claude Status Bar when you log in.")
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .onChange(of: launchAtLogin) { _, newValue in
-                    do {
-                        if newValue {
-                            try SMAppService.mainApp.register()
-                        } else {
-                            try SMAppService.mainApp.unregister()
+                Toggle("Launch at Login", isOn: $launchAtLogin)
+                    .onChange(of: launchAtLogin) { _, newValue in
+                        do {
+                            if newValue {
+                                try SMAppService.mainApp.register()
+                            } else {
+                                try SMAppService.mainApp.unregister()
+                            }
+                        } catch {
+                            launchAtLogin = SMAppService.mainApp.status == .enabled
                         }
-                    } catch {
-                        launchAtLogin = SMAppService.mainApp.status == .enabled
                     }
-                }
 
                 Picker(selection: $viewModel.selectedLanguage) {
                     ForEach(AppLanguage.allCases) { language in
                         Text(language.localizedDisplayName).tag(language)
                     }
                 } label: {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Language")
-                        Text("Choose the display language for the app.")
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
-                    }
+                    Text("Language")
                 }
             }
 
@@ -65,9 +53,6 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Icon Design")
-            } footer: {
-                Text("Choose how the status icon appears in the menu bar.")
-                    .foregroundStyle(.secondary)
             }
 
             Section {
@@ -82,9 +67,6 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Notifications")
-            } footer: {
-                Text("Choose which components trigger desktop notifications when their status changes.")
-                    .foregroundStyle(.secondary)
             }
 
             Section {
@@ -97,14 +79,11 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Reset")
-            } footer: {
-                Text("Reset icon design, notification settings, and Launch at Login to defaults.")
-                    .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)
         .frame(width: 450, height: 550)
-        .navigationTitle("Settings")
+        .navigationTitle(Text("Settings"))
         .alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Reset", role: .destructive) {
