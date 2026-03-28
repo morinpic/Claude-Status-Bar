@@ -33,6 +33,29 @@ struct SettingsView: View {
             }
 
             Section {
+                ForEach(IconDesignType.allCases) { design in
+                    HStack {
+                        iconPreview(for: design)
+                            .frame(width: 28, height: 28)
+                        Text(verbatim: design.displayName)
+                            .font(.body)
+                        Spacer()
+                        if viewModel.selectedIconDesign == design {
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(.blue)
+                                .fontWeight(.semibold)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        viewModel.selectedIconDesign = design
+                    }
+                }
+            } header: {
+                Text("Icon Design")
+            }
+
+            Section {
                 ForEach(viewModel.components) { component in
                     Toggle(
                         component.name,
@@ -73,7 +96,21 @@ struct SettingsView: View {
                 launchAtLogin = SMAppService.mainApp.status == .enabled
             }
         } message: {
-            Text("This will reset notification settings and Launch at Login to their defaults.")
+            Text("This will reset icon design, notification settings, and Launch at Login to their defaults.")
+        }
+    }
+
+    @ViewBuilder
+    private func iconPreview(for design: IconDesignType) -> some View {
+        switch design {
+        case .statusIcons:
+            Image(systemName: "checkmark.circle")
+                .font(.system(size: 16))
+        case .classic:
+            Image(systemName: "circle.fill")
+                .symbolRenderingMode(.monochrome)
+                .foregroundStyle(.green)
+                .font(.system(size: 16))
         }
     }
 

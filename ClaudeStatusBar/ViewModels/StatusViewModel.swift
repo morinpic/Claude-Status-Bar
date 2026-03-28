@@ -12,6 +12,7 @@ final class StatusViewModel {
     var isLoading = false
     var error: Error?
     var selectedLanguageRaw: String = UserDefaults.standard.string(forKey: "selectedLanguage") ?? AppLanguage.system.rawValue
+    var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.statusIcons.rawValue
     var notificationEnabledMap: [String: Bool] = [:]
 
     private let service = StatusService()
@@ -41,13 +42,37 @@ final class StatusViewModel {
         }
     }
 
+    var selectedIconDesign: IconDesignType {
+        get { IconDesignType(rawValue: selectedIconDesignRaw) ?? .statusIcons }
+        set {
+            selectedIconDesignRaw = newValue.rawValue
+            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedIconDesign")
+        }
+    }
+
     var menuBarIcon: String {
-        if hasError { return "questionmark.circle" }
+        switch selectedIconDesign {
+        case .statusIcons:
+            if hasError { return "questionmark.circle" }
+            switch overallStatus {
+            case .none: return "checkmark.circle"
+            case .minor: return "exclamationmark.triangle"
+            case .major: return "exclamationmark.circle"
+            case .critical: return "xmark.circle"
+            }
+        case .classic:
+            return "circle.fill"
+        }
+    }
+
+    var menuBarIconColor: Color? {
+        guard selectedIconDesign == .classic else { return nil }
+        if hasError { return .gray }
         switch overallStatus {
-        case .none: return "checkmark.circle"
-        case .minor: return "exclamationmark.triangle"
-        case .major: return "exclamationmark.circle"
-        case .critical: return "xmark.circle"
+        case .none: return .green
+        case .minor: return .yellow
+        case .major: return .orange
+        case .critical: return .red
         }
     }
 
@@ -176,6 +201,9 @@ final class StatusViewModel {
     func resetAllSettings() {
         // Language
         selectedLanguage = .system
+
+        // Icon design
+        selectedIconDesign = .statusIcons
 
         // Notification settings
         let ids = components.map { $0.id }

@@ -9,7 +9,13 @@ struct ClaudeStatusBarApp: App {
             StatusMenuView(viewModel: viewModel)
                 .applyLocale(viewModel.selectedLanguage)
         } label: {
-            Image(systemName: viewModel.menuBarIcon)
+            if let color = viewModel.menuBarIconColor {
+                Image(systemName: viewModel.menuBarIcon)
+                    .symbolRenderingMode(.monochrome)
+                    .foregroundStyle(color)
+            } else {
+                Image(systemName: viewModel.menuBarIcon)
+            }
         }
         .menuBarExtraStyle(.window)
         Settings {
