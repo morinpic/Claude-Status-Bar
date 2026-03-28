@@ -31,7 +31,7 @@ struct ClaudeStatusBarApp: App {
 // MARK: - Helpers
 
 private func statusIconImage(symbolName: String) -> NSImage {
-    let config = NSImage.SymbolConfiguration(pointSize: 18, weight: .medium)
+    let config = NSImage.SymbolConfiguration(pointSize: 16, weight: .medium)
     guard let baseImage = NSImage(systemSymbolName: symbolName, accessibilityDescription: nil)?
         .withSymbolConfiguration(config) else {
         return NSImage()
