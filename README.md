@@ -21,6 +21,7 @@ macOS menu bar app that monitors Claude's service status and sends real-time not
 - **Incident details** — Active incidents displayed with impact level, current status, and latest update message
 - **Desktop notifications** — Alerts when Claude goes down and when it recovers
 - **Icon design selection** — Choose from 5 menu bar icon designs: Default (SF Symbols), Shield + Pulse, Abstract C, Connection Ring, and Claude-kun
+- **Language support** — English and Japanese, switchable in Settings (or follows system language)
 - **Launch at Login** — Optional auto-start on login
 - **Quick links** — Open [status.claude.com](https://status.claude.com), GitHub repository, or file a bug report directly from the popover
 

@@ -26,7 +26,8 @@ ClaudeStatusBar/
 ├── ClaudeStatusBar.entitlements      # App Sandbox + ネットワーク権限
 ├── Models/
 │   ├── StatusModels.swift            # Codable structs（API レスポンス）
-│   └── IconDesignType.swift          # アイコンデザイン・状態 enum
+│   ├── IconDesignType.swift          # アイコンデザイン・状態 enum
+│   └── AppLanguage.swift             # 言語設定 enum（system / en / ja）
 ├── Services/
 │   ├── StatusService.swift           # API ポーリング + パース + 指数バックオフ
 │   ├── NotificationService.swift     # UNUserNotificationCenter 通知
@@ -42,7 +43,8 @@ ClaudeStatusBar/
 │   ├── DebugPreset.swift             # デバッグ用プリセットデータ
 │   └── DebugMenuView.swift           # デバッグメニュー UI
 └── Resources/
-    └── Assets.xcassets               # アプリアイコン + カラーアセット
+    ├── Assets.xcassets               # アプリアイコン + カラーアセット
+    └── Localizable.xcstrings         # String Catalog（英語 + 日本語）
 
 ClaudeStatusBarTests/
 ├── StatusModelsTests.swift           # モデルデコードテスト
@@ -95,6 +97,8 @@ GET https://status.claude.com/api/v2/summary.json
 4. もりけんさんのレビュー・承認後にマージする
 5. マージ後のブランチ削除は GitHub の自動削除設定で行う
 
+**例外:** ドキュメントのみの修正（README.md, CLAUDE.md, docs/ 配下）はプロダクトコードを含まないため、`main` への直接プッシュ可
+
 ### GitHub Issue を作成するケース
 
 通常タスクでは Issue を作成しない（BACKLOG.md + PR ベースで運用する）。以下の場合のみ Issue を作成する：
@@ -124,7 +128,7 @@ GET https://status.claude.com/api/v2/summary.json
 
 ## バージョン管理ルール
 
-現在のバージョン: `1.1.1`（MARKETING_VERSION）
+現在のバージョン: `2.1.0`（MARKETING_VERSION）
 
 Semantic Versioning（`MAJOR.MINOR.PATCH`）に従う。
 
