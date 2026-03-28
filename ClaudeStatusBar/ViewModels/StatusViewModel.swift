@@ -57,7 +57,7 @@ final class StatusViewModel {
             if hasError { return "questionmark.circle" }
             switch overallStatus {
             case .none: return "checkmark.circle"
-            case .minor: return "exclamationmark.triangle"
+            case .minor: return "info.circle"
             case .major: return "exclamationmark.circle"
             case .critical: return "xmark.circle"
             }
