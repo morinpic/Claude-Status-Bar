@@ -5,11 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1.0] - 2026-03-29
 
 ### Added
 
-- Japanese localization — all UI text, notifications, and settings screens are now available in Japanese when the system language is set to Japanese
+- Japanese localization — all UI text, notifications, and settings are now available in Japanese
+- In-app language switcher (System Default / English / Japanese) in Settings
+- Notification messages respect the selected app language
 
 ## [2.0.0] - 2026-03-28
 
@@ -66,6 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling with graceful UI for network failures
 - Homebrew Cask distribution via `brew tap morinpic/tap`
 
+[2.1.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.1.0...v1.1.1
