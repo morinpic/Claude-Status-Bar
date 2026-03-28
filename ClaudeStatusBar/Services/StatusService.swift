@@ -9,11 +9,11 @@ extension URLSession: URLSessionProtocol {}
 actor StatusService {
     private let session: URLSessionProtocol
     private let baseURL = URL(string: "https://status.claude.com/api/v2/summary.json")!
-    private let baseInterval: TimeInterval = 60
+    private var baseInterval: TimeInterval
     private let maxInterval: TimeInterval = 300
     private let requestTimeout: TimeInterval = 10
 
-    private var currentInterval: TimeInterval = 60
+    private var currentInterval: TimeInterval
     private var pollingTask: Task<Void, Never>?
 
     private let decoder: JSONDecoder = {
@@ -42,8 +42,15 @@ actor StatusService {
         return decoder
     }()
 
-    init(session: URLSessionProtocol = URLSession.shared) {
+    init(session: URLSessionProtocol = URLSession.shared, baseInterval: TimeInterval = 60) {
         self.session = session
+        self.baseInterval = baseInterval
+        self.currentInterval = baseInterval
+    }
+
+    func updateBaseInterval(_ interval: TimeInterval) {
+        baseInterval = interval
+        currentInterval = interval
     }
 
     func fetchStatus() async throws -> StatusSummary {

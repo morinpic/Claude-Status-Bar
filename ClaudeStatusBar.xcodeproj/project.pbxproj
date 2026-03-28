@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		512F85DC2F773AFB002897F2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 512F85DB2F773AFB002897F2 /* Localizable.xcstrings */; };
 		512F85DE2F774893002897F2 /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F85DD2F774893002897F2 /* AppLanguage.swift */; };
+		512F85E02F787BCD002897F2 /* PollingInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F85DF2F787BCD002897F2 /* PollingInterval.swift */; };
 		8A1B2C3D4E5F000000000101 /* ClaudeStatusBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000001 /* ClaudeStatusBarApp.swift */; };
 		8A1B2C3D4E5F000000000102 /* StatusModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000002 /* StatusModels.swift */; };
 		8A1B2C3D4E5F000000000103 /* StatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000003 /* StatusService.swift */; };
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		512F85DB2F773AFB002897F2 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		512F85DD2F774893002897F2 /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
+		512F85DF2F787BCD002897F2 /* PollingInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingInterval.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000001 /* ClaudeStatusBarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeStatusBarApp.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000002 /* StatusModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusModels.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000003 /* StatusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusService.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		8A1B2C3D4E5F000000000203 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				512F85DF2F787BCD002897F2 /* PollingInterval.swift */,
 				512F85DD2F774893002897F2 /* AppLanguage.swift */,
 				8A1B2C3D4E5F000000000002 /* StatusModels.swift */,
 				8A1B2C3D4E5F00000000000F /* IconDesignType.swift */,
@@ -286,6 +289,7 @@
 				8A1B2C3D4E5F000000000107 /* IncidentCard.swift in Sources */,
 				8A1B2C3D4E5F000000000108 /* StatusViewModel.swift in Sources */,
 				8A1B2C3D4E5F00000000010C /* IconDesignType.swift in Sources */,
+				512F85E02F787BCD002897F2 /* PollingInterval.swift in Sources */,
 				8A1B2C3D4E5F000000000114 /* SettingsView.swift in Sources */,
 				8A1B2C3D4E5F00000000010E /* DebugPreset.swift in Sources */,
 				8A1B2C3D4E5F00000000010F /* DebugMenuView.swift in Sources */,
