@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import ServiceManagement
 
@@ -9,24 +10,25 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section("General") {
-                Toggle(isOn: $launchAtLogin) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Launch at Login")
-                        Text("Start Claude Status Bar when you log in.")
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .onChange(of: launchAtLogin) { _, newValue in
-                    do {
-                        if newValue {
-                            try SMAppService.mainApp.register()
-                        } else {
-                            try SMAppService.mainApp.unregister()
+                Toggle("Launch at Login", isOn: $launchAtLogin)
+                    .onChange(of: launchAtLogin) { _, newValue in
+                        do {
+                            if newValue {
+                                try SMAppService.mainApp.register()
+                            } else {
+                                try SMAppService.mainApp.unregister()
+                            }
+                        } catch {
+                            launchAtLogin = SMAppService.mainApp.status == .enabled
                         }
-                    } catch {
-                        launchAtLogin = SMAppService.mainApp.status == .enabled
                     }
+
+                Picker(selection: $viewModel.selectedLanguage) {
+                    ForEach(AppLanguage.allCases) { language in
+                        Text(language.localizedDisplayName).tag(language)
+                    }
+                } label: {
+                    Text("Language")
                 }
             }
 
@@ -52,9 +54,6 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Icon Design")
-            } footer: {
-                Text("Choose how the status icon appears in the menu bar.")
-                    .foregroundStyle(.secondary)
             }
 
             Section {
@@ -69,9 +68,6 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Notifications")
-            } footer: {
-                Text("Choose which components trigger desktop notifications when their status changes.")
-                    .foregroundStyle(.secondary)
             }
 
             Section {
@@ -84,13 +80,16 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Reset")
-            } footer: {
-                Text("Reset icon design, notification settings, and Launch at Login to defaults.")
-                    .foregroundStyle(.secondary)
             }
         }
         .formStyle(.grouped)
         .frame(width: 450, height: 550)
+        .onAppear {
+            updateWindowTitle()
+        }
+        .onChange(of: viewModel.selectedLanguage) { _, _ in
+            updateWindowTitle()
+        }
         .alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Reset", role: .destructive) {
@@ -99,6 +98,27 @@ struct SettingsView: View {
             }
         } message: {
             Text("This will reset icon design, notification settings, and Launch at Login to their defaults.")
+        }
+    }
+
+    private func settingsTitle() -> String {
+        switch viewModel.selectedLanguage {
+        case .en: return "Settings"
+        case .ja: return "設定"
+        case .system:
+            return Locale.current.language.languageCode?.identifier == "ja" ? "設定" : "Settings"
+        }
+    }
+
+    private func updateWindowTitle() {
+        Task { @MainActor in
+            for window in NSApplication.shared.windows {
+                if window.identifier?.rawValue.contains("Settings") == true ||
+                   window.title == "設定" || window.title == "Settings" {
+                    window.title = settingsTitle()
+                    break
+                }
+            }
         }
     }
 

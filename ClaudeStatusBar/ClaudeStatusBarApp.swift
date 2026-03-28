@@ -7,6 +7,7 @@ struct ClaudeStatusBarApp: App {
     var body: some Scene {
         MenuBarExtra {
             StatusMenuView(viewModel: viewModel)
+                .applyLocale(viewModel.selectedLanguage)
         } label: {
             if let nsImage = menuBarCustomIcon {
                 Image(nsImage: nsImage)
@@ -20,6 +21,7 @@ struct ClaudeStatusBarApp: App {
 
         Settings {
             SettingsView(viewModel: viewModel)
+                .applyLocale(viewModel.selectedLanguage)
         }
     }
 
@@ -38,6 +40,19 @@ struct ClaudeStatusBarApp: App {
         case .minor: return .yellow
         case .major: return .orange
         case .critical: return .red
+        }
+    }
+}
+
+// MARK: - View Extension
+
+private extension View {
+    @ViewBuilder
+    func applyLocale(_ language: AppLanguage) -> some View {
+        if let locale = language.locale {
+            self.environment(\.locale, locale)
+        } else {
+            self
         }
     }
 }

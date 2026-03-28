@@ -12,6 +12,7 @@ final class StatusViewModel {
     var isLoading = false
     var error: Error?
     var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.default.rawValue
+    var selectedLanguageRaw: String = UserDefaults.standard.string(forKey: "selectedLanguage") ?? AppLanguage.system.rawValue
     var notificationEnabledMap: [String: Bool] = [:]
 
     private let service = StatusService()
@@ -32,6 +33,20 @@ final class StatusViewModel {
         set {
             selectedIconDesignRaw = newValue.rawValue
             UserDefaults.standard.set(newValue.rawValue, forKey: "selectedIconDesign")
+        }
+    }
+
+    var selectedLanguage: AppLanguage {
+        get { AppLanguage(rawValue: selectedLanguageRaw) ?? .system }
+        set {
+            selectedLanguageRaw = newValue.rawValue
+            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedLanguage")
+            // Update AppleLanguages for non-SwiftUI code (e.g. NotificationService)
+            if newValue == .system {
+                UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+            } else {
+                UserDefaults.standard.set([newValue.rawValue], forKey: "AppleLanguages")
+            }
         }
     }
 
@@ -159,10 +174,11 @@ final class StatusViewModel {
             if previousStatus == .operational && component.status != .operational {
                 notificationService.sendComponentIncidentNotification(
                     componentName: component.name,
-                    status: component.status
+                    status: component.status,
+                    language: selectedLanguage
                 )
             } else if previousStatus != nil && previousStatus != .operational && component.status == .operational {
-                notificationService.sendComponentRecoveryNotification(componentName: component.name)
+                notificationService.sendComponentRecoveryNotification(componentName: component.name, language: selectedLanguage)
             }
         }
     }
@@ -174,6 +190,9 @@ final class StatusViewModel {
     func resetAllSettings() {
         // Icon design
         selectedIconDesign = .default
+
+        // Language
+        selectedLanguage = .system
 
         // Notification settings
         let ids = components.map { $0.id }
@@ -198,9 +217,9 @@ final class StatusViewModel {
     ) {
         if previous == .none && current != .none {
             let incidentName = incidents.first?.name ?? "Unknown incident"
-            notificationService.sendIncidentNotification(incidentName: incidentName)
+            notificationService.sendIncidentNotification(incidentName: incidentName, language: selectedLanguage)
         } else if previous != .none && current == .none {
-            notificationService.sendRecoveryNotification()
+            notificationService.sendRecoveryNotification(language: selectedLanguage)
         }
     }
 
@@ -253,11 +272,11 @@ final class StatusViewModel {
     }
 
     func debugSendIncidentNotification() {
-        notificationService.sendIncidentNotification(incidentName: "[Debug] Test incident on Claude API")
+        notificationService.sendIncidentNotification(incidentName: "[Debug] Test incident on Claude API", language: selectedLanguage)
     }
 
     func debugSendRecoveryNotification() {
-        notificationService.sendRecoveryNotification()
+        notificationService.sendRecoveryNotification(language: selectedLanguage)
     }
 
     func debugSimulateComponentTransition(

@@ -17,10 +17,11 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    func sendIncidentNotification(incidentName: String) {
+    func sendIncidentNotification(incidentName: String, language: AppLanguage) {
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        content.body = "⚠ Claude で障害が発生しました: \(incidentName)"
+        let template = language.localizedString("⚠ Incident detected on Claude: %@")
+        content.body = String(format: template, incidentName)
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -31,10 +32,10 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendRecoveryNotification() {
+    func sendRecoveryNotification(language: AppLanguage) {
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        content.body = "✅ Claude は復旧しました"
+        content.body = language.localizedString("✅ Claude is back to operational")
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -45,7 +46,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendComponentIncidentNotification(componentName: String, status: ComponentStatus) {
+    func sendComponentIncidentNotification(componentName: String, status: ComponentStatus, language: AppLanguage) {
         let statusText: String
         switch status {
         case .operational: return
@@ -67,10 +68,11 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendComponentRecoveryNotification(componentName: String) {
+    func sendComponentRecoveryNotification(componentName: String, language: AppLanguage) {
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        content.body = "✅ \(componentName) is back to operational"
+        let template = language.localizedString("✅ %@ is back to operational")
+        content.body = String(format: template, componentName)
         content.sound = .default
 
         let request = UNNotificationRequest(

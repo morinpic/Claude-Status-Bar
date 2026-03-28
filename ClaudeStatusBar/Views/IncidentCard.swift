@@ -24,9 +24,12 @@ struct IncidentCard: View {
                     .foregroundStyle(.secondary)
             }
 
-            Text("Updated: \(incident.updatedAt.formatted(date: .abbreviated, time: .shortened))")
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
+            Text(
+                "Updated: \(incident.updatedAt.formatted(date: .abbreviated, time: .shortened))",
+                comment: "Label showing when the incident was last updated"
+            )
+            .font(.caption2)
+            .foregroundStyle(.tertiary)
 
             if let latestUpdate = incident.incidentUpdates.first {
                 Text(latestUpdate.body)
