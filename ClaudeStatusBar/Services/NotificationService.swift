@@ -17,11 +17,18 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    func sendIncidentNotification(incidentName: String, language: AppLanguage) {
+    func sendIncidentNotification(incidentName: String, language: AppLanguage, iconDesign: IconDesignType) {
+        let prefix: String
+        switch iconDesign {
+        case .statusIcons: prefix = "[!]"
+        case .classic: prefix = "🔴"
+        case .vibe: prefix = "😰"
+        }
+
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        let template = language.localizedString("[!] Incident: %@")
-        content.body = String(format: template, incidentName)
+        let template = language.localizedString("Incident: %@")
+        content.body = "\(prefix) " + String(format: template, incidentName)
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -32,10 +39,17 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendRecoveryNotification(language: AppLanguage) {
+    func sendRecoveryNotification(language: AppLanguage, iconDesign: IconDesignType) {
+        let prefix: String
+        switch iconDesign {
+        case .statusIcons: prefix = "[✓]"
+        case .classic: prefix = "🟢"
+        case .vibe: prefix = "😊"
+        }
+
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        content.body = language.localizedString("[✓] All systems operational")
+        content.body = "\(prefix) " + language.localizedString("All systems operational")
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -46,7 +60,27 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendComponentIncidentNotification(componentName: String, status: ComponentStatus, language: AppLanguage) {
+    func sendComponentIncidentNotification(componentName: String, status: ComponentStatus, language: AppLanguage, iconDesign: IconDesignType) {
+        let prefix: String
+        switch iconDesign {
+        case .statusIcons:
+            prefix = "[!]"
+        case .classic:
+            switch status {
+            case .degradedPerformance: prefix = "🟡"
+            case .partialOutage: prefix = "🟠"
+            case .majorOutage: prefix = "🔴"
+            case .operational: return
+            }
+        case .vibe:
+            switch status {
+            case .degradedPerformance: prefix = "😟"
+            case .partialOutage: prefix = "😰"
+            case .majorOutage: prefix = "💀"
+            case .operational: return
+            }
+        }
+
         let statusText: String
         switch status {
         case .operational: return
@@ -57,7 +91,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
 
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        content.body = "[!] \(componentName): \(statusText)"
+        content.body = "\(prefix) \(componentName): \(statusText)"
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -68,11 +102,18 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendComponentRecoveryNotification(componentName: String, language: AppLanguage) {
+    func sendComponentRecoveryNotification(componentName: String, language: AppLanguage, iconDesign: IconDesignType) {
+        let prefix: String
+        switch iconDesign {
+        case .statusIcons: prefix = "[✓]"
+        case .classic: prefix = "🟢"
+        case .vibe: prefix = "😊"
+        }
+
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        let template = language.localizedString("[✓] %@: Operational")
-        content.body = String(format: template, componentName)
+        let template = language.localizedString("%@: Operational")
+        content.body = "\(prefix) " + String(format: template, componentName)
         content.sound = .default
 
         let request = UNNotificationRequest(

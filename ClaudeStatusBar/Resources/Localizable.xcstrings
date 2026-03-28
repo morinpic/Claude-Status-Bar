@@ -19,32 +19,32 @@
         }
       }
     },
-    "[!] Incident: %@" : {
+    "%@: Operational" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[!] 障害発生: %@"
+            "value" : "%@: 正常稼働"
           }
         }
       }
     },
-    "[✓] %@: Operational" : {
+    "All systems operational" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[✓] %@: 正常稼働"
+            "value" : "全サービス復旧"
           }
         }
       }
     },
-    "[✓] All systems operational" : {
+    "Incident: %@" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[✓] 全サービス復旧"
+            "value" : "障害発生: %@"
           }
         }
       }
