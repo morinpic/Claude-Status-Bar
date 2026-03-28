@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import Observation
 import ServiceManagement
@@ -11,8 +12,8 @@ final class StatusViewModel {
     var lastUpdated: Date?
     var isLoading = false
     var error: Error?
-    var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.default.rawValue
     var selectedLanguageRaw: String = UserDefaults.standard.string(forKey: "selectedLanguage") ?? AppLanguage.system.rawValue
+    var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.statusIcons.rawValue
     var notificationEnabledMap: [String: Bool] = [:]
 
     private let service = StatusService()
@@ -28,14 +29,6 @@ final class StatusViewModel {
 
     var hasError: Bool { error != nil }
 
-    var selectedIconDesign: IconDesignType {
-        get { IconDesignType(rawValue: selectedIconDesignRaw) ?? .default }
-        set {
-            selectedIconDesignRaw = newValue.rawValue
-            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedIconDesign")
-        }
-    }
-
     var selectedLanguage: AppLanguage {
         get { AppLanguage(rawValue: selectedLanguageRaw) ?? .system }
         set {
@@ -50,19 +43,51 @@ final class StatusViewModel {
         }
     }
 
-    var currentIconState: IconState {
-        IconState.from(overallStatus, hasError: hasError)
-    }
-
-    var menuBarIconAssetName: String? {
-        let design = selectedIconDesign
-        guard design != .default else { return nil }
-        return design.assetName(for: currentIconState)
+    var selectedIconDesign: IconDesignType {
+        get { IconDesignType(rawValue: selectedIconDesignRaw) ?? .statusIcons }
+        set {
+            selectedIconDesignRaw = newValue.rawValue
+            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedIconDesign")
+        }
     }
 
     var menuBarIcon: String {
-        if hasError { return "exclamationmark.circle.fill" }
-        return "circle.fill"
+        switch selectedIconDesign {
+        case .statusIcons:
+            if hasError { return "questionmark.circle" }
+            switch overallStatus {
+            case .none: return "checkmark.circle"
+            case .minor: return "info.circle"
+            case .major: return "exclamationmark.circle"
+            case .critical: return "xmark.circle"
+            }
+        case .classic:
+            return "circle.fill"
+        case .vibe:
+            return "circle.fill" // fallback, not actually used
+        }
+    }
+
+    var menuBarIconNSColor: NSColor? {
+        guard selectedIconDesign == .classic else { return nil }
+        if hasError { return .systemGray }
+        switch overallStatus {
+        case .none: return .systemGreen
+        case .minor: return .systemYellow
+        case .major: return .systemOrange
+        case .critical: return .systemRed
+        }
+    }
+
+    var menuBarEmoji: String? {
+        guard selectedIconDesign == .vibe else { return nil }
+        if hasError { return "🤔" }
+        switch overallStatus {
+        case .none: return "😊"
+        case .minor: return "😟"
+        case .major: return "😰"
+        case .critical: return "💀"
+        }
     }
 
     var overallStatusText: String {
@@ -188,11 +213,11 @@ final class StatusViewModel {
     }
 
     func resetAllSettings() {
-        // Icon design
-        selectedIconDesign = .default
-
         // Language
         selectedLanguage = .system
+
+        // Icon design
+        selectedIconDesign = .statusIcons
 
         // Notification settings
         let ids = components.map { $0.id }

@@ -32,29 +32,7 @@ struct SettingsView: View {
                 }
             }
 
-            Section {
-                let designs = IconDesignType.allCases
-                ForEach(designs, id: \.self) { (design: IconDesignType) in
-                    HStack {
-                        iconPreview(for: design)
-                            .frame(width: 28, height: 28)
-                        Text(design.displayName)
-                            .font(.body)
-                        Spacer()
-                        if viewModel.selectedIconDesign == design {
-                            Image(systemName: "checkmark")
-                                .foregroundStyle(.blue)
-                                .fontWeight(.semibold)
-                        }
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.selectedIconDesign = design
-                    }
-                }
-            } header: {
-                Text("Icon Design")
-            }
+            iconDesignSection
 
             Section {
                 ForEach(viewModel.components) { component in
@@ -68,18 +46,15 @@ struct SettingsView: View {
                 }
             } header: {
                 Text("Notifications")
-            }
-
-            Section {
+            } footer: {
                 HStack {
                     Spacer()
                     Button("Reset All Settings") {
                         showingResetConfirmation = true
                     }
-                    Spacer()
+                    .buttonStyle(.bordered)
                 }
-            } header: {
-                Text("Reset")
+                .padding(.top, 12)
             }
         }
         .formStyle(.grouped)
@@ -98,6 +73,76 @@ struct SettingsView: View {
             }
         } message: {
             Text("This will reset icon design, notification settings, and Launch at Login to their defaults.")
+        }
+    }
+
+    @ViewBuilder
+    private var iconDesignSection: some View {
+        Section {
+            ForEach(IconDesignType.allCases) { design in
+                iconDesignCard(for: design)
+            }
+        } header: {
+            Text("Icon Design")
+        }
+    }
+
+    @ViewBuilder
+    private func iconDesignCard(for design: IconDesignType) -> some View {
+        let isSelected = viewModel.selectedIconDesign == design
+        VStack {
+            HStack {
+                ForEach(Array(iconPreviews(for: design).enumerated()), id: \.offset) { _, preview in
+                    preview
+                        .frame(maxWidth: .infinity)
+                }
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(isSelected ? Color.blue.opacity(0.1) : Color.clear)
+        )
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.selectedIconDesign = design
+        }
+    }
+
+    private func iconPreviews(for design: IconDesignType) -> [AnyView] {
+        switch design {
+        case .statusIcons:
+            let symbols = ["checkmark.circle", "info.circle", "exclamationmark.circle", "xmark.circle", "questionmark.circle"]
+            return symbols.map { name in
+                AnyView(
+                    Image(systemName: name)
+                        .font(.system(size: 16))
+                )
+            }
+        case .classic:
+            let colors: [Color] = [
+                Color(nsColor: .systemGreen),
+                Color(nsColor: .systemYellow),
+                Color(nsColor: .systemOrange),
+                Color(nsColor: .systemRed),
+                Color(nsColor: .systemGray),
+            ]
+            return colors.map { color in
+                AnyView(
+                    Image(systemName: "circle.fill")
+                        .symbolRenderingMode(.monochrome)
+                        .foregroundStyle(color)
+                        .font(.system(size: 16))
+                )
+            }
+        case .vibe:
+            let emojis = ["😊", "😟", "😰", "💀", "🤔"]
+            return emojis.map { emoji in
+                AnyView(
+                    Text(emoji)
+                        .font(.system(size: 16))
+                )
+            }
         }
     }
 
@@ -122,17 +167,4 @@ struct SettingsView: View {
         }
     }
 
-    @ViewBuilder
-    private func iconPreview(for design: IconDesignType) -> some View {
-        if design == .default {
-            Image(systemName: "circle.fill")
-                .foregroundStyle(.green)
-                .font(.system(size: 16))
-        } else {
-            Image(design.assetName(for: .normal))
-                .renderingMode(.original)
-                .resizable()
-                .scaledToFit()
-        }
-    }
 }

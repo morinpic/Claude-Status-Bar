@@ -23,13 +23,13 @@ struct ComponentRow: View {
     private var statusColor: Color {
         switch component.status {
         case .operational:
-            return .green
+            return Color(nsColor: .systemGreen)
         case .degradedPerformance:
-            return .yellow
+            return Color(nsColor: .systemYellow)
         case .partialOutage:
-            return .orange
+            return Color(nsColor: .systemOrange)
         case .majorOutage:
-            return .red
+            return Color(nsColor: .systemRed)
         }
     }
 

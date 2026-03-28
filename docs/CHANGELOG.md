@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Replace custom SVG icon designs (Shield, Arc, Ring, Buddy) with SF Symbols for menu bar icon
+- Menu bar icon now reflects status by shape instead of color: `checkmark.circle` (none), `exclamationmark.triangle` (minor), `exclamationmark.circle` (major), `xmark.circle` (critical), `questionmark.circle` (connection error)
+- Remove Icon Design selection section from Settings
+- Remove "icon design" from reset confirmation dialog message
+
+### Removed
+
+- Custom SVG icon assets (4 designs × 5 states)
+- `IconDesignType` and `IconState` enums
+
 ## [2.1.0] - 2026-03-29
 
 ### Added
@@ -68,6 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling with graceful UI for network failures
 - Homebrew Cask distribution via `brew tap morinpic/tap`
 
+[Unreleased]: https://github.com/morinpic/Claude-Status-Bar/compare/v2.1.0...HEAD
 [2.1.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v1.1.1...v1.2.0
