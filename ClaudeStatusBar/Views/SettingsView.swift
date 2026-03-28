@@ -8,58 +8,58 @@ struct SettingsView: View {
     @State private var showingResetConfirmation = false
 
     var body: some View {
-        VStack {
-            Form {
-                Section("General") {
-                    Toggle("Launch at Login", isOn: $launchAtLogin)
-                        .onChange(of: launchAtLogin) { _, newValue in
-                            do {
-                                if newValue {
-                                    try SMAppService.mainApp.register()
-                                } else {
-                                    try SMAppService.mainApp.unregister()
-                                }
-                            } catch {
-                                launchAtLogin = SMAppService.mainApp.status == .enabled
+        Form {
+            Section("General") {
+                Toggle("Launch at Login", isOn: $launchAtLogin)
+                    .onChange(of: launchAtLogin) { _, newValue in
+                        do {
+                            if newValue {
+                                try SMAppService.mainApp.register()
+                            } else {
+                                try SMAppService.mainApp.unregister()
                             }
+                        } catch {
+                            launchAtLogin = SMAppService.mainApp.status == .enabled
                         }
-
-                    Picker(selection: $viewModel.selectedLanguage) {
-                        ForEach(AppLanguage.allCases) { language in
-                            Text(language.localizedDisplayName).tag(language)
-                        }
-                    } label: {
-                        Text("Language")
                     }
+
+                Picker(selection: $viewModel.selectedLanguage) {
+                    ForEach(AppLanguage.allCases) { language in
+                        Text(language.localizedDisplayName).tag(language)
+                    }
+                } label: {
+                    Text("Language")
                 }
+            }
 
-                iconDesignSection
+            iconDesignSection
 
-                Section {
-                    ForEach(viewModel.components) { component in
-                        Toggle(
-                            component.name,
-                            isOn: Binding(
-                                get: { viewModel.isComponentNotificationEnabled(component.id) },
-                                set: { viewModel.toggleComponentNotification(component.id, enabled: $0) }
-                            )
+            Section {
+                ForEach(viewModel.components) { component in
+                    Toggle(
+                        component.name,
+                        isOn: Binding(
+                            get: { viewModel.isComponentNotificationEnabled(component.id) },
+                            set: { viewModel.toggleComponentNotification(component.id, enabled: $0) }
                         )
-                    }
-                } header: {
-                    Text("Notifications")
+                    )
                 }
+            } header: {
+                Text("Notifications")
             }
-            .formStyle(.grouped)
 
-            HStack {
-                Spacer()
-                Button("Reset All Settings") {
-                    showingResetConfirmation = true
+            Section {
+                HStack {
+                    Spacer()
+                    Button("Reset All Settings") {
+                        showingResetConfirmation = true
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.red)
                 }
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 12)
         }
+        .formStyle(.grouped)
         .frame(width: 450, height: 550)
         .onAppear {
             updateWindowTitle()
