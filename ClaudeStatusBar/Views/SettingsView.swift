@@ -30,6 +30,17 @@ struct SettingsView: View {
                 } label: {
                     Text("Language")
                 }
+
+                Picker(selection: Binding(
+                    get: { viewModel.selectedPollingInterval },
+                    set: { viewModel.selectedPollingInterval = $0 }
+                )) {
+                    ForEach(PollingInterval.allCases) { interval in
+                        Text(verbatim: interval.displayName).tag(interval)
+                    }
+                } label: {
+                    Text("Polling Interval")
+                }
             }
 
             iconDesignSection
@@ -72,7 +83,7 @@ struct SettingsView: View {
                 launchAtLogin = SMAppService.mainApp.status == .enabled
             }
         } message: {
-            Text("This will reset icon design, notification settings, and Launch at Login to their defaults.")
+            Text("This will reset icon design, notification settings, polling interval, and Launch at Login to their defaults.")
         }
     }
 
