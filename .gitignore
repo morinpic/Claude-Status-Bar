@@ -22,5 +22,6 @@ Pods/
 *.xcarchive
 
 # Claude Code
+.claude/settings.json
 .claude/settings.local.json
 docs/prompts/
