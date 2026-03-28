@@ -93,18 +93,7 @@ struct SettingsView: View {
     @ViewBuilder
     private func iconDesignCard(for design: IconDesignType) -> some View {
         let isSelected = viewModel.selectedIconDesign == design
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(verbatim: design.displayName)
-                    .font(.body)
-                    .fontWeight(.medium)
-                Spacer()
-                if isSelected {
-                    Image(systemName: "checkmark")
-                        .foregroundStyle(.blue)
-                        .fontWeight(.semibold)
-                }
-            }
+        VStack {
             HStack {
                 ForEach(Array(iconPreviews(for: design).enumerated()), id: \.offset) { _, preview in
                     preview
