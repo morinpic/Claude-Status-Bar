@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import ServiceManagement
 
@@ -83,7 +84,12 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .frame(width: 450, height: 550)
-        .navigationTitle(Text("Settings"))
+        .onAppear {
+            updateWindowTitle()
+        }
+        .onChange(of: viewModel.selectedLanguage) { _, _ in
+            updateWindowTitle()
+        }
         .alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Reset", role: .destructive) {
@@ -92,6 +98,27 @@ struct SettingsView: View {
             }
         } message: {
             Text("This will reset icon design, notification settings, and Launch at Login to their defaults.")
+        }
+    }
+
+    private func settingsTitle() -> String {
+        switch viewModel.selectedLanguage {
+        case .en: return "Settings"
+        case .ja: return "設定"
+        case .system:
+            return Locale.current.language.languageCode?.identifier == "ja" ? "設定" : "Settings"
+        }
+    }
+
+    private func updateWindowTitle() {
+        Task { @MainActor in
+            for window in NSApplication.shared.windows {
+                if window.identifier?.rawValue.contains("Settings") == true ||
+                   window.title == "設定" || window.title == "Settings" {
+                    window.title = settingsTitle()
+                    break
+                }
+            }
         }
     }
 
