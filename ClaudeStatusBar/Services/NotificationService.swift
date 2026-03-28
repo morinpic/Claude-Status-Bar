@@ -20,7 +20,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func sendIncidentNotification(incidentName: String, language: AppLanguage, iconDesign: IconDesignType) {
         let prefix: String
         switch iconDesign {
-        case .statusIcons: prefix = "[!]"
+        case .statusIcons: prefix = "[ ! ]"
         case .classic: prefix = "🔴"
         case .vibe: prefix = "😰"
         }
@@ -64,7 +64,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         let prefix: String
         switch iconDesign {
         case .statusIcons:
-            prefix = "[!]"
+            prefix = "[ ! ]"
         case .classic:
             switch status {
             case .degradedPerformance: prefix = "🟡"
