@@ -32,41 +32,7 @@ struct SettingsView: View {
                 }
             }
 
-            Section {
-                ForEach(IconDesignType.allCases) { design in
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text(verbatim: design.displayName)
-                                .font(.body)
-                                .fontWeight(.medium)
-                            Spacer()
-                            if viewModel.selectedIconDesign == design {
-                                Image(systemName: "checkmark")
-                                    .foregroundStyle(.blue)
-                                    .fontWeight(.semibold)
-                            }
-                        }
-                        HStack(spacing: 16) {
-                            ForEach(iconPreviewItems(for: design), id: \.label) { item in
-                                VStack(spacing: 4) {
-                                    item.icon
-                                        .frame(width: 24, height: 24)
-                                    Text(verbatim: item.label)
-                                        .font(.caption2)
-                                        .foregroundStyle(.secondary)
-                                }
-                            }
-                        }
-                    }
-                    .padding(.vertical, 4)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.selectedIconDesign = design
-                    }
-                }
-            } header: {
-                Text("Icon Design")
-            }
+            iconDesignSection
 
             Section {
                 ForEach(viewModel.components) { component in
@@ -113,70 +79,82 @@ struct SettingsView: View {
         }
     }
 
-    private struct IconPreviewItem {
-        let icon: AnyView
-        let label: String
+    @ViewBuilder
+    private var iconDesignSection: some View {
+        Section {
+            ForEach(IconDesignType.allCases) { design in
+                iconDesignCard(for: design)
+            }
+        } header: {
+            Text("Icon Design")
+        }
     }
 
-    private func iconPreviewItems(for design: IconDesignType) -> [IconPreviewItem] {
+    @ViewBuilder
+    private func iconDesignCard(for design: IconDesignType) -> some View {
+        let isSelected = viewModel.selectedIconDesign == design
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(verbatim: design.displayName)
+                    .font(.body)
+                    .fontWeight(.medium)
+                Spacer()
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .foregroundStyle(.blue)
+                        .fontWeight(.semibold)
+                }
+            }
+            HStack {
+                ForEach(Array(iconPreviews(for: design).enumerated()), id: \.offset) { _, preview in
+                    preview
+                        .frame(maxWidth: .infinity)
+                }
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(isSelected ? Color.blue.opacity(0.1) : Color.clear)
+        )
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.selectedIconDesign = design
+        }
+    }
+
+    private func iconPreviews(for design: IconDesignType) -> [AnyView] {
         switch design {
         case .statusIcons:
-            return [
-                IconPreviewItem(
-                    icon: AnyView(Image(systemName: "checkmark.circle").font(.system(size: 16))),
-                    label: "OK"
-                ),
-                IconPreviewItem(
-                    icon: AnyView(Image(systemName: "info.circle").font(.system(size: 16))),
-                    label: "Minor"
-                ),
-                IconPreviewItem(
-                    icon: AnyView(Image(systemName: "exclamationmark.circle").font(.system(size: 16))),
-                    label: "Major"
-                ),
-                IconPreviewItem(
-                    icon: AnyView(Image(systemName: "xmark.circle").font(.system(size: 16))),
-                    label: "Critical"
-                ),
-                IconPreviewItem(
-                    icon: AnyView(Image(systemName: "questionmark.circle").font(.system(size: 16))),
-                    label: "Error"
-                ),
-            ]
+            let symbols = ["checkmark.circle", "info.circle", "exclamationmark.circle", "xmark.circle", "questionmark.circle"]
+            return symbols.map { name in
+                AnyView(
+                    Image(systemName: name)
+                        .font(.system(size: 16))
+                )
+            }
         case .classic:
-            let colors: [(Color, String)] = [
-                (Color(nsColor: .systemGreen), "OK"),
-                (Color(nsColor: .systemYellow), "Minor"),
-                (Color(nsColor: .systemOrange), "Major"),
-                (Color(nsColor: .systemRed), "Critical"),
-                (Color(nsColor: .systemGray), "Error"),
+            let colors: [Color] = [
+                Color(nsColor: .systemGreen),
+                Color(nsColor: .systemYellow),
+                Color(nsColor: .systemOrange),
+                Color(nsColor: .systemRed),
+                Color(nsColor: .systemGray),
             ]
-            return colors.map { color, label in
-                IconPreviewItem(
-                    icon: AnyView(
-                        Image(systemName: "circle.fill")
-                            .symbolRenderingMode(.monochrome)
-                            .foregroundStyle(color)
-                            .font(.system(size: 16))
-                    ),
-                    label: label
+            return colors.map { color in
+                AnyView(
+                    Image(systemName: "circle.fill")
+                        .symbolRenderingMode(.monochrome)
+                        .foregroundStyle(color)
+                        .font(.system(size: 16))
                 )
             }
         case .vibe:
-            let emojis: [(String, String)] = [
-                ("😊", "OK"),
-                ("😟", "Minor"),
-                ("😰", "Major"),
-                ("💀", "Critical"),
-                ("🤔", "Error"),
-            ]
-            return emojis.map { emoji, label in
-                IconPreviewItem(
-                    icon: AnyView(
-                        Text(emoji)
-                            .font(.system(size: 16))
-                    ),
-                    label: label
+            let emojis = ["😊", "😟", "😰", "💀", "🤔"]
+            return emojis.map { emoji in
+                AnyView(
+                    Text(emoji)
+                        .font(.system(size: 16))
                 )
             }
         }
