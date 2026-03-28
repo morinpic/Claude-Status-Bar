@@ -17,10 +17,10 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    func sendIncidentNotification(incidentName: String) {
+    func sendIncidentNotification(incidentName: String, locale: Locale) {
         let content = UNMutableNotificationContent()
-        content.title = String(localized: "Claude Status")
-        content.body = String(localized: "⚠ Incident detected on Claude: \(incidentName)")
+        content.title = "Claude Status"
+        content.body = String(localized: "⚠ Incident detected on Claude: \(incidentName)", locale: locale)
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -31,10 +31,10 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendRecoveryNotification() {
+    func sendRecoveryNotification(locale: Locale) {
         let content = UNMutableNotificationContent()
-        content.title = String(localized: "Claude Status")
-        content.body = String(localized: "✅ Claude is back to operational")
+        content.title = "Claude Status"
+        content.body = String(localized: "✅ Claude is back to operational", locale: locale)
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -45,17 +45,17 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendComponentIncidentNotification(componentName: String, status: ComponentStatus) {
+    func sendComponentIncidentNotification(componentName: String, status: ComponentStatus, locale: Locale) {
         let statusText: String
         switch status {
         case .operational: return
-        case .degradedPerformance: statusText = String(localized: "Degraded")
-        case .partialOutage: statusText = String(localized: "Partial Outage")
-        case .majorOutage: statusText = String(localized: "Major Outage")
+        case .degradedPerformance: statusText = String(localized: "Degraded", locale: locale)
+        case .partialOutage: statusText = String(localized: "Partial Outage", locale: locale)
+        case .majorOutage: statusText = String(localized: "Major Outage", locale: locale)
         }
 
         let content = UNMutableNotificationContent()
-        content.title = String(localized: "Claude Status")
+        content.title = "Claude Status"
         content.body = "⚠ \(componentName): \(statusText)"
         content.sound = .default
 
@@ -67,10 +67,10 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendComponentRecoveryNotification(componentName: String) {
+    func sendComponentRecoveryNotification(componentName: String, locale: Locale) {
         let content = UNMutableNotificationContent()
-        content.title = String(localized: "Claude Status")
-        content.body = String(localized: "✅ \(componentName) is back to operational")
+        content.title = "Claude Status"
+        content.body = String(localized: "✅ \(componentName) is back to operational", locale: locale)
         content.sound = .default
 
         let request = UNNotificationRequest(

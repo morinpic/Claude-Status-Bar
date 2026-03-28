@@ -50,6 +50,10 @@ final class StatusViewModel {
         }
     }
 
+    private var currentLocale: Locale {
+        selectedLanguage.locale ?? Locale.current
+    }
+
     var currentIconState: IconState {
         IconState.from(overallStatus, hasError: hasError)
     }
@@ -174,10 +178,11 @@ final class StatusViewModel {
             if previousStatus == .operational && component.status != .operational {
                 notificationService.sendComponentIncidentNotification(
                     componentName: component.name,
-                    status: component.status
+                    status: component.status,
+                    locale: currentLocale
                 )
             } else if previousStatus != nil && previousStatus != .operational && component.status == .operational {
-                notificationService.sendComponentRecoveryNotification(componentName: component.name)
+                notificationService.sendComponentRecoveryNotification(componentName: component.name, locale: currentLocale)
             }
         }
     }
@@ -216,9 +221,9 @@ final class StatusViewModel {
     ) {
         if previous == .none && current != .none {
             let incidentName = incidents.first?.name ?? "Unknown incident"
-            notificationService.sendIncidentNotification(incidentName: incidentName)
+            notificationService.sendIncidentNotification(incidentName: incidentName, locale: currentLocale)
         } else if previous != .none && current == .none {
-            notificationService.sendRecoveryNotification()
+            notificationService.sendRecoveryNotification(locale: currentLocale)
         }
     }
 
@@ -271,11 +276,11 @@ final class StatusViewModel {
     }
 
     func debugSendIncidentNotification() {
-        notificationService.sendIncidentNotification(incidentName: "[Debug] Test incident on Claude API")
+        notificationService.sendIncidentNotification(incidentName: "[Debug] Test incident on Claude API", locale: currentLocale)
     }
 
     func debugSendRecoveryNotification() {
-        notificationService.sendRecoveryNotification()
+        notificationService.sendRecoveryNotification(locale: currentLocale)
     }
 
     func debugSimulateComponentTransition(
