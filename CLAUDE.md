@@ -27,7 +27,8 @@ ClaudeStatusBar/
 ├── Models/
 │   ├── StatusModels.swift            # Codable structs（API レスポンス）
 │   ├── IconDesignType.swift          # アイコンデザイン・状態 enum
-│   └── AppLanguage.swift             # 言語設定 enum（system / en / ja）
+│   ├── AppLanguage.swift             # 言語設定 enum（system / en / ja）
+│   └── PollingInterval.swift         # ポーリング間隔 enum（15s〜5min）
 ├── Services/
 │   ├── StatusService.swift           # API ポーリング + パース + 指数バックオフ
 │   ├── NotificationService.swift     # UNUserNotificationCenter 通知

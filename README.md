@@ -11,16 +11,17 @@ macOS menu bar app that monitors Claude's service status and sends real-time not
 
 ## Features
 
-- **Menu bar status indicator** — Color-coded circle icon shows overall system health at a glance
-  - Green: All systems operational
-  - Yellow: Minor issues
-  - Orange: Major outage
-  - Red: Critical outage
-  - Gray: Connection error
+- **Menu bar status indicator** — Icon changes shape based on system health at a glance
+  - ✓ checkmark.circle: All systems operational
+  - ℹ info.circle: Minor issues
+  - ! exclamationmark.circle: Major outage
+  - ✕ xmark.circle: Critical outage
+  - ? questionmark.circle: Connection error
 - **Component status** — View individual status for claude.ai, Claude API, Claude Code, platform.claude.com, and Claude for Government
 - **Incident details** — Active incidents displayed with impact level, current status, and latest update message
 - **Desktop notifications** — Alerts when Claude goes down and when it recovers
-- **Icon design selection** — Choose from 5 menu bar icon designs: Default (SF Symbols), Shield + Pulse, Abstract C, Connection Ring, and Claude-kun
+- **Icon design selection** — Choose from 3 menu bar icon styles: Status Icons (shape-based), Classic (color-coded circle), and Vibe (emoji)
+- **Polling interval** — Configurable polling interval (15s / 30s / 60s / 2min / 5min)
 - **Language support** — English and Japanese, switchable in Settings (or follows system language)
 - **Launch at Login** — Optional auto-start on login
 - **Quick links** — Open [status.claude.com](https://status.claude.com), GitHub repository, or file a bug report directly from the popover
@@ -53,14 +54,14 @@ The built app will be in `DerivedData/ClaudeStatusBar-*/Build/Products/Release/C
 
 ## Usage
 
-1. Launch the app — a colored circle appears in the menu bar
+1. Launch the app — a status icon appears in the menu bar
 2. Click the icon to see detailed status for all Claude services
 3. When an incident occurs, you'll receive a macOS notification
 4. Enable "Launch at Login" in the popover to start automatically
 
 ## How It Works
 
-The app polls the [Statuspage API](https://status.claude.com/api/v2/summary.json) every 60 seconds. On failure, it retries with exponential backoff (60s → 120s → 240s, max 300s).
+The app polls the [Statuspage API](https://status.claude.com/api/v2/summary.json) at a configurable interval (default: 60 seconds). On failure, it retries with exponential backoff (up to 300s).
 
 ## License
 
