@@ -124,16 +124,6 @@
         }
       }
     },
-    "Icon Design" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "アイコンデザイン"
-          }
-        }
-      }
-    },
     "Incidents" : {
 
     },
@@ -322,12 +312,12 @@
         }
       }
     },
-    "This will reset icon design, notification settings, and Launch at Login to their defaults." : {
+    "This will reset notification settings and Launch at Login to their defaults." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アイコンデザイン、通知設定、ログイン時の起動設定が初期値に戻ります。"
+            "value" : "通知設定とログイン時の起動設定が初期値に戻ります。"
           }
         }
       }

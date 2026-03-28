@@ -11,7 +11,6 @@ final class StatusViewModel {
     var lastUpdated: Date?
     var isLoading = false
     var error: Error?
-    var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.default.rawValue
     var selectedLanguageRaw: String = UserDefaults.standard.string(forKey: "selectedLanguage") ?? AppLanguage.system.rawValue
     var notificationEnabledMap: [String: Bool] = [:]
 
@@ -28,14 +27,6 @@ final class StatusViewModel {
 
     var hasError: Bool { error != nil }
 
-    var selectedIconDesign: IconDesignType {
-        get { IconDesignType(rawValue: selectedIconDesignRaw) ?? .default }
-        set {
-            selectedIconDesignRaw = newValue.rawValue
-            UserDefaults.standard.set(newValue.rawValue, forKey: "selectedIconDesign")
-        }
-    }
-
     var selectedLanguage: AppLanguage {
         get { AppLanguage(rawValue: selectedLanguageRaw) ?? .system }
         set {
@@ -50,19 +41,14 @@ final class StatusViewModel {
         }
     }
 
-    var currentIconState: IconState {
-        IconState.from(overallStatus, hasError: hasError)
-    }
-
-    var menuBarIconAssetName: String? {
-        let design = selectedIconDesign
-        guard design != .default else { return nil }
-        return design.assetName(for: currentIconState)
-    }
-
     var menuBarIcon: String {
-        if hasError { return "exclamationmark.circle.fill" }
-        return "circle.fill"
+        if hasError { return "questionmark.circle" }
+        switch overallStatus {
+        case .none: return "checkmark.circle"
+        case .minor: return "exclamationmark.triangle"
+        case .major: return "exclamationmark.circle"
+        case .critical: return "xmark.circle"
+        }
     }
 
     var overallStatusText: String {
@@ -188,9 +174,6 @@ final class StatusViewModel {
     }
 
     func resetAllSettings() {
-        // Icon design
-        selectedIconDesign = .default
-
         // Language
         selectedLanguage = .system
 

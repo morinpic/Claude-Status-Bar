@@ -33,30 +33,6 @@ struct SettingsView: View {
             }
 
             Section {
-                let designs = IconDesignType.allCases
-                ForEach(designs, id: \.self) { (design: IconDesignType) in
-                    HStack {
-                        iconPreview(for: design)
-                            .frame(width: 28, height: 28)
-                        Text(design.displayName)
-                            .font(.body)
-                        Spacer()
-                        if viewModel.selectedIconDesign == design {
-                            Image(systemName: "checkmark")
-                                .foregroundStyle(.blue)
-                                .fontWeight(.semibold)
-                        }
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.selectedIconDesign = design
-                    }
-                }
-            } header: {
-                Text("Icon Design")
-            }
-
-            Section {
                 ForEach(viewModel.components) { component in
                     Toggle(
                         component.name,
@@ -97,7 +73,7 @@ struct SettingsView: View {
                 launchAtLogin = SMAppService.mainApp.status == .enabled
             }
         } message: {
-            Text("This will reset icon design, notification settings, and Launch at Login to their defaults.")
+            Text("This will reset notification settings and Launch at Login to their defaults.")
         }
     }
 
@@ -122,17 +98,4 @@ struct SettingsView: View {
         }
     }
 
-    @ViewBuilder
-    private func iconPreview(for design: IconDesignType) -> some View {
-        if design == .default {
-            Image(systemName: "circle.fill")
-                .foregroundStyle(.green)
-                .font(.system(size: 16))
-        } else {
-            Image(design.assetName(for: .normal))
-                .renderingMode(.original)
-                .resizable()
-                .scaledToFit()
-        }
-    }
 }
