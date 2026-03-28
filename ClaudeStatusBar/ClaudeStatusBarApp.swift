@@ -15,8 +15,9 @@ struct ClaudeStatusBarApp: App {
                 // with isTemplate = false to ensure the color is rendered correctly.
                 Image(nsImage: coloredCircleImage(color: nsColor))
             } else {
-                Image(systemName: viewModel.menuBarIcon)
-                    .font(.system(size: 24))
+                // Status Icons mode: use NSImage with explicit pointSize to control
+                // the icon size, since .font() is ignored in MenuBarExtra labels.
+                Image(nsImage: statusIconImage(symbolName: viewModel.menuBarIcon))
             }
         }
         .menuBarExtraStyle(.window)
@@ -28,6 +29,20 @@ struct ClaudeStatusBarApp: App {
 }
 
 // MARK: - Helpers
+
+private func statusIconImage(symbolName: String) -> NSImage {
+    let config = NSImage.SymbolConfiguration(pointSize: 18, weight: .medium)
+    guard let baseImage = NSImage(systemSymbolName: symbolName, accessibilityDescription: nil)?
+        .withSymbolConfiguration(config) else {
+        return NSImage()
+    }
+    let image = NSImage(size: baseImage.size, flipped: false) { rect in
+        baseImage.draw(in: rect)
+        return true
+    }
+    image.isTemplate = true
+    return image
+}
 
 private func coloredCircleImage(color: NSColor) -> NSImage {
     let size = NSSize(width: 18, height: 18)
