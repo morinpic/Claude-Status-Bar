@@ -52,8 +52,7 @@ struct SettingsView: View {
                     Button("Reset All Settings") {
                         showingResetConfirmation = true
                     }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.red)
+                    .buttonStyle(.bordered)
                 }
                 .padding(.top, 12)
             }
