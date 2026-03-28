@@ -19,46 +19,62 @@
         }
       }
     },
-    "⚠ %@: %@" : {
-      "extractionState" : "stale",
+    "[!] Incident: %@" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠ %@: %@"
+            "value" : "[!] 障害発生: %@"
           }
         }
       }
     },
-    "⚠ Incident detected on Claude: %@" : {
-      "extractionState" : "stale",
+    "[✓] %@: Operational" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠ Claude で障害が発生しました: %@"
+            "value" : "[✓] %@: 正常稼働"
           }
         }
       }
     },
-    "✅ %@ is back to operational" : {
-      "extractionState" : "stale",
+    "[✓] All systems operational" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ %@ が正常稼働に復旧しました"
+            "value" : "[✓] 全サービス復旧"
           }
         }
       }
     },
-    "✅ Claude is back to operational" : {
-      "extractionState" : "stale",
+    "degraded performance" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ Claude は復旧しました"
+            "value" : "パフォーマンス低下"
+          }
+        }
+      }
+    },
+    "major outage" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大規模停止"
+          }
+        }
+      }
+    },
+    "partial outage" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一部停止"
           }
         }
       }

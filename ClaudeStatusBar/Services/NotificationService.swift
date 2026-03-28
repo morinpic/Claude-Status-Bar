@@ -20,7 +20,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func sendIncidentNotification(incidentName: String, language: AppLanguage) {
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        let template = language.localizedString("⚠ Incident detected on Claude: %@")
+        let template = language.localizedString("[!] Incident: %@")
         content.body = String(format: template, incidentName)
         content.sound = .default
 
@@ -35,7 +35,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func sendRecoveryNotification(language: AppLanguage) {
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        content.body = language.localizedString("✅ Claude is back to operational")
+        content.body = language.localizedString("[✓] All systems operational")
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -50,14 +50,14 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         let statusText: String
         switch status {
         case .operational: return
-        case .degradedPerformance: statusText = "degraded performance"
-        case .partialOutage: statusText = "partial outage"
-        case .majorOutage: statusText = "major outage"
+        case .degradedPerformance: statusText = language.localizedString("degraded performance")
+        case .partialOutage: statusText = language.localizedString("partial outage")
+        case .majorOutage: statusText = language.localizedString("major outage")
         }
 
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        content.body = "⚠ \(componentName): \(statusText)"
+        content.body = "[!] \(componentName): \(statusText)"
         content.sound = .default
 
         let request = UNNotificationRequest(
@@ -71,7 +71,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     func sendComponentRecoveryNotification(componentName: String, language: AppLanguage) {
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
-        let template = language.localizedString("✅ %@ is back to operational")
+        let template = language.localizedString("[✓] %@: Operational")
         content.body = String(format: template, componentName)
         content.sound = .default
 
