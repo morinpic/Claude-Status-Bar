@@ -9,7 +9,10 @@ struct ClaudeStatusBarApp: App {
             StatusMenuView(viewModel: viewModel)
                 .applyLocale(viewModel.selectedLanguage)
         } label: {
-            if let nsColor = viewModel.menuBarIconNSColor {
+            if let emoji = viewModel.menuBarEmoji {
+                // Vibe mode: emoji as menu bar icon
+                Image(nsImage: emojiImage(emoji))
+            } else if let nsColor = viewModel.menuBarIconNSColor {
                 // Classic mode: MenuBarExtra treats SF Symbols as template images,
                 // so .foregroundStyle() is ignored. Draw a colored circle via NSBezierPath
                 // with isTemplate = false to ensure the color is rendered correctly.
@@ -41,6 +44,24 @@ private func statusIconImage(symbolName: String) -> NSImage {
         return true
     }
     image.isTemplate = true
+    return image
+}
+
+private func emojiImage(_ emoji: String) -> NSImage {
+    let size = NSSize(width: 18, height: 18)
+    let image = NSImage(size: size, flipped: false) { rect in
+        let font = NSFont.systemFont(ofSize: 14)
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        let str = emoji as NSString
+        let strSize = str.size(withAttributes: attributes)
+        let point = NSPoint(
+            x: (rect.width - strSize.width) / 2,
+            y: (rect.height - strSize.height) / 2
+        )
+        str.draw(at: point, withAttributes: attributes)
+        return true
+    }
+    image.isTemplate = false
     return image
 }
 

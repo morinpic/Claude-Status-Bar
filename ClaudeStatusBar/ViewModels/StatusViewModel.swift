@@ -63,6 +63,8 @@ final class StatusViewModel {
             }
         case .classic:
             return "circle.fill"
+        case .vibe:
+            return "circle.fill" // fallback, not actually used
         }
     }
 
@@ -74,6 +76,17 @@ final class StatusViewModel {
         case .minor: return .systemYellow
         case .major: return .systemOrange
         case .critical: return .systemRed
+        }
+    }
+
+    var menuBarEmoji: String? {
+        guard selectedIconDesign == .vibe else { return nil }
+        if hasError { return "🤔" }
+        switch overallStatus {
+        case .none: return "😊"
+        case .minor: return "😟"
+        case .major: return "😰"
+        case .critical: return "💀"
         }
     }
 

@@ -162,6 +162,23 @@ struct SettingsView: View {
                     label: label
                 )
             }
+        case .vibe:
+            let emojis: [(String, String)] = [
+                ("😊", "OK"),
+                ("😟", "Minor"),
+                ("😰", "Major"),
+                ("💀", "Critical"),
+                ("🤔", "Error"),
+            ]
+            return emojis.map { emoji, label in
+                IconPreviewItem(
+                    icon: AnyView(
+                        Text(emoji)
+                            .font(.system(size: 16))
+                    ),
+                    label: label
+                )
+            }
         }
     }
 
