@@ -160,6 +160,9 @@ final class StatusViewModel {
             self.error = error
             self.isLoading = false
         }
+        #if DEBUG
+        startCountdown()
+        #endif
     }
 
     @MainActor
@@ -271,6 +274,22 @@ final class StatusViewModel {
 
     #if DEBUG
     var isDebugMode = false
+    var pollCountdown: Int = 0
+    var pollInterval: Int { selectedPollingInterval.rawValue }
+    private var countdownTask: Task<Void, Never>?
+
+    func startCountdown() {
+        countdownTask?.cancel()
+        pollCountdown = selectedPollingInterval.rawValue
+        countdownTask = Task { @MainActor in
+            while !Task.isCancelled && pollCountdown > 0 {
+                try? await Task.sleep(for: .seconds(1))
+                if !Task.isCancelled {
+                    pollCountdown -= 1
+                }
+            }
+        }
+    }
 
     func applyDebugState(
         statusPreset: DebugStatusPreset,

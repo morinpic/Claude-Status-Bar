@@ -33,6 +33,10 @@ struct DebugMenuView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 3))
                     }
                     Spacer()
+                    Text("⏱ \(viewModel.pollCountdown)s / \(viewModel.pollInterval)s")
+                        .font(.caption2)
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
