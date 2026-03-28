@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import Observation
 import ServiceManagement
@@ -65,14 +66,14 @@ final class StatusViewModel {
         }
     }
 
-    var menuBarIconColor: Color? {
+    var menuBarIconNSColor: NSColor? {
         guard selectedIconDesign == .classic else { return nil }
-        if hasError { return .gray }
+        if hasError { return .systemGray }
         switch overallStatus {
-        case .none: return .green
-        case .minor: return .yellow
-        case .major: return .orange
-        case .critical: return .red
+        case .none: return .systemGreen
+        case .minor: return .systemYellow
+        case .major: return .systemOrange
+        case .critical: return .systemRed
         }
     }
 

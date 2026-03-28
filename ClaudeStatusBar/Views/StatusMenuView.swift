@@ -168,10 +168,10 @@ struct StatusMenuView: View {
 
     private var overallStatusColor: Color {
         switch viewModel.overallStatus {
-        case .none: return .green
-        case .minor: return .yellow
-        case .major: return .orange
-        case .critical: return .red
+        case .none: return Color(nsColor: .systemGreen)
+        case .minor: return Color(nsColor: .systemYellow)
+        case .major: return Color(nsColor: .systemOrange)
+        case .critical: return Color(nsColor: .systemRed)
         }
     }
 
