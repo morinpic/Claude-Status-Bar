@@ -35,9 +35,15 @@ enum AppLanguage: String, CaseIterable, Identifiable {
 
     /// 指定言語でローカライズされた文字列を返す
     func localizedString(_ key: String) -> String {
-        guard let bundle else {
+        switch self {
+        case .en:
+            // English is the source language — keys are English text
+            return key
+        case .ja:
+            guard let bundle else { return key }
+            return bundle.localizedString(forKey: key, value: key, table: "Localizable")
+        case .system:
             return String(localized: String.LocalizationValue(key))
         }
-        return bundle.localizedString(forKey: key, value: nil, table: "Localizable")
     }
 }
