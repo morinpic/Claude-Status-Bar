@@ -16,6 +16,18 @@ final class StatusViewModel {
     var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.statusIcons.rawValue
     var notificationEnabledMap: [String: Bool] = [:]
 
+    var selectedPollingInterval: PollingInterval {
+        get {
+            let stored = UserDefaults.standard.integer(forKey: "pollingInterval")
+            let raw = stored > 0 ? stored : 60
+            return PollingInterval(rawValue: raw) ?? .sixty
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: "pollingInterval")
+            restartMonitoringWithNewInterval()
+        }
+    }
+
     private let service = StatusService()
     private let notificationService = NotificationService.shared
     private let notificationSettings = NotificationSettingsService.shared
@@ -102,6 +114,7 @@ final class StatusViewModel {
     func startMonitoring() {
         Task {
             isLoading = true
+            await service.updateBaseInterval(selectedPollingInterval.timeInterval)
             await service.startPolling { [weak self] result in
                 Task { @MainActor in
                     self?.handleResult(result)
@@ -114,6 +127,11 @@ final class StatusViewModel {
         Task {
             await service.stopPolling()
         }
+    }
+
+    private func restartMonitoringWithNewInterval() {
+        stopMonitoring()
+        startMonitoring()
     }
 
     func refresh() {
@@ -225,6 +243,9 @@ final class StatusViewModel {
         for id in ids {
             notificationEnabledMap[id] = true
         }
+
+        // Polling interval
+        selectedPollingInterval = .sixty
 
         // Launch at Login
         try? SMAppService.mainApp.unregister()
