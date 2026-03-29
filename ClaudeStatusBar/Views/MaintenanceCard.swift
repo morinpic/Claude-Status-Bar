@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MaintenanceCard: View {
     let maintenance: Incident
+    var locale: Locale = .current
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -31,7 +32,7 @@ struct MaintenanceCard: View {
             }
 
             Text(
-                "Updated: \(maintenance.updatedAt.formatted(date: .abbreviated, time: .shortened))",
+                "Updated: \(maintenance.updatedAt.formatted(.dateTime.year().month().day().hour().minute().locale(locale)))",
                 comment: "Label showing when the incident was last updated"
             )
             .font(.caption2)

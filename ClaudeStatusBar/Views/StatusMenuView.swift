@@ -32,7 +32,7 @@ struct StatusMenuView: View {
                     .font(.headline)
                 if let lastUpdated = viewModel.lastUpdated {
                     Text(
-                        "Last checked: \(lastUpdated.formatted(date: .omitted, time: .shortened))",
+                        "Last checked: \(lastUpdated.formatted(.dateTime.hour().minute().locale(dateLocale)))",
                         comment: "Label showing the last time status was fetched"
                     )
                     .font(.caption2)
@@ -92,7 +92,7 @@ struct StatusMenuView: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 ForEach(viewModel.activeIncidents) { incident in
-                    IncidentCard(incident: incident)
+                    IncidentCard(incident: incident, locale: dateLocale)
                 }
             }
         }
@@ -111,7 +111,7 @@ struct StatusMenuView: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 ForEach(viewModel.scheduledMaintenances) { maintenance in
-                    MaintenanceCard(maintenance: maintenance)
+                    MaintenanceCard(maintenance: maintenance, locale: dateLocale)
                 }
             }
             .padding(.horizontal, 14)
@@ -184,6 +184,10 @@ struct StatusMenuView: View {
         .buttonStyle(.plain)
         .padding(.horizontal, 14)
         .padding(.vertical, 6)
+    }
+
+    private var dateLocale: Locale {
+        viewModel.selectedLanguage.locale ?? .current
     }
 
     private var overallStatusColor: Color {
