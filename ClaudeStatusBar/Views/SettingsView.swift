@@ -76,7 +76,7 @@ struct SettingsView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 16, height: 16)
-                            .opacity(0.6)
+                            .opacity(0.8)
                     }
                     .buttonStyle(.plain)
                     Spacer()
