@@ -5,17 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.5.0] - 2026-03-29
 
 ### Added
 
 - Notification Level setting (Simple / Detailed) in Settings
-- Detailed mode: send worsened notification when incident severity increases (minor→major, minor→critical, major→critical)
-- Detailed mode: send improving notification when incident severity decreases without full recovery (critical→major, critical→minor, major→minor)
+- Detailed mode: worsened/improving notifications when incident severity changes
+- Severity-aware notification icons (`[ i ]` / `[ ! ]` / `[ x ]` for Status Icons, color/emoji for Classic/Vibe)
+- Debug menu: detailed mode transition test buttons (minor→major, major→critical, critical→minor)
 
 ### Changed
 
-- Redesign debug menu: always expanded with compact layout (no more collapsible toggle)
+- Redesign debug menu: always expanded with compact layout, one-tap buttons for all actions
 
 ## [2.4.0] - 2026-03-29
 
@@ -113,6 +114,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling with graceful UI for network failures
 - Homebrew Cask distribution via `brew tap morinpic/tap`
 
+[2.5.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/morinpic/Claude-Status-Bar/compare/v2.1.0...v2.2.0
