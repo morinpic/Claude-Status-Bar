@@ -90,8 +90,8 @@ struct DebugMenuView: View {
                 Button("📢 Incident") { viewModel.debugSendIncidentNotification() }
                 Button("✅ Recovery") { viewModel.debugSendRecoveryNotification() }
             }
-            .buttonStyle(.plain)
-            .font(.caption)
+            .buttonStyle(.bordered)
+            .controlSize(.small)
 
             // Transitions
             sectionLabel("Transitions")
@@ -101,8 +101,8 @@ struct DebugMenuView: View {
                 Button("→ critical") { viewModel.debugSimulateTransition(from: .none, to: .critical) }
                 Button("→ recover") { viewModel.debugSimulateTransition(from: .major, to: .none) }
             }
-            .buttonStyle(.plain)
-            .font(.caption)
+            .buttonStyle(.bordered)
+            .controlSize(.small)
 
             // Component transitions
             if let first = viewModel.components.first {
@@ -119,8 +119,8 @@ struct DebugMenuView: View {
                         )
                     }
                 }
-                .buttonStyle(.plain)
-                .font(.caption)
+                .buttonStyle(.bordered)
+                .controlSize(.small)
             }
 
             // Reset
