@@ -149,9 +149,9 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         switch iconDesign {
         case .statusIcons:
             switch severity {
-            case .minor: return "[i]"
+            case .minor: return "[ i ]"
             case .major: return "[ ! ]"
-            case .critical: return "[✕]"
+            case .critical: return "[ x ]"
             case .none: return "[✓]"
             }
         case .classic:
@@ -181,7 +181,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
 
     private func improvingPrefix(iconDesign: IconDesignType) -> String {
         switch iconDesign {
-        case .statusIcons: return "[~]"
+        case .statusIcons: return "[ ~ ]"
         case .classic: return "🟡"
         case .vibe: return "😟"
         }
