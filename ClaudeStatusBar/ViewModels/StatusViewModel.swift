@@ -9,6 +9,7 @@ final class StatusViewModel {
     var overallStatus: StatusIndicator = .none
     var components: [Component] = []
     var activeIncidents: [Incident] = []
+    var scheduledMaintenances: [Incident] = []
     var lastUpdated: Date?
     var isLoading = false
     var error: Error?
@@ -207,6 +208,8 @@ final class StatusViewModel {
         components = filteredComponents
 
         activeIncidents = activeIncidentsList
+        scheduledMaintenances = summary.scheduledMaintenances
+            .filter { $0.status != .completed }
         lastUpdated = Date()
         isLoading = false
         error = nil
@@ -329,6 +332,7 @@ final class StatusViewModel {
     var debugIncidentPreset: DebugIncidentPreset = .none
     var debugComponentPreset: DebugComponentPreset = .allOperational
     var debugErrorPreset: DebugErrorPreset = .none
+    var debugMaintenancePreset: DebugMaintenancePreset = .none
     var debugIsLoading: Bool = false
 
     func startCountdown() {
@@ -349,6 +353,7 @@ final class StatusViewModel {
         incidentPreset: DebugIncidentPreset,
         componentPreset: DebugComponentPreset,
         errorPreset: DebugErrorPreset,
+        maintenancePreset: DebugMaintenancePreset,
         isLoadingOverride: Bool
     ) {
         if statusPreset == .live {
@@ -361,6 +366,7 @@ final class StatusViewModel {
         debugIncidentPreset = incidentPreset
         debugComponentPreset = componentPreset
         debugErrorPreset = errorPreset
+        debugMaintenancePreset = maintenancePreset
         debugIsLoading = isLoadingOverride
 
         isDebugMode = true
@@ -383,6 +389,7 @@ final class StatusViewModel {
 
         overallStatus = effectiveStatus
         activeIncidents = incidents
+        scheduledMaintenances = DebugDataFactory.makeMaintenances(preset: maintenancePreset)
         components = DebugDataFactory.makeComponents(preset: componentPreset)
         error = DebugDataFactory.makeError(preset: errorPreset)
         isLoading = isLoadingOverride
@@ -395,6 +402,7 @@ final class StatusViewModel {
         debugIncidentPreset = .none
         debugComponentPreset = .allOperational
         debugErrorPreset = .none
+        debugMaintenancePreset = .none
         debugIsLoading = false
         error = nil
         isLoading = false

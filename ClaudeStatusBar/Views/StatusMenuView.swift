@@ -11,6 +11,7 @@ struct StatusMenuView: View {
             componentSection
             Divider()
             incidentSection
+            maintenanceSection
             errorSection
             #if DEBUG
             Divider()
@@ -97,6 +98,25 @@ struct StatusMenuView: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)
+    }
+
+    // MARK: - Maintenance
+
+    @ViewBuilder
+    private var maintenanceSection: some View {
+        if !viewModel.scheduledMaintenances.isEmpty {
+            Divider()
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Scheduled Maintenance")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                ForEach(viewModel.scheduledMaintenances) { maintenance in
+                    MaintenanceCard(maintenance: maintenance)
+                }
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
+        }
     }
 
     // MARK: - Error
