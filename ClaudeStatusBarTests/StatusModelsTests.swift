@@ -1,3 +1,4 @@
+import Testing
 import XCTest
 @testable import ClaudeStatusBar
 
@@ -262,4 +263,170 @@ extension StatusModelsTests {
       }
     }
     """
+
+    static let scheduledMaintenanceJSON = """
+    {
+      "page": {
+        "id": "tymt9n04zgry",
+        "name": "Claude",
+        "url": "https://status.claude.com",
+        "time_zone": "Etc/UTC",
+        "updated_at": "2026-03-04T08:30:00.000Z"
+      },
+      "components": [
+        {
+          "id": "rwppv331jlwc",
+          "name": "claude.ai",
+          "status": "operational",
+          "created_at": "2023-07-11T17:52:24.275Z",
+          "updated_at": "2026-03-03T16:38:59.714Z",
+          "position": 1,
+          "description": null,
+          "showcase": true,
+          "start_date": "2023-07-11",
+          "group_id": null,
+          "page_id": "tymt9n04zgry",
+          "group": false,
+          "only_show_if_degraded": false
+        }
+      ],
+      "incidents": [],
+      "scheduled_maintenances": [
+        {
+          "id": "maint001",
+          "name": "Scheduled maintenance for Claude API",
+          "status": "scheduled",
+          "impact": "none",
+          "created_at": "2026-03-04T06:00:00.000Z",
+          "updated_at": "2026-03-04T06:00:00.000Z",
+          "incident_updates": [
+            {
+              "id": "upd-maint001",
+              "status": "scheduled",
+              "body": "We will be performing scheduled maintenance.",
+              "created_at": "2026-03-04T06:00:00.000Z",
+              "affected_components": null
+            }
+          ]
+        },
+        {
+          "id": "maint002",
+          "name": "Database migration",
+          "status": "in_progress",
+          "impact": "minor",
+          "created_at": "2026-03-04T07:00:00.000Z",
+          "updated_at": "2026-03-04T08:00:00.000Z",
+          "incident_updates": [
+            {
+              "id": "upd-maint002",
+              "status": "in_progress",
+              "body": "Migration is currently in progress.",
+              "created_at": "2026-03-04T08:00:00.000Z",
+              "affected_components": null
+            }
+          ]
+        }
+      ],
+      "status": {
+        "indicator": "none",
+        "description": "All Systems Operational"
+      }
+    }
+    """
+}
+
+// MARK: - Maintenance Status Tests (Swift Testing)
+
+@Suite("IncidentStatus Maintenance Cases")
+struct IncidentStatusMaintenanceTests {
+
+    private func decodeIncidentStatus(_ raw: String) throws -> IncidentStatus {
+        let json = "\"\(raw)\""
+        return try JSONDecoder().decode(IncidentStatus.self, from: Data(json.utf8))
+    }
+
+    @Test("Decode scheduled status")
+    func decodeScheduled() throws {
+        let status = try decodeIncidentStatus("scheduled")
+        #expect(status == .scheduled)
+    }
+
+    @Test("Decode in_progress status")
+    func decodeInProgress() throws {
+        let status = try decodeIncidentStatus("in_progress")
+        #expect(status == .inProgress)
+    }
+
+    @Test("Decode verifying status")
+    func decodeVerifying() throws {
+        let status = try decodeIncidentStatus("verifying")
+        #expect(status == .verifying)
+    }
+
+    @Test("Decode completed status")
+    func decodeCompleted() throws {
+        let status = try decodeIncidentStatus("completed")
+        #expect(status == .completed)
+    }
+}
+
+@Suite("Scheduled Maintenances Decoding")
+struct ScheduledMaintenancesDecodingTests {
+
+    private var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let string = try container.decode(String.self)
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            if let date = formatter.date(from: string) {
+                return date
+            }
+            formatter.formatOptions = [.withInternetDateTime]
+            if let date = formatter.date(from: string) {
+                return date
+            }
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Cannot decode date: \(string)"
+            )
+        }
+        return decoder
+    }
+
+    @Test("Decode summary with scheduled maintenances")
+    func decodeSummaryWithMaintenances() throws {
+        let data = Data(StatusModelsTests.scheduledMaintenanceJSON.utf8)
+        let summary = try decoder.decode(StatusSummary.self, from: data)
+
+        #expect(summary.scheduledMaintenances.count == 2)
+        #expect(summary.incidents.isEmpty)
+    }
+
+    @Test("Decode scheduled maintenance fields")
+    func decodeMaintenanceFields() throws {
+        let data = Data(StatusModelsTests.scheduledMaintenanceJSON.utf8)
+        let summary = try decoder.decode(StatusSummary.self, from: data)
+
+        let scheduled = summary.scheduledMaintenances[0]
+        #expect(scheduled.id == "maint001")
+        #expect(scheduled.name == "Scheduled maintenance for Claude API")
+        #expect(scheduled.status == .scheduled)
+        #expect(scheduled.impact == .none)
+        #expect(scheduled.incidentUpdates.count == 1)
+        #expect(scheduled.incidentUpdates[0].status == .scheduled)
+    }
+
+    @Test("Decode in-progress maintenance")
+    func decodeInProgressMaintenance() throws {
+        let data = Data(StatusModelsTests.scheduledMaintenanceJSON.utf8)
+        let summary = try decoder.decode(StatusSummary.self, from: data)
+
+        let inProgress = summary.scheduledMaintenances[1]
+        #expect(inProgress.id == "maint002")
+        #expect(inProgress.status == .inProgress)
+        #expect(inProgress.impact == .minor)
+    }
 }
