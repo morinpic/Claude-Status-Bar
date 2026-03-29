@@ -67,13 +67,13 @@ struct DebugMenuView: View {
 
             // Loading toggle
             Toggle("Loading", isOn: Binding(
-                get: { viewModel.isLoading },
+                get: { viewModel.debugIsLoading },
                 set: { newValue in
                     viewModel.applyDebugState(
-                        statusPreset: .operational,
-                        incidentPreset: .none,
-                        componentPreset: .allOperational,
-                        errorPreset: .none,
+                        statusPreset: viewModel.debugStatusPreset == .live ? .operational : viewModel.debugStatusPreset,
+                        incidentPreset: viewModel.debugIncidentPreset,
+                        componentPreset: viewModel.debugComponentPreset,
+                        errorPreset: viewModel.debugErrorPreset,
                         isLoadingOverride: newValue
                     )
                 }
@@ -149,10 +149,10 @@ struct DebugMenuView: View {
         Button(label) {
             viewModel.applyDebugState(
                 statusPreset: preset,
-                incidentPreset: .none,
-                componentPreset: .allOperational,
-                errorPreset: .none,
-                isLoadingOverride: false
+                incidentPreset: viewModel.debugIncidentPreset,
+                componentPreset: viewModel.debugComponentPreset,
+                errorPreset: viewModel.debugErrorPreset,
+                isLoadingOverride: viewModel.debugIsLoading
             )
         }
         .buttonStyle(.bordered)
@@ -162,11 +162,11 @@ struct DebugMenuView: View {
     private func incidentButton(_ label: String, preset: DebugIncidentPreset) -> some View {
         Button(label) {
             viewModel.applyDebugState(
-                statusPreset: .operational,
+                statusPreset: viewModel.debugStatusPreset == .live ? .operational : viewModel.debugStatusPreset,
                 incidentPreset: preset,
-                componentPreset: .allOperational,
-                errorPreset: .none,
-                isLoadingOverride: false
+                componentPreset: viewModel.debugComponentPreset,
+                errorPreset: viewModel.debugErrorPreset,
+                isLoadingOverride: viewModel.debugIsLoading
             )
         }
         .buttonStyle(.bordered)
@@ -176,11 +176,11 @@ struct DebugMenuView: View {
     private func componentButton(_ label: String, preset: DebugComponentPreset) -> some View {
         Button(label) {
             viewModel.applyDebugState(
-                statusPreset: .operational,
-                incidentPreset: .none,
+                statusPreset: viewModel.debugStatusPreset == .live ? .operational : viewModel.debugStatusPreset,
+                incidentPreset: viewModel.debugIncidentPreset,
                 componentPreset: preset,
-                errorPreset: .none,
-                isLoadingOverride: false
+                errorPreset: viewModel.debugErrorPreset,
+                isLoadingOverride: viewModel.debugIsLoading
             )
         }
         .buttonStyle(.bordered)
@@ -190,11 +190,11 @@ struct DebugMenuView: View {
     private func errorButton(_ label: String, preset: DebugErrorPreset) -> some View {
         Button(label) {
             viewModel.applyDebugState(
-                statusPreset: .operational,
-                incidentPreset: .none,
-                componentPreset: .allOperational,
+                statusPreset: viewModel.debugStatusPreset == .live ? .operational : viewModel.debugStatusPreset,
+                incidentPreset: viewModel.debugIncidentPreset,
+                componentPreset: viewModel.debugComponentPreset,
                 errorPreset: preset,
-                isLoadingOverride: false
+                isLoadingOverride: viewModel.debugIsLoading
             )
         }
         .buttonStyle(.bordered)
