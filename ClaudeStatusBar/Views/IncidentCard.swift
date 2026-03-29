@@ -68,6 +68,10 @@ struct IncidentCard: View {
         case .monitoring: return "Monitoring"
         case .resolved: return "Resolved"
         case .postmortem: return "Postmortem"
+        case .scheduled: return "Scheduled"
+        case .inProgress: return "In Progress"
+        case .verifying: return "Verifying"
+        case .completed: return "Completed"
         }
     }
 }
