@@ -128,8 +128,8 @@ struct DebugMenuView: View {
             Button("Reset to Live") {
                 viewModel.exitDebugMode()
             }
-            .buttonStyle(.plain)
-            .font(.caption)
+            .buttonStyle(.bordered)
+            .controlSize(.small)
             .foregroundStyle(.red)
         }
         .padding(.horizontal, 14)
@@ -155,8 +155,8 @@ struct DebugMenuView: View {
                 isLoadingOverride: false
             )
         }
-        .buttonStyle(.plain)
-        .font(.caption)
+        .buttonStyle(.bordered)
+        .controlSize(.small)
     }
 
     private func incidentButton(_ label: String, preset: DebugIncidentPreset) -> some View {
@@ -169,8 +169,8 @@ struct DebugMenuView: View {
                 isLoadingOverride: false
             )
         }
-        .buttonStyle(.plain)
-        .font(.caption)
+        .buttonStyle(.bordered)
+        .controlSize(.small)
     }
 
     private func componentButton(_ label: String, preset: DebugComponentPreset) -> some View {
@@ -183,8 +183,8 @@ struct DebugMenuView: View {
                 isLoadingOverride: false
             )
         }
-        .buttonStyle(.plain)
-        .font(.caption)
+        .buttonStyle(.bordered)
+        .controlSize(.small)
     }
 
     private func errorButton(_ label: String, preset: DebugErrorPreset) -> some View {
@@ -197,8 +197,8 @@ struct DebugMenuView: View {
                 isLoadingOverride: false
             )
         }
-        .buttonStyle(.plain)
-        .font(.caption)
+        .buttonStyle(.bordered)
+        .controlSize(.small)
     }
 }
 
