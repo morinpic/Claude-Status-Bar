@@ -78,6 +78,7 @@ struct SettingsView: View {
                             .frame(width: 16, height: 16)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel("Open GitHub repository")
                     Spacer()
                     Button("Reset All Settings") {
                         showingResetConfirmation = true
