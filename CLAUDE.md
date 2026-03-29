@@ -129,7 +129,7 @@ GET https://status.claude.com/api/v2/summary.json
 
 ## バージョン管理ルール
 
-現在のバージョン: `2.5.0`（MARKETING_VERSION）
+現在のバージョン: `2.6.0`（MARKETING_VERSION）
 
 Semantic Versioning（`MAJOR.MINOR.PATCH`）に従う。
 
