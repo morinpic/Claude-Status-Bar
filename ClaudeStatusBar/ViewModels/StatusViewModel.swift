@@ -290,6 +290,13 @@ final class StatusViewModel {
     var pollInterval: Int { selectedPollingInterval.rawValue }
     private var countdownTask: Task<Void, Never>?
 
+    // Current debug presets (preserved across individual changes)
+    var debugStatusPreset: DebugStatusPreset = .live
+    var debugIncidentPreset: DebugIncidentPreset = .none
+    var debugComponentPreset: DebugComponentPreset = .allOperational
+    var debugErrorPreset: DebugErrorPreset = .none
+    var debugIsLoading: Bool = false
+
     func startCountdown() {
         countdownTask?.cancel()
         pollCountdown = selectedPollingInterval.rawValue
@@ -314,6 +321,13 @@ final class StatusViewModel {
             exitDebugMode()
             return
         }
+
+        // Save current presets
+        debugStatusPreset = statusPreset
+        debugIncidentPreset = incidentPreset
+        debugComponentPreset = componentPreset
+        debugErrorPreset = errorPreset
+        debugIsLoading = isLoadingOverride
 
         isDebugMode = true
         stopMonitoring()
@@ -343,6 +357,11 @@ final class StatusViewModel {
 
     func exitDebugMode() {
         isDebugMode = false
+        debugStatusPreset = .live
+        debugIncidentPreset = .none
+        debugComponentPreset = .allOperational
+        debugErrorPreset = .none
+        debugIsLoading = false
         error = nil
         isLoading = false
         startMonitoring()
