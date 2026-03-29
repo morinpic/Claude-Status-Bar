@@ -287,6 +287,7 @@ final class StatusViewModel {
             // 障害発生
             notificationService.sendIncidentNotification(
                 incidentName: incidentName,
+                severity: current,
                 language: selectedLanguage,
                 iconDesign: selectedIconDesign
             )
@@ -302,6 +303,7 @@ final class StatusViewModel {
                 // 悪化 (minor→major, minor→critical, major→critical)
                 notificationService.sendWorsenedNotification(
                     incidentName: incidentName,
+                    severity: current,
                     language: selectedLanguage,
                     iconDesign: selectedIconDesign
                 )
@@ -402,6 +404,7 @@ final class StatusViewModel {
     func debugSendIncidentNotification() {
         notificationService.sendIncidentNotification(
             incidentName: "[Debug] Test incident on Claude API",
+            severity: .major,
             language: selectedLanguage,
             iconDesign: selectedIconDesign
         )

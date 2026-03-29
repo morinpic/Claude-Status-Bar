@@ -17,13 +17,8 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         }
     }
 
-    func sendIncidentNotification(incidentName: String, language: AppLanguage, iconDesign: IconDesignType) {
-        let prefix: String
-        switch iconDesign {
-        case .statusIcons: prefix = "[ ! ]"
-        case .classic: prefix = "🔴"
-        case .vibe: prefix = "😰"
-        }
+    func sendIncidentNotification(incidentName: String, severity: StatusIndicator, language: AppLanguage, iconDesign: IconDesignType) {
+        let prefix = incidentPrefix(for: severity, iconDesign: iconDesign)
 
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
@@ -40,12 +35,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     }
 
     func sendRecoveryNotification(language: AppLanguage, iconDesign: IconDesignType) {
-        let prefix: String
-        switch iconDesign {
-        case .statusIcons: prefix = "[✓]"
-        case .classic: prefix = "🟢"
-        case .vibe: prefix = "😊"
-        }
+        let prefix = recoveryPrefix(iconDesign: iconDesign)
 
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
@@ -102,13 +92,8 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    func sendWorsenedNotification(incidentName: String, language: AppLanguage, iconDesign: IconDesignType) {
-        let prefix: String
-        switch iconDesign {
-        case .statusIcons: prefix = "[ ! ]"
-        case .classic: prefix = "🔴"
-        case .vibe: prefix = "😰"
-        }
+    func sendWorsenedNotification(incidentName: String, severity: StatusIndicator, language: AppLanguage, iconDesign: IconDesignType) {
+        let prefix = incidentPrefix(for: severity, iconDesign: iconDesign)
 
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
@@ -125,12 +110,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     }
 
     func sendImprovingNotification(incidentName: String, language: AppLanguage, iconDesign: IconDesignType) {
-        let prefix: String
-        switch iconDesign {
-        case .statusIcons: prefix = "[✓]"
-        case .classic: prefix = "🟡"
-        case .vibe: prefix = "😟"
-        }
+        let prefix = improvingPrefix(iconDesign: iconDesign)
 
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
@@ -147,12 +127,7 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
     }
 
     func sendComponentRecoveryNotification(componentName: String, language: AppLanguage, iconDesign: IconDesignType) {
-        let prefix: String
-        switch iconDesign {
-        case .statusIcons: prefix = "[✓]"
-        case .classic: prefix = "🟢"
-        case .vibe: prefix = "😊"
-        }
+        let prefix = recoveryPrefix(iconDesign: iconDesign)
 
         let content = UNMutableNotificationContent()
         content.title = "Claude Status"
@@ -166,6 +141,50 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
             trigger: nil
         )
         center.add(request)
+    }
+
+    // MARK: - Private helpers
+
+    private func incidentPrefix(for severity: StatusIndicator, iconDesign: IconDesignType) -> String {
+        switch iconDesign {
+        case .statusIcons:
+            switch severity {
+            case .minor: return "[i]"
+            case .major: return "[ ! ]"
+            case .critical: return "[✕]"
+            case .none: return "[✓]"
+            }
+        case .classic:
+            switch severity {
+            case .minor: return "🟡"
+            case .major: return "🟠"
+            case .critical: return "🔴"
+            case .none: return "🟢"
+            }
+        case .vibe:
+            switch severity {
+            case .minor: return "😟"
+            case .major: return "😰"
+            case .critical: return "💀"
+            case .none: return "😊"
+            }
+        }
+    }
+
+    private func recoveryPrefix(iconDesign: IconDesignType) -> String {
+        switch iconDesign {
+        case .statusIcons: return "[✓]"
+        case .classic: return "🟢"
+        case .vibe: return "😊"
+        }
+    }
+
+    private func improvingPrefix(iconDesign: IconDesignType) -> String {
+        switch iconDesign {
+        case .statusIcons: return "[~]"
+        case .classic: return "🟡"
+        case .vibe: return "😟"
+        }
     }
 
     // Show notifications even when app is in foreground
