@@ -384,6 +384,56 @@
         }
       }
     },
+    "Detailed" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細"
+          }
+        }
+      }
+    },
+    "Improving: %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "改善中: %@"
+          }
+        }
+      }
+    },
+    "Notification Level" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知レベル"
+          }
+        }
+      }
+    },
+    "Simple" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シンプル"
+          }
+        }
+      }
+    },
+    "Worsened: %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "悪化: %@"
+          }
+        }
+      }
+    },
     "日本語" : {
       "localizations" : {
         "ja" : {

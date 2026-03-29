@@ -15,6 +15,15 @@ final class StatusViewModel {
     var selectedLanguageRaw: String = UserDefaults.standard.string(forKey: "selectedLanguage") ?? AppLanguage.system.rawValue
     var selectedIconDesignRaw: String = UserDefaults.standard.string(forKey: "selectedIconDesign") ?? IconDesignType.statusIcons.rawValue
     var notificationEnabledMap: [String: Bool] = [:]
+    var selectedNotificationLevelRaw: String = UserDefaults.standard.string(forKey: "notificationLevel") ?? NotificationLevel.simple.rawValue
+
+    var selectedNotificationLevel: NotificationLevel {
+        get { NotificationLevel(rawValue: selectedNotificationLevelRaw) ?? .simple }
+        set {
+            selectedNotificationLevelRaw = newValue.rawValue
+            UserDefaults.standard.set(newValue.rawValue, forKey: "notificationLevel")
+        }
+    }
 
     var selectedPollingInterval: PollingInterval {
         get {
@@ -252,6 +261,9 @@ final class StatusViewModel {
             notificationEnabledMap[id] = true
         }
 
+        // Notification level
+        selectedNotificationLevel = .simple
+
         // Polling interval
         selectedPollingInterval = .sixty
 
@@ -269,18 +281,38 @@ final class StatusViewModel {
         to current: StatusIndicator,
         incidents: [Incident]
     ) {
+        let incidentName = incidents.first?.name ?? "Unknown incident"
+
         if previous == .none && current != .none {
-            let incidentName = incidents.first?.name ?? "Unknown incident"
+            // 障害発生
             notificationService.sendIncidentNotification(
                 incidentName: incidentName,
                 language: selectedLanguage,
                 iconDesign: selectedIconDesign
             )
         } else if previous != .none && current == .none {
+            // 復旧
             notificationService.sendRecoveryNotification(
                 language: selectedLanguage,
                 iconDesign: selectedIconDesign
             )
+        } else if selectedNotificationLevel == .detailed && previous != .none && current != .none && previous != current {
+            // 詳細モード: 悪化 or 改善（復旧ではない）
+            if current > previous {
+                // 悪化 (minor→major, minor→critical, major→critical)
+                notificationService.sendWorsenedNotification(
+                    incidentName: incidentName,
+                    language: selectedLanguage,
+                    iconDesign: selectedIconDesign
+                )
+            } else {
+                // 改善 (critical→major, critical→minor, major→minor)
+                notificationService.sendImprovingNotification(
+                    incidentName: incidentName,
+                    language: selectedLanguage,
+                    iconDesign: selectedIconDesign
+                )
+            }
         }
     }
 

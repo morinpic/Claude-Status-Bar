@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Notification Level setting (Simple / Detailed) in Settings
+- Detailed mode: send worsened notification when incident severity increases (minor→major, minor→critical, major→critical)
+- Detailed mode: send improving notification when incident severity decreases without full recovery (critical→major, critical→minor, major→minor)
+
 ### Changed
 
 - Redesign debug menu: always expanded with compact layout (no more collapsible toggle)

@@ -102,6 +102,50 @@ final class NotificationService: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
+    func sendWorsenedNotification(incidentName: String, language: AppLanguage, iconDesign: IconDesignType) {
+        let prefix: String
+        switch iconDesign {
+        case .statusIcons: prefix = "[ ! ]"
+        case .classic: prefix = "🔴"
+        case .vibe: prefix = "😰"
+        }
+
+        let content = UNMutableNotificationContent()
+        content.title = "Claude Status"
+        let template = language.localizedString("Worsened: %@")
+        content.body = "\(prefix) " + String(format: template, incidentName)
+        content.sound = .default
+
+        let request = UNNotificationRequest(
+            identifier: "worsened-\(UUID().uuidString)",
+            content: content,
+            trigger: nil
+        )
+        center.add(request)
+    }
+
+    func sendImprovingNotification(incidentName: String, language: AppLanguage, iconDesign: IconDesignType) {
+        let prefix: String
+        switch iconDesign {
+        case .statusIcons: prefix = "[✓]"
+        case .classic: prefix = "🟡"
+        case .vibe: prefix = "😟"
+        }
+
+        let content = UNMutableNotificationContent()
+        content.title = "Claude Status"
+        let template = language.localizedString("Improving: %@")
+        content.body = "\(prefix) " + String(format: template, incidentName)
+        content.sound = .default
+
+        let request = UNNotificationRequest(
+            identifier: "improving-\(UUID().uuidString)",
+            content: content,
+            trigger: nil
+        )
+        center.add(request)
+    }
+
     func sendComponentRecoveryNotification(componentName: String, language: AppLanguage, iconDesign: IconDesignType) {
         let prefix: String
         switch iconDesign {
