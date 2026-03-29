@@ -14,25 +14,7 @@ struct StatusMenuView: View {
             errorSection
             #if DEBUG
             Divider()
-            Button {
-                NSApp.activate(ignoringOtherApps: true)
-                openDebugWindow()
-            } label: {
-                HStack {
-                    Text("🐛 Debug")
-                        .font(.body)
-                    Spacer()
-                    Text("⏱ \(viewModel.pollCountdown)s / \(viewModel.pollInterval)s")
-                        .font(.caption)
-                        .monospacedDigit()
-                        .foregroundStyle(.secondary)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 6)
+            DebugMenuView(viewModel: viewModel)
             #endif
             Divider()
             footerSection
@@ -192,13 +174,5 @@ struct StatusMenuView: View {
         case .critical: return Color(nsColor: .systemRed)
         }
     }
-
-    // MARK: - Debug
-
-    #if DEBUG
-    private func openDebugWindow() {
-        DebugWindowManager.shared.showWindow(viewModel: viewModel)
-    }
-    #endif
 
 }

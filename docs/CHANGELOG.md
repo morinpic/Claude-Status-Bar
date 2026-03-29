@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Migrate debug menu from collapsible popover section to a standalone NSWindow for simultaneous use with the popover
+- Redesign debug menu: always expanded with compact layout (no more collapsible toggle)
 
 ## [2.4.0] - 2026-03-29
 
