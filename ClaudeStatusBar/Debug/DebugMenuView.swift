@@ -104,6 +104,16 @@ struct DebugMenuView: View {
             .buttonStyle(.bordered)
             .controlSize(.small)
 
+            // Detailed mode transitions
+            sectionLabel("Detailed")
+            HStack(spacing: 4) {
+                Button("minor→major") { viewModel.debugSimulateTransition(from: .minor, to: .major) }
+                Button("major→critical") { viewModel.debugSimulateTransition(from: .major, to: .critical) }
+                Button("critical→minor") { viewModel.debugSimulateTransition(from: .critical, to: .minor) }
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+
             // Component transitions
             if let first = viewModel.components.first {
                 sectionLabel("Component")
