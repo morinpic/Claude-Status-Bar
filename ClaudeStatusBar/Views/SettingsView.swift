@@ -46,6 +46,14 @@ struct SettingsView: View {
             iconDesignSection
 
             Section {
+                Picker(selection: $viewModel.selectedNotificationLevel) {
+                    ForEach(NotificationLevel.allCases) { level in
+                        Text(level.localizedDisplayName).tag(level)
+                    }
+                } label: {
+                    Text("Notification Level")
+                }
+
                 ForEach(viewModel.components) { component in
                     Toggle(
                         component.name,
