@@ -30,6 +30,13 @@ enum DebugErrorPreset: String, CaseIterable {
     case httpError = "HTTP Error (500)"
 }
 
+enum DebugMaintenancePreset: String, CaseIterable {
+    case none = "No Maintenance"
+    case scheduled = "1 Scheduled"
+    case inProgress = "1 In Progress"
+    case multiple = "Multiple"
+}
+
 struct DebugDataFactory {
 
     static func makeComponents(preset: DebugComponentPreset) -> [Component] {
@@ -97,6 +104,41 @@ struct DebugDataFactory {
             name: name,
             status: status,
             impact: impact,
+            createdAt: Date().addingTimeInterval(-600),
+            updatedAt: Date().addingTimeInterval(-300),
+            incidentUpdates: [update]
+        )
+    }
+
+    static func makeMaintenances(preset: DebugMaintenancePreset) -> [Incident] {
+        switch preset {
+        case .none:
+            return []
+        case .scheduled:
+            return [makeMaintenance(name: "Scheduled maintenance for Claude API", status: .scheduled)]
+        case .inProgress:
+            return [makeMaintenance(name: "Database migration in progress", status: .inProgress)]
+        case .multiple:
+            return [
+                makeMaintenance(name: "Scheduled maintenance for Claude API", status: .scheduled),
+                makeMaintenance(name: "Database migration in progress", status: .inProgress)
+            ]
+        }
+    }
+
+    static func makeMaintenance(name: String, status: IncidentStatus) -> Incident {
+        let update = IncidentUpdate(
+            id: UUID().uuidString,
+            status: status,
+            body: "This maintenance is expected to last approximately 2 hours.",
+            createdAt: Date().addingTimeInterval(-300),
+            affectedComponents: nil
+        )
+        return Incident(
+            id: UUID().uuidString,
+            name: name,
+            status: status,
+            impact: .none,
             createdAt: Date().addingTimeInterval(-600),
             updatedAt: Date().addingTimeInterval(-300),
             incidentUpdates: [update]

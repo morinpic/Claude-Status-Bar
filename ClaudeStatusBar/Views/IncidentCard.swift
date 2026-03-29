@@ -2,6 +2,7 @@ import SwiftUI
 
 struct IncidentCard: View {
     let incident: Incident
+    var locale: Locale = .current
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -25,7 +26,7 @@ struct IncidentCard: View {
             }
 
             Text(
-                "Updated: \(incident.updatedAt.formatted(date: .abbreviated, time: .shortened))",
+                "Updated: \(incident.updatedAt.formatted(.dateTime.year().month().day().hour().minute().locale(locale)))",
                 comment: "Label showing when the incident was last updated"
             )
             .font(.caption2)
@@ -68,6 +69,10 @@ struct IncidentCard: View {
         case .monitoring: return "Monitoring"
         case .resolved: return "Resolved"
         case .postmortem: return "Postmortem"
+        case .scheduled: return "Scheduled"
+        case .inProgress: return "In Progress"
+        case .verifying: return "Verifying"
+        case .completed: return "Completed"
         }
     }
 }

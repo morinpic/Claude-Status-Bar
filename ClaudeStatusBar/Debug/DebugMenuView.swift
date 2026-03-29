@@ -47,6 +47,15 @@ struct DebugMenuView: View {
                 incidentButton("Multiple", preset: .multiple)
             }
 
+            // Maintenance
+            sectionLabel("Maintenance")
+            FlowButtons {
+                maintenanceButton("None", preset: .none)
+                maintenanceButton("Scheduled", preset: .scheduled)
+                maintenanceButton("In Progress", preset: .inProgress)
+                maintenanceButton("Multiple", preset: .multiple)
+            }
+
             // Components
             sectionLabel("Components")
             FlowButtons {
@@ -74,6 +83,7 @@ struct DebugMenuView: View {
                         incidentPreset: viewModel.debugIncidentPreset,
                         componentPreset: viewModel.debugComponentPreset,
                         errorPreset: viewModel.debugErrorPreset,
+                        maintenancePreset: viewModel.debugMaintenancePreset,
                         isLoadingOverride: newValue
                     )
                 }
@@ -162,6 +172,7 @@ struct DebugMenuView: View {
                 incidentPreset: viewModel.debugIncidentPreset,
                 componentPreset: viewModel.debugComponentPreset,
                 errorPreset: viewModel.debugErrorPreset,
+                maintenancePreset: viewModel.debugMaintenancePreset,
                 isLoadingOverride: viewModel.debugIsLoading
             )
         }
@@ -176,6 +187,22 @@ struct DebugMenuView: View {
                 incidentPreset: preset,
                 componentPreset: viewModel.debugComponentPreset,
                 errorPreset: viewModel.debugErrorPreset,
+                maintenancePreset: viewModel.debugMaintenancePreset,
+                isLoadingOverride: viewModel.debugIsLoading
+            )
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.small)
+    }
+
+    private func maintenanceButton(_ label: String, preset: DebugMaintenancePreset) -> some View {
+        Button(label) {
+            viewModel.applyDebugState(
+                statusPreset: viewModel.debugStatusPreset == .live ? .operational : viewModel.debugStatusPreset,
+                incidentPreset: viewModel.debugIncidentPreset,
+                componentPreset: viewModel.debugComponentPreset,
+                errorPreset: viewModel.debugErrorPreset,
+                maintenancePreset: preset,
                 isLoadingOverride: viewModel.debugIsLoading
             )
         }
@@ -190,6 +217,7 @@ struct DebugMenuView: View {
                 incidentPreset: viewModel.debugIncidentPreset,
                 componentPreset: preset,
                 errorPreset: viewModel.debugErrorPreset,
+                maintenancePreset: viewModel.debugMaintenancePreset,
                 isLoadingOverride: viewModel.debugIsLoading
             )
         }
@@ -204,6 +232,7 @@ struct DebugMenuView: View {
                 incidentPreset: viewModel.debugIncidentPreset,
                 componentPreset: viewModel.debugComponentPreset,
                 errorPreset: preset,
+                maintenancePreset: viewModel.debugMaintenancePreset,
                 isLoadingOverride: viewModel.debugIsLoading
             )
         }

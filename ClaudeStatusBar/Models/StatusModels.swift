@@ -85,11 +85,17 @@ struct Incident: Codable, Sendable, Identifiable {
 }
 
 enum IncidentStatus: String, Codable, Sendable {
+    // Incident statuses
     case investigating
     case identified
     case monitoring
     case resolved
     case postmortem
+    // Maintenance statuses
+    case scheduled
+    case inProgress = "in_progress"
+    case verifying
+    case completed
 }
 
 // MARK: - Incident Update

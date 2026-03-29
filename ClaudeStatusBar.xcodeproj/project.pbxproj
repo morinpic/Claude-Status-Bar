@@ -12,6 +12,7 @@
 		512F85E02F787BCD002897F2 /* PollingInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F85DF2F787BCD002897F2 /* PollingInterval.swift */; };
 		512F85E62F78A2C3002897F2 /* DebugMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F85E52F78A2C3002897F2 /* DebugMenuView.swift */; };
 		512F85E82F78B96F002897F2 /* NotificationLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F85E72F78B96F002897F2 /* NotificationLevel.swift */; };
+		512F85EA2F79D7B5002897F2 /* MaintenanceCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512F85E92F79D7B5002897F2 /* MaintenanceCard.swift */; };
 		8A1B2C3D4E5F000000000101 /* ClaudeStatusBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000001 /* ClaudeStatusBarApp.swift */; };
 		8A1B2C3D4E5F000000000102 /* StatusModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000002 /* StatusModels.swift */; };
 		8A1B2C3D4E5F000000000103 /* StatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F000000000003 /* StatusService.swift */; };
@@ -47,6 +48,7 @@
 		512F85DF2F787BCD002897F2 /* PollingInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingInterval.swift; sourceTree = "<group>"; };
 		512F85E52F78A2C3002897F2 /* DebugMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuView.swift; sourceTree = "<group>"; };
 		512F85E72F78B96F002897F2 /* NotificationLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLevel.swift; sourceTree = "<group>"; };
+		512F85E92F79D7B5002897F2 /* MaintenanceCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceCard.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000001 /* ClaudeStatusBarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeStatusBarApp.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000002 /* StatusModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusModels.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F000000000003 /* StatusService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusService.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		8A1B2C3D4E5F000000000205 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				512F85E92F79D7B5002897F2 /* MaintenanceCard.swift */,
 				8A1B2C3D4E5F000000000005 /* StatusMenuView.swift */,
 				8A1B2C3D4E5F000000000006 /* ComponentRow.swift */,
 				8A1B2C3D4E5F000000000007 /* IncidentCard.swift */,
@@ -287,6 +290,7 @@
 				8A1B2C3D4E5F000000000102 /* StatusModels.swift in Sources */,
 				8A1B2C3D4E5F000000000103 /* StatusService.swift in Sources */,
 				8A1B2C3D4E5F000000000104 /* NotificationService.swift in Sources */,
+				512F85EA2F79D7B5002897F2 /* MaintenanceCard.swift in Sources */,
 				8A1B2C3D4E5F000000000105 /* StatusMenuView.swift in Sources */,
 				512F85E62F78A2C3002897F2 /* DebugMenuView.swift in Sources */,
 				512F85DE2F774893002897F2 /* AppLanguage.swift in Sources */,
