@@ -67,6 +67,18 @@ struct SettingsView: View {
                 Text("Notifications")
             } footer: {
                 HStack {
+                    Button {
+                        if let url = URL(string: "https://github.com/morinpic/Claude-Status-Bar") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    } label: {
+                        Image("github-mark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 16, height: 16)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Open GitHub repository")
                     Spacer()
                     Button("Reset All Settings") {
                         showingResetConfirmation = true
