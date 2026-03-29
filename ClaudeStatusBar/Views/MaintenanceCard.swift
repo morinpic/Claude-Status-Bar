@@ -71,10 +71,10 @@ struct MaintenanceCard: View {
 
     private var statusText: String {
         switch maintenance.status {
-        case .scheduled: return String(localized: "Scheduled")
-        case .inProgress: return String(localized: "In Progress")
-        case .verifying: return String(localized: "Verifying")
-        case .completed: return String(localized: "Completed")
+        case .scheduled: return "Scheduled"
+        case .inProgress: return "In Progress"
+        case .verifying: return "Verifying"
+        case .completed: return "Completed"
         case .investigating, .identified, .monitoring, .resolved, .postmortem:
             return maintenance.status.rawValue.capitalized
         }
