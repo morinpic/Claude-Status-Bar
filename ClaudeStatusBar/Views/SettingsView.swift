@@ -84,6 +84,7 @@ struct SettingsView: View {
                         showingResetConfirmation = true
                     }
                     .buttonStyle(.bordered)
+                    .accessibilityHint(Text("Shows confirmation dialog to reset all settings to defaults"))
                 }
                 .padding(.top, 12)
             }
@@ -138,6 +139,10 @@ struct SettingsView: View {
         .onTapGesture {
             viewModel.selectedIconDesign = design
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("\(design.displayName), \(isSelected ? "Selected" : "Not selected")"))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .accessibilityAddTraits(.isButton)
     }
 
     private func iconPreviews(for design: IconDesignType) -> [AnyView] {

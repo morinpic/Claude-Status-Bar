@@ -19,6 +19,7 @@ struct MaintenanceCard: View {
                         .fill(impactColor)
                         .frame(width: 6, height: 6)
                 }
+                .accessibilityLabel(Text("Impact: \(impactText)"))
 
                 Label {
                     Text(statusText)
@@ -29,6 +30,7 @@ struct MaintenanceCard: View {
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                 }
+                .accessibilityLabel(Text("Status: \(statusText)"))
             }
 
             Text(
@@ -48,6 +50,8 @@ struct MaintenanceCard: View {
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassEffect(.regular, in: .rect(cornerRadius: 8))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("Maintenance: \(maintenance.name), Impact: \(impactText), Status: \(statusText)"))
     }
 
     // MARK: - Private

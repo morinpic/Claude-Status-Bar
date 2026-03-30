@@ -19,10 +19,12 @@ struct IncidentCard: View {
                         .fill(impactColor)
                         .frame(width: 6, height: 6)
                 }
+                .accessibilityLabel(Text("Impact: \(impactText)"))
 
                 Text(statusText)
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                    .accessibilityLabel(Text("Status: \(statusText)"))
             }
 
             Text(
@@ -42,6 +44,8 @@ struct IncidentCard: View {
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassEffect(.regular, in: .rect(cornerRadius: 8))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("\(incident.name), Impact: \(impactText), Status: \(statusText)"))
     }
 
     private var impactColor: Color {

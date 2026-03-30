@@ -16,8 +16,11 @@ struct ComponentRow: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            .accessibilityElement(children: .ignore)
         }
         .padding(.vertical, 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("\(component.name): \(statusText)"))
     }
 
     private var statusColor: Color {
