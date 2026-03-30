@@ -95,6 +95,15 @@ GET https://status.claude.com/api/v2/summary.json
 1. `main` から feature ブランチを切る（ブランチ名: `feature/{backlog-id}-{short-description}`、例: `feature/f13-notification-settings`）
 2. 実装・コミット（`main` への直接コミット禁止）
 3. PR を作成する（`docs/BACKLOG.md` の該当タスクへの取り消し線も PR に含める）
+   - PR にはバックログ ID のカテゴリに対応するラベルを付ける（`gh pr create --label <label>`）
+
+   | バックログ ID | ラベル |
+   |---|---|
+   | F-xx | `feature` |
+   | D-xx | `dev-tools` |
+   | I-xx | `infra` |
+   | R-xx | `repo` |
+   | バグ修正 | `bug` |
 4. もりけんさんのレビュー・承認後にマージする
 5. マージ後のブランチ削除は GitHub の自動削除設定で行う
 
