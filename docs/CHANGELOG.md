@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2026-03-30
+
+### Added
+
+- Scheduled maintenance display in popover (F-7)
+- Maintenance statuses support: scheduled, in_progress, verifying, completed
+- MaintenanceCard view with wrench icon and status labels
+- Debug menu: maintenance presets (None / Scheduled / In Progress / Multiple)
+- Model decoding tests for maintenance statuses
+
+### Fixed
+
+- Date format now respects in-app Language setting (was using system locale)
+
 ## [2.6.0] - 2026-03-29
 
 ### Added
