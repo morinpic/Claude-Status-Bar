@@ -15,13 +15,13 @@ struct StatusMenuView: View {
                     incidentSection
                     maintenanceSection
                     errorSection
+                    #if DEBUG
+                    Divider()
+                    DebugMenuView(viewModel: viewModel)
+                    #endif
                 }
             }
             .frame(maxHeight: 400)
-            #if DEBUG
-            Divider()
-            DebugMenuView(viewModel: viewModel)
-            #endif
             Divider()
             footerSection
         }
