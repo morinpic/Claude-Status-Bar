@@ -27,6 +27,8 @@ struct DebugMenuView: View {
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(Text("Debug mode \(viewModel.isDebugMode ? "on" : "off"), polling \(viewModel.pollCountdown) of \(viewModel.pollInterval) seconds"))
 
             // Status — all buttons in one row
             sectionLabel("Status")
@@ -98,7 +100,9 @@ struct DebugMenuView: View {
             sectionLabel("Notifications")
             HStack(spacing: 4) {
                 Button("📢 Incident") { viewModel.debugSendIncidentNotification() }
+                    .accessibilityLabel(Text("Send test incident notification"))
                 Button("✅ Recovery") { viewModel.debugSendRecoveryNotification() }
+                    .accessibilityLabel(Text("Send test recovery notification"))
             }
             .buttonStyle(.bordered)
             .controlSize(.small)
@@ -151,6 +155,7 @@ struct DebugMenuView: View {
             .buttonStyle(.bordered)
             .controlSize(.small)
             .foregroundStyle(.red)
+            .accessibilityLabel(Text("Reset debug mode to live data"))
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)

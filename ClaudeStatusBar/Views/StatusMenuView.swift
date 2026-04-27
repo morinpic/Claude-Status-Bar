@@ -8,15 +8,20 @@ struct StatusMenuView: View {
         VStack(alignment: .leading, spacing: 0) {
             headerSection
             Divider()
-            componentSection
-            Divider()
-            incidentSection
-            maintenanceSection
-            errorSection
-            #if DEBUG
-            Divider()
-            DebugMenuView(viewModel: viewModel)
-            #endif
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    componentSection
+                    Divider()
+                    incidentSection
+                    maintenanceSection
+                    errorSection
+                    #if DEBUG
+                    Divider()
+                    DebugMenuView(viewModel: viewModel)
+                    #endif
+                }
+            }
+            .frame(maxHeight: 400)
             Divider()
             footerSection
         }
@@ -63,6 +68,8 @@ struct StatusMenuView: View {
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
         .glassEffect(.regular, in: .capsule)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Overall status: \(viewModel.overallStatusText)"))
     }
 
     // MARK: - Components
@@ -146,6 +153,8 @@ struct StatusMenuView: View {
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(Text("Connection Error: \(error.localizedDescription)"))
 
             Divider()
         }
